@@ -1,0 +1,654 @@
+[
+    {
+      "number":1,
+      "enterpriseName":"(주)태봉",
+      "prePrice":"0원",
+      "purchaseAmount":"15,970원",
+      "withdrawalAmount":"-7,970원",
+      "updatePrice":"-5,210원",
+      "balance":"2,790원",
+      "finalDate":"2018-06-22",
+      "detail":[
+        {
+          "number":1,
+          "date":"2017-12-04 13:25:00",
+          "division":"매입",
+          "transaction":"일반 발주",
+          "price":"970원",
+          "totalBalance":"970원",
+          "remarks":"5229877650 발주 확정"
+        },
+        {
+          "number":2,
+          "date":"2017-12-04 13:25:30",
+          "division":"출금",
+          "transaction":"직접 출금",
+          "price":"-970원",
+          "totalBalance":"0원",
+          "remarks":""
+        },
+        {
+          "number":3,
+          "date":"2018-03-19 12:41:32",
+          "division":"매입",
+          "transaction":"일반 발주",
+          "price":"0원",
+          "totalBalance":"0원",
+          "remarks":"8176985609 발주 확정"
+        },
+        {
+          "number":4,
+          "date":"2018-03-28 14:09:03",
+          "division":"매입",
+          "transaction":"일반 발주",
+          "price":"6,000원",
+          "totalBalance":"6,000원",
+          "remarks":"4760789004 발주 확정"
+        },
+        {
+          "number":5,
+          "date":"2018-03-28 16:19:14",
+          "division":"매입",
+          "transaction":"일반 발주",
+          "price":"6,000원",
+          "totalBalance":"12,000원",
+          "remarks":"5923861811 발주 확정"
+        },
+        {
+          "number":6,
+          "date":"2018-06-05 16:20:53",
+          "division":"매입",
+          "transaction":"일반 발주",
+          "price":"3,000원",
+          "totalBalance":"15,000원",
+          "remarks":"9664826383 발주 확정"
+        },
+        {
+          "number":7,
+          "date":"2018-06-11 16:52:20",
+          "division":"출금",
+          "transaction":"직접 출금",
+          "price":"-4,000원",
+          "totalBalance":"11,000원",
+          "remarks":""
+        },
+        {
+          "number":8,
+          "date":"2018-06-20 13:44:51",
+          "division":"출금",
+          "transaction":"직접 출금",
+          "price":"-3,000원",
+          "totalBalance":"8,000원",
+          "remarks":""
+        },
+        {
+          "number":9,
+          "date":"2018-06-22 12:49:06",
+          "division":"수정",
+          "transaction":"금액 차감",
+          "price":"-210원",
+          "totalBalance":"7,790원",
+          "remarks":""
+        },
+        {
+          "number":10,
+          "date":"2018-06-22 12:55:31",
+          "division":"수정",
+          "transaction":"금액 차감",
+          "price":"-5,000원",
+          "totalBalance":"2,790원",
+          "remarks":"이거 봐꿔도 되나요?"
+        }
+      ]
+    },
+    {
+      "number":2,
+      "enterpriseName":"153코리아",
+      "prePrice":"0원",
+      "purchaseAmount":"1,408,800원",
+      "withdrawalAmount":"-507,000원",
+      "updatePrice":"2,950,000원",
+      "balance":"3,851,800원",
+      "finalDate":"2018-06-12",
+      "detail":[
+        {
+          "number":1,
+          "date":"2018-01-18 11:12:07",
+          "division":"출금",
+          "transaction":"직접 출금",
+          "price":"-500,000원",
+          "totalBalance":"-500,000원",
+          "remarks":""
+        },
+        {
+          "number":2,
+          "date":"2018-01-18 11:13:00",
+          "division":"수정",
+          "transaction":"금액 차감",
+          "price":"-50,000원",
+          "totalBalance":"-550,000원",
+          "remarks":""
+        },
+        {
+          "number":3,
+          "date":"2018-03-28 11:07:17",
+          "division":"매입",
+          "transaction":"일반 발주",
+          "price":"48,400원",
+          "totalBalance":"-501,600원",
+          "remarks":"7703704647 발주 확정"
+        },
+        {
+          "number":4,
+          "date":"2018-03-28 16:24:30",
+          "division":"매입",
+          "transaction":"일반 발주",
+          "price":"64,000원",
+          "totalBalance":"-437,600원",
+          "remarks":"3536470101 발주 확정"
+        },
+        {
+          "number":5,
+          "date":"2018-03-29 09:24:06",
+          "division":"매입",
+          "transaction":"일반 발주",
+          "price":"48,000원",
+          "totalBalance":"-389,600원",
+          "remarks":"9834082711 발주 확정"
+        },
+        {
+          "number":6,
+          "date":"2018-03-29 09:47:09",
+          "division":"매입",
+          "transaction":"일반 발주",
+          "price":"160,400원",
+          "totalBalance":"-229,200원",
+          "remarks":"8905333396 발주 확정"
+        },
+        {
+          "number":7,
+          "date":"2018-03-29 10:18:42",
+          "division":"수정",
+          "transaction":"금액 추가",
+          "price":"3,000,000원",
+          "totalBalance":"2,770,800원",
+          "remarks":"3/29 3,000,000원 선결제 완료"
+        },
+        {
+          "number":8,
+          "date":"2018-03-29 10:27:05",
+          "division":"매입",
+          "transaction":"일반 발주",
+          "price":"320,000원",
+          "totalBalance":"3,090,800원",
+          "remarks":"3629010773 발주 확정"
+        },
+        {
+          "number":9,
+          "date":"2018-03-29 10:29:47",
+          "division":"매입",
+          "transaction":"일반 발주",
+          "price":"320,000원",
+          "totalBalance":"3,410,800원",
+          "remarks":"0437282570 발주 확정"
+        },
+        {
+          "number":10,
+          "date":"2018-03-29 16:08:29",
+          "division":"매입",
+          "transaction":"일반 발주",
+          "price":"320,000원",
+          "totalBalance":"3,730,800원",
+          "remarks":"5317815928 발주 확정"
+        },
+        {
+          "number":11,
+          "date":"2018-04-10 15:43:37",
+          "division":"매입",
+          "transaction":"일반 발주",
+          "price":"128,000원",
+          "totalBalance":"3,858,800원",
+          "remarks":"1648034214 발주 확정"
+        },
+        {
+          "number":12,
+          "date":"2018-06-12 11:10:43",
+          "division":"출금",
+          "transaction":"직접 출금",
+          "price":"-7,000원",
+          "totalBalance":"3,851,800원",
+          "remarks":""
+        }
+      ]
+    },
+    {
+      "number":3,
+      "enterpriseName":"GFS",
+      "prePrice":"0원",
+      "purchaseAmount":"0원",
+      "withdrawalAmount":"0원",
+      "updatePrice":"0원",
+      "balance":"0원",
+      "finalDate":"",
+      "detail":[
+  
+      ]
+    },
+    {
+      "number":4,
+      "enterpriseName":"감자푸드",
+      "prePrice":"0원",
+      "purchaseAmount":"4,000원",
+      "withdrawalAmount":"-10,000원",
+      "updatePrice":"0원",
+      "balance":"-6,000원",
+      "finalDate":"2018-03-28",
+      "detail":[
+        {
+          "number":1,
+          "date":"2017-01-20 17:38:32",
+          "division":"출금",
+          "transaction":"직접 출금",
+          "price":"-10,000원",
+          "totalBalance":"-10,000원",
+          "remarks":"일반 입금"
+        },
+        {
+          "number":2,
+          "date":"2018-03-19 12:44:30",
+          "division":"매입",
+          "transaction":"일반 발주",
+          "price":"2,000원",
+          "totalBalance":"-8,000원",
+          "remarks":"8191997261 발주 확정"
+        },
+        {
+          "number":3,
+          "date":"2018-03-28 16:20:32",
+          "division":"매입",
+          "transaction":"일반 발주",
+          "price":"2,000원",
+          "totalBalance":"-6,000원",
+          "remarks":"3374917598 발주 확정"
+        }
+      ]
+    },
+    {
+      "number":5,
+      "enterpriseName":"건푸",
+      "prePrice":"0원",
+      "purchaseAmount":"0원",
+      "withdrawalAmount":"0원",
+      "updatePrice":"0원",
+      "balance":"0원",
+      "finalDate":"",
+      "detail":[
+  
+      ]
+    },
+    {
+      "number":6,
+      "enterpriseName":"그린수산",
+      "prePrice":"0원",
+      "purchaseAmount":"0원",
+      "withdrawalAmount":"0원",
+      "updatePrice":"0원",
+      "balance":"0원",
+      "finalDate":"",
+      "detail":[
+  
+      ]
+    },
+    {
+      "number":7,
+      "enterpriseName":"그린푸드",
+      "prePrice":"0원",
+      "purchaseAmount":"100,197,600원",
+      "withdrawalAmount":"-100,092,500원",
+      "updatePrice":"-29,000원",
+      "balance":"76,100원",
+      "finalDate":"2018-07-21",
+      "detail":[
+        {
+          "number":1,
+          "date":"2016-12-22 13:24:31",
+          "division":"매입",
+          "transaction":"일반 발주",
+          "price":"29,500원",
+          "totalBalance":"29,500원",
+          "remarks":"이전 발주 확정 총액"
+        },
+        {
+          "number":2,
+          "date":"2016-12-22 13:26:30",
+          "division":"매입",
+          "transaction":"일반 발주",
+          "price":"40,000원",
+          "totalBalance":"69,500원",
+          "remarks":"2948092497 발주 확정"
+        },
+        {
+          "number":3,
+          "date":"2016-12-22 13:27:42",
+          "division":"출금",
+          "transaction":"직접 출금",
+          "price":"-500원",
+          "totalBalance":"69,000원",
+          "remarks":"일반 입금"
+        },
+        {
+          "number":4,
+          "date":"2016-12-22 13:27:59",
+          "division":"수정",
+          "transaction":"금액 추가",
+          "price":"1,000원",
+          "totalBalance":"70,000원",
+          "remarks":"일반 차감"
+        },
+        {
+          "number":5,
+          "date":"2017-01-02 14:35:36",
+          "division":"매입",
+          "transaction":"일반 발주",
+          "price":"27,500원",
+          "totalBalance":"97,500원",
+          "remarks":"4892909861 발주 확정"
+        },
+        {
+          "number":6,
+          "date":"2017-02-10 15:59:43",
+          "division":"출금",
+          "transaction":"직접 출금",
+          "price":"-45,000원",
+          "totalBalance":"52,500원",
+          "remarks":""
+        },
+        {
+          "number":7,
+          "date":"2017-02-10 16:19:05",
+          "division":"수정",
+          "transaction":"금액 차감",
+          "price":"-30,000원",
+          "totalBalance":"22,500원",
+          "remarks":""
+        },
+        {
+          "number":8,
+          "date":"2017-03-15 13:59:32",
+          "division":"매입",
+          "transaction":"일반 발주",
+          "price":"2,000원",
+          "totalBalance":"24,500원",
+          "remarks":"6609821676 발주 확정"
+        },
+        {
+          "number":9,
+          "date":"2017-03-15 14:00:56",
+          "division":"매입",
+          "transaction":"일반 발주",
+          "price":"100,000,000원",
+          "totalBalance":"100,024,500원",
+          "remarks":"7333087028 발주 확정"
+        }
+      ]
+    },
+    {
+      "number":8,
+      "enterpriseName":"네츠사마",
+      "prePrice":"0원",
+      "purchaseAmount":"0원",
+      "withdrawalAmount":"0원",
+      "updatePrice":"0원",
+      "balance":"0원",
+      "finalDate":"2018-03-29",
+      "detail":[
+        {
+          "number":1,
+          "date":"2018-03-29 16:08:37",
+          "division":"매입",
+          "transaction":"일반 발주",
+          "price":"0원",
+          "totalBalance":"0원",
+          "remarks":"9828741681 발주 확정"
+        }
+      ]
+    },
+    {
+      "number":9,
+      "enterpriseName":"대산식품",
+      "prePrice":"0원",
+      "purchaseAmount":"53,300원",
+      "withdrawalAmount":"-53,300원",
+      "updatePrice":"0원",
+      "balance":"0원",
+      "finalDate":"2017-05-30",
+      "detail": [
+        {
+          "number":1,
+          "date":"2016-12-22 13:24:31",
+          "division":"매입",
+          "transaction":"일반 발주",
+          "price":"53,300원",
+          "totalBalance":"53,300원",
+          "remarks":"이전 발주 확정 총액"
+        },
+        {
+          "number":2,
+          "date":"2017-01-07 19:00:26",
+          "division":"매입",
+          "transaction":"일반 발주",
+          "price":"0원",
+          "totalBalance":"53,300원",
+          "remarks":"1820346646 발주 확정"
+        },
+        {
+          "number":3,
+          "date":"2017-02-01 16:53:08",
+          "division":"매입",
+          "transaction":"일반 발주",
+          "price":"0원",
+          "totalBalance":"53,300원",
+          "remarks":"0048011513 발주 확정"
+        },
+        {
+          "number":4,
+          "date":"2017-02-15 14:57:29",
+          "division":"매입",
+          "transaction":"일반 발주",
+          "price":"0원",
+          "totalBalance":"53,300원",
+          "remarks":"5700951829 발주 확정"
+        },
+        {
+          "number":5,
+          "date":"2017-04-20 15:44:49",
+          "division":"매입",
+          "transaction":"일반 발주",
+          "price":"0원",
+          "totalBalance":"53,300원",
+          "remarks":"2151401203 발주 확정"
+        }
+      ]
+    },
+    {
+      "number":10,
+      "enterpriseName":"봄푸드",
+      "prePrice":"0원",
+      "purchaseAmount":"0원",
+      "withdrawalAmount":"0원",
+      "updatePrice":"0원",
+      "balance":"0원",
+      "finalDate":"",
+      "detail":[
+  
+      ]
+    },
+    {
+      "number":11,
+      "enterpriseName":"삼양푸드",
+      "prePrice":"0원",
+      "purchaseAmount":"6,500원",
+      "withdrawalAmount":"0원",
+      "updatePrice":"0원",
+      "balance":"6,500원",
+      "finalDate":"2017-03-15",
+      "detail":[
+        {
+          "number":1,
+          "date":"2017-03-15 14:02:35",
+          "division":"매입",
+          "transaction":"일반 발주",
+          "price":"6,500원",
+          "totalBalance":"6,500원",
+          "remarks":"1442090827 발주 확정"
+        }
+      ]
+    },
+    {
+      "number":12,
+      "enterpriseName":"세미기획",
+      "prePrice":"0원",
+      "purchaseAmount":"0원",
+      "withdrawalAmount":"0원",
+      "updatePrice":"0원",
+      "balance":"0원",
+      "finalDate":"",
+      "detail":[
+  
+      ]
+    },
+    {
+      "number":13,
+      "enterpriseName":"송이애농장",
+      "prePrice":"0원",
+      "purchaseAmount":"50,000원",
+      "withdrawalAmount":"0원",
+      "updatePrice":"0원",
+      "balance":"50,000원",
+      "finalDate":"2018-03-29",
+      "detail":[
+        {
+          "number":1,
+          "date":"2018-03-29 16:08:34",
+          "division":"매입",
+          "transaction":"일반 발주",
+          "price":"50,000원",
+          "totalBalance":"50,000원",
+          "remarks":"0656767055 발주 확정"
+        }
+      ]
+    },
+    {
+      "number":14,
+      "enterpriseName":"신명수산",
+      "prePrice":"0원",
+      "purchaseAmount":"0원",
+      "withdrawalAmount":"0원",
+      "updatePrice":"0원",
+      "balance":"0원",
+      "finalDate":"",
+      "detail":[
+  
+      ]
+    },
+    {
+      "number":15,
+      "enterpriseName":"오성",
+      "prePrice":"0원",
+      "purchaseAmount":"301,100원",
+      "withdrawalAmount":"0원",
+      "updatePrice":"0원",
+      "balance":"301,100원",
+      "finalDate":"2017-11-20",
+      "detail":[
+        {
+          "number":1,
+          "date":"2017-11-20 07:10:16",
+          "division":"매입",
+          "transaction":"일반 발주",
+          "price":"1,100원",
+          "totalBalance":"1,100원",
+          "remarks":"6401608752 발주 확정"
+        },
+        {
+          "number":2,
+          "date":"2017-11-20 18:43:31",
+          "division":"매입",
+          "transaction":"자동 발주",
+          "price":"75,000원",
+          "totalBalance":"76,100원",
+          "remarks":"자동 발주"
+        },
+        {
+          "number":3,
+          "date":"2017-11-20 18:48:02",
+          "division":"매입",
+          "transaction":"자동 발주",
+          "price":"150,000원",
+          "totalBalance":"226,100원",
+          "remarks":"자동 발주"
+        },
+        {
+          "number":4,
+          "date":"2017-11-20 18:51:34",
+          "division":"매입",
+          "transaction":"일반 발주",
+          "price":"75,000원",
+          "totalBalance":"301,100원",
+          "remarks":"0969294524 발주 확정"
+        }
+      ]
+    },
+    {
+      "number":16,
+      "enterpriseName":"음료수-진주",
+      "prePrice":"0원",
+      "purchaseAmount":"0원",
+      "withdrawalAmount":"0원",
+      "updatePrice":"0원",
+      "balance":"0원",
+      "finalDate":"",
+      "detail":[
+  
+      ]
+    },
+    {
+      "number":17,
+      "enterpriseName":"초코",
+      "prePrice":"0원",
+      "purchaseAmount":"0원",
+      "withdrawalAmount":"0원",
+      "updatePrice":"0원",
+      "balance":"0원",
+      "finalDate":"",
+      "detail":[
+  
+      ]
+    },
+    {
+      "number":18,
+      "enterpriseName":"태성푸드",
+      "prePrice":"0원",
+      "purchaseAmount":"0원",
+      "withdrawalAmount":"0원",
+      "updatePrice":"0원",
+      "balance":"0원",
+      "finalDate":"",
+      "detail":[
+  
+      ]
+    },
+    {
+      "number":19,
+      "enterpriseName":"테스트트",
+      "prePrice":"0원",
+      "purchaseAmount":"0원",
+      "withdrawalAmount":"0원",
+      "updatePrice":"0원",
+      "balance":"0원",
+      "finalDate":"",
+      "detail":[
+  
+      ]
+    }
+  ]

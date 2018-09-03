@@ -1,0 +1,618 @@
+[
+    {
+      "number":1,
+      "orderNum":7333087028,
+      "enterprise":"그린푸드",
+      "orderDate":"2017-03-15 14:00:01",
+      "totalNum":1,
+      "orderPrice":"100,000,000원",
+      "orderType":"수동발주",
+      "orderStatus":"발주 완료",
+      "enterpriseStatus":"출고 완료",
+      "receivingStatus":"입고 완료",
+      "orderProduct":[
+        {
+          "number":1,
+          "productName":"용과(1kg)",
+          "category":"차(티백)",
+          "unit":"-",
+          "origin":"-",
+          "amount":1,
+          "orderPrice":"100,000,000원",
+          "supplyPrice":"100,000,000원",
+          "vat":"0원",
+          "totalPrice":"100,000,000원"
+        }
+      ]
+    },
+    {
+      "number":2,
+      "orderNum":6609821676,
+      "enterprise":"그린푸드",
+      "orderDate":"2017-03-15 13:59:03",
+      "totalNum":1,
+      "orderPrice":"2,000원",
+      "orderType":"수동발주",
+      "orderStatus":"발주 완료",
+      "enterpriseStatus":"출고 완료",
+      "receivingStatus":"입고 완료",
+      "orderProduct":[
+        {
+          "number":1,
+          "productName":"용과(1kg)",
+          "category":"차(티백)",
+          "unit":"-",
+          "origin":"-",
+          "amount":1,
+          "orderPrice":"2,000원",
+          "supplyPrice":"2,000원",
+          "vat":"0원",
+          "totalPrice":"2,000원"
+        }
+      ]
+    },
+    {
+      "number":3,
+      "orderNum":5035530157,
+      "enterprise":"소울푸드",
+      "orderDate":"2017-03-15 13:44:02",
+      "totalNum":2,
+      "orderPrice":"0원",
+      "orderType":"자동발주",
+      "orderStatus":"발주 완료",
+      "enterpriseStatus":"출고 대기",
+      "receivingStatus":"입고 대기",
+      "orderProduct":[
+        {
+          "number":1,
+          "productName":"[웰치스]",
+          "category":"베이스",
+          "unit":"-",
+          "origin":"-",
+          "amount":1,
+          "orderPrice":"0원",
+          "supplyPrice":"0원",
+          "vat":"0원",
+          "totalPrice":"0원"
+        },
+        {
+          "number":2,
+          "productName":"고르곤졸라 크럼블",
+          "category":"스무디",
+          "unit":"500g(1ea)",
+          "origin":"(이탈리아)",
+          "amount":1,
+          "orderPrice":"0원",
+          "supplyPrice":"0원",
+          "vat":"0원",
+          "totalPrice":"0원"
+        }
+      ]
+    },
+    {
+      "number":4,
+      "orderNum":7231382338,
+      "enterprise":"소울푸드",
+      "orderDate":"2017-03-13 14:30:29",
+      "totalNum":4,
+      "orderPrice":"2,000원",
+      "orderType":"자동발주",
+      "orderStatus":"발주 취소",
+      "enterpriseStatus":"출고 대기",
+      "receivingStatus":"입고 대기",
+      "orderProduct":[
+        {
+          "number":1,
+          "productName":"고르곤졸라 크럼블",
+          "category":"스무디",
+          "unit":"500g(1ea)",
+          "origin":"(이탈리아)",
+          "amount":4,
+          "orderPrice":"0원",
+          "supplyPrice":"0원",
+          "vat":"0원",
+          "totalPrice":"0원"
+        }
+      ]
+    },
+    {
+      "number":5,
+      "orderNum":8688624509,
+      "enterprise":"그린푸드",
+      "orderDate":"2017-03-09 15:23:24",
+      "totalNum":-1,
+      "orderPrice":"-5,000원",
+      "orderType":"수동발주",
+      "orderStatus":"발주 완료",
+      "enterpriseStatus":"출고 완료",
+      "receivingStatus":"입고 완료",
+      "orderProduct":[
+        {
+          "number":1,
+          "productName":"용과(1kg)",
+          "category":"차(티백)",
+          "unit":"-",
+          "origin":"-",
+          "amount":-1,
+          "orderPrice":"5,000원",
+          "supplyPrice":"-5,000원",
+          "vat":"0원",
+          "totalPrice":"-5,000원"
+        }
+      ]
+    },
+    {
+      "number":6,
+      "orderNum":5597448544,
+      "enterprise":"소울푸드",
+      "orderDate":"2017-03-07 13:56:20",
+      "totalNum":3,
+      "orderPrice":"0원",
+      "orderType":"자동발주",
+      "orderStatus":"발주 완료",
+      "enterpriseStatus":"출고 대기",
+      "receivingStatus":"입고 대기",
+      "orderProduct":[
+        {
+          "number":1,
+          "productName":"[웰치스]",
+          "category":"베이스",
+          "unit":"-",
+          "origin":"-",
+          "amount":1,
+          "orderPrice":"0원",
+          "supplyPrice":"0원",
+          "vat":"0원",
+          "totalPrice":"0원"
+        },
+        {
+          "number":2,
+          "productName":"고르곤졸라 크럼블",
+          "category":"스무디",
+          "unit":"500g(1ea)",
+          "origin":"(이탈리아)",
+          "amount":1,
+          "orderPrice":"0원",
+          "supplyPrice":"0원",
+          "vat":"0원",
+          "totalPrice":"0원"
+        }
+      ]
+    },
+    {
+      "number":7,
+      "orderNum":6174585770,
+      "enterprise":"소울푸드",
+      "orderDate":"2017-03-02 16:04:19",
+      "totalNum":1,
+      "orderPrice":"0원",
+      "orderType":"자동발주",
+      "orderStatus":"발주 완료",
+      "enterpriseStatus":"출고 대기",
+      "receivingStatus":"입고 대기",
+      "orderProduct":[
+        {
+          "number":1,
+          "productName":"건크랜베리",
+          "category":"",
+          "unit":"(1ea)",
+          "origin":"(미국)",
+          "amount":1,
+          "orderPrice":"0원",
+          "supplyPrice":"0원",
+          "vat":"0원",
+          "totalPrice":"0원"
+        }
+      ]
+    },
+    {
+      "number":8,
+      "orderNum":2176551837,
+      "enterprise":"소울푸드",
+      "orderDate":"2017-02-23 16:46:02",
+      "totalNum":1,
+      "orderPrice":"0원",
+      "orderType":"자동발주",
+      "orderStatus":"발주 완료",
+      "enterpriseStatus":"출고 대기",
+      "receivingStatus":"입고 대기",
+      "orderProduct":[
+        {
+          "number":1,
+          "productName":"[웰치스]",
+          "category":"베이스",
+          "unit":"-",
+          "origin":"-",
+          "amount":1,
+          "orderPrice":"0원",
+          "supplyPrice":"0원",
+          "vat":"0원",
+          "totalPrice":"0원"
+        }
+      ]
+    },
+    {
+      "number":9,
+      "orderNum":8736634180,
+      "enterprise":"소울푸드",
+      "orderDate":"2017-02-23 16:19:14",
+      "totalNum":1,
+      "orderPrice":"0원",
+      "orderType":"자동발주",
+      "orderStatus":"발주 완료",
+      "enterpriseStatus":"출고 대기",
+      "receivingStatus":"입고 대기",
+      "orderProduct":[
+        {
+          "number":1,
+          "productName":"[웰치스]",
+          "category":"베이스",
+          "unit":"-",
+          "origin":"-",
+          "amount":1,
+          "orderPrice":"0원",
+          "supplyPrice":"0원",
+          "vat":"0원",
+          "totalPrice":"0원"
+        }
+      ]
+    },
+    {
+      "number":10,
+      "orderNum":2863227753,
+      "enterprise":"소울푸드",
+      "orderDate":"2017-02-23 16:13:59",
+      "totalNum":1,
+      "orderPrice":"0원",
+      "orderType":"자동발주",
+      "orderStatus":"발주 완료",
+      "enterpriseStatus":"출고 대기",
+      "receivingStatus":"입고 대기",
+      "orderProduct":[
+        {
+          "number":1,
+          "productName":"[웰치스]",
+          "category":"베이스",
+          "unit":"-",
+          "origin":"-",
+          "amount":1,
+          "orderPrice":"0원",
+          "supplyPrice":"0원",
+          "vat":"0원",
+          "totalPrice":"0원"
+        }
+      ]
+    },
+    {
+      "number":11,
+      "orderNum":9325593377,
+      "enterprise":"소울푸드",
+      "orderDate":"2017-02-23 16:00:44",
+      "totalNum":2,
+      "orderPrice":"0원",
+      "orderType":"자동발주",
+      "orderStatus":"발주 완료",
+      "enterpriseStatus":"출고 대기",
+      "receivingStatus":"입고 대기",
+      "orderProduct":[
+        {
+          "number":1,
+          "productName":"[웰치스]",
+          "category":"베이스",
+          "unit":"-",
+          "origin":"-",
+          "amount":1,
+          "orderPrice":"0원",
+          "supplyPrice":"0원",
+          "vat":"0원",
+          "totalPrice":"0원"
+        },
+        {
+          "number":2,
+          "productName":"고르곤졸라 크럼블",
+          "category":"스무디",
+          "unit":"500g(1ea)",
+          "origin":"(이탈리아)",
+          "amount":1,
+          "orderPrice":"0원",
+          "supplyPrice":"0원",
+          "vat":"0원",
+          "totalPrice":"0원"
+        }
+      ]
+    },
+    {
+      "number":12,
+      "orderNum":7845706682,
+      "enterprise":"소울푸드",
+      "orderDate":"2017-02-23 15:59:24",
+      "totalNum":1,
+      "orderPrice":"0원",
+      "orderType":"자동발주",
+      "orderStatus":"발주 완료",
+      "enterpriseStatus":"출고 대기",
+      "receivingStatus":"입고 대기",
+      "orderProduct":[
+        {
+          "number":1,
+          "productName":"[웰치스]",
+          "category":"베이스",
+          "unit":"-",
+          "origin":"-",
+          "amount":1,
+          "orderPrice":"0원",
+          "supplyPrice":"0원",
+          "vat":"0원",
+          "totalPrice":"0원"
+        }
+      ]
+    },
+    {
+      "number":13,
+      "orderNum":9318296091,
+      "enterprise":"소울푸드",
+      "orderDate":"2017-02-23 15:58:57",
+      "totalNum":2,
+      "orderPrice":"0원",
+      "orderType":"자동발주",
+      "orderStatus":"발주 취소",
+      "enterpriseStatus":"출고 대기",
+      "receivingStatus":"입고 대기",
+      "orderProduct":[
+        {
+          "number":1,
+          "productName":"[웰치스]",
+          "category":"베이스",
+          "unit":"-",
+          "origin":"-",
+          "amount":1,
+          "orderPrice":"0원",
+          "supplyPrice":"0원",
+          "vat":"0원",
+          "totalPrice":"0원"
+        },
+        {
+          "number":2,
+          "productName":"고르곤졸라 크럼블",
+          "category":"스무디",
+          "unit":"500g(1ea)",
+          "origin":"(이탈리아)",
+          "amount":1,
+          "orderPrice":"0원",
+          "supplyPrice":"0원",
+          "vat":"0원",
+          "totalPrice":"0원"
+        }
+      ]
+    },
+    {
+      "number":14,
+      "orderNum":1784804396,
+      "enterprise":"소울푸드",
+      "orderDate":"2017-02-23 15:58:19",
+      "totalNum":2,
+      "orderPrice":"0원",
+      "orderType":"자동발주",
+      "orderStatus":"발주 취소",
+      "enterpriseStatus":"출고 대기",
+      "receivingStatus":"입고 대기",
+      "orderProduct":[
+        {
+          "number":1,
+          "productName":"[웰치스]",
+          "category":"베이스",
+          "unit":"-",
+          "origin":"-",
+          "amount":1,
+          "orderPrice":"0원",
+          "supplyPrice":"0원",
+          "vat":"0원",
+          "totalPrice":"0원"
+        },
+        {
+          "number":2,
+          "productName":"고르곤졸라 크럼블",
+          "category":"스무디",
+          "unit":"500g(1ea)",
+          "origin":"(이탈리아)",
+          "amount":1,
+          "orderPrice":"0원",
+          "supplyPrice":"0원",
+          "vat":"0원",
+          "totalPrice":"0원"
+        }
+      ]
+    },
+    {
+      "number":15,
+      "orderNum":9336449050,
+      "enterprise":"소울푸드",
+      "orderDate":"2017-02-17 17:15:28",
+      "totalNum":14,
+      "orderPrice":"0원",
+      "orderType":"자동발주",
+      "orderStatus":"발주 완료",
+      "enterpriseStatus":"출고 대기",
+      "receivingStatus":"입고 대기",
+      "orderProduct":[
+        {
+          "number":1,
+          "productName":"고르곤졸라 크럼블",
+          "category":"스무디",
+          "unit":"500g(1ea)",
+          "origin":"(이탈리아)",
+          "amount":1,
+          "orderPrice":"0원",
+          "supplyPrice":"0원",
+          "vat":"0원",
+          "totalPrice":"0원"
+        }
+      ]
+    },
+    {
+      "number":16,
+      "orderNum":5700951829,
+      "enterprise":"대신식품",
+      "orderDate":"2017-02-15 14:57:20",
+      "totalNum":2,
+      "orderPrice":"0원",
+      "orderType":"수동발주",
+      "orderStatus":"발주 완료",
+      "enterpriseStatus":"출고 완료",
+      "receivingStatus":"입고 완료",
+      "orderProduct":[
+        {
+          "number":1,
+          "productName":"카라멜 색소",
+          "category":"베이스",
+          "unit":"-",
+          "origin":"(수입)",
+          "amount":1,
+          "orderPrice":"0원",
+          "supplyPrice":"0원",
+          "vat":"0원",
+          "totalPrice":"0원"
+        },
+        {
+          "number":2,
+          "productName":"페투치네",
+          "category":"파우더",
+          "unit":"-",
+          "origin":"(이탈리아)",
+          "amount":1,
+          "orderPrice":"0원",
+          "supplyPrice":"0원",
+          "vat":"0원",
+          "totalPrice":"0원"
+        }
+      ]
+    },
+    {
+      "number":17,
+      "orderNum":1555067965,
+      "enterprise":"소울푸드",
+      "orderDate":"2017-02-15 13:29:18",
+      "totalNum":1,
+      "orderPrice":"0원",
+      "orderType":"자동발주",
+      "orderStatus":"발주 완료",
+      "enterpriseStatus":"출고 대기",
+      "receivingStatus":"입고 대기",
+      "orderProduct":[
+        {
+          "number":1,
+          "productName":"고르곤졸라 크럼블",
+          "category":"스무디",
+          "unit":"500g(1ea)",
+          "origin":"(이탈리아)",
+          "amount":1,
+          "orderPrice":"0원",
+          "supplyPrice":"0원",
+          "vat":"0원",
+          "totalPrice":"0원"
+        }
+      ]
+    },
+    {
+      "number":18,
+      "orderNum":7518770770,
+      "enterprise":"소울푸드",
+      "orderDate":"2017-02-15 13:29:10",
+      "totalNum":2,
+      "orderPrice":"0원",
+      "orderType":"자동발주",
+      "orderStatus":"발주 취소",
+      "enterpriseStatus":"출고 대기",
+      "receivingStatus":"입고 대기",
+      "orderProduct":[
+        {
+          "number":1,
+          "productName":"고르곤졸라 크럼블",
+          "category":"스무디",
+          "unit":"500g(1ea)",
+          "origin":"(이탈리아)",
+          "amount":2,
+          "orderPrice":"0원",
+          "supplyPrice":"0원",
+          "vat":"0원",
+          "totalPrice":"0원"
+        }
+      ]
+    },
+    {
+      "number":19,
+      "orderNum":3024951857,
+      "enterprise":"소울푸드",
+      "orderDate":"2017-02-15 13:27:45",
+      "totalNum":2,
+      "orderPrice":"0원",
+      "orderType":"자동발주",
+      "orderStatus":"발주 완료",
+      "enterpriseStatus":"출고 대기",
+      "receivingStatus":"입고 대기",
+      "orderProduct":[
+        {
+          "number":1,
+          "productName":"컨크랜베리",
+          "category":"",
+          "unit":"(1ea)",
+          "origin":"(미국)",
+          "amount":1,
+          "orderPrice":"0원",
+          "supplyPrice":"0원",
+          "vat":"0원",
+          "totalPrice":"0원"
+        },
+        {
+          "number":2,
+          "productName":"고르곤졸라 크럼블",
+          "category":"스무디",
+          "unit":"500g(1ea)",
+          "origin":"(이탈리아)",
+          "amount":1,
+          "orderPrice":"0원",
+          "supplyPrice":"0원",
+          "vat":"0원",
+          "totalPrice":"0원"
+        }
+      ]
+    },
+    {
+      "number":20,
+      "orderNum":9712450954,
+      "enterprise":"소울푸드",
+      "orderDate":"2017-02-15 11:47:15",
+      "totalNum":10,
+      "orderPrice":"0원",
+      "orderType":"자동발주",
+      "orderStatus":"발주 완료",
+      "enterpriseStatus":"출고 대기",
+      "receivingStatus":"입고 대기",
+      "orderProduct":[
+        {
+          "number":1,
+          "productName":"[웰치스]",
+          "category":"베이스",
+          "unit":"-",
+          "origin":"-",
+          "amount":5,
+          "orderPrice":"0원",
+          "supplyPrice":"0원",
+          "vat":"0원",
+          "totalPrice":"0원"
+        },
+        {
+          "number":2,
+          "productName":"컨크랜베리",
+          "category":"",
+          "unit":"(1ea)",
+          "origin":"(미국)",
+          "amount":5,
+          "orderPrice":"0원",
+          "supplyPrice":"0원",
+          "vat":"0원",
+          "totalPrice":"0원"
+        }
+      ]
+    }
+  ]
