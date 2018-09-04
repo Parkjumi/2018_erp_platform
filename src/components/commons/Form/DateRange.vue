@@ -1,54 +1,47 @@
 <template>
 <div style="position:relative;">
+  <v-menu
+    :close-on-content-click="false"
+    v-model="menu2"
+    :nudge-right="40"
+    lazy
+    transition="scale-transition"
+    offset-y
+    full-width
+    style="float:left;"
+  >
+    <v-text-field
+      slot="activator"
+      v-model="computedStartDateFormatted"
+      label="시작날짜"
+      persistent-hint
+      prepend-icon="event"
+      readonly
+    ></v-text-field>
+    <v-date-picker v-model="dateStart" :dateStart="propsDateStart" no-title @input="menu2 = false"></v-date-picker>
+  </v-menu>
 
-    
+  <v-menu
+    :close-on-content-click="false"
+    v-model="menu1"
+    :nudge-right="40"
+    lazy
+    transition="scale-transition"
+    offset-y
+    full-width
+    style="float:left;"
+  >
+    <v-text-field
+      slot="activator"
+      v-model="computedEndDateFormatted"
+      label="종료날짜"
+      persistent-hint
+      prepend-icon="event"
+      readonly
+    ></v-text-field>
+    <v-date-picker v-model="dateEnd" no-title @input="menu1 = false"></v-date-picker>
+  </v-menu>
 
-        <v-menu
-          :close-on-content-click="false"
-          v-model="menu2"
-          :nudge-right="40"
-          lazy
-          transition="scale-transition"
-          offset-y
-          full-width
-          style="float:left;"
-        >
-          <v-text-field
-            slot="activator"
-            v-model="computedStartDateFormatted"
-            label="시작날짜"
-            persistent-hint
-            prepend-icon="event"
-            readonly
-          ></v-text-field>
-          <v-date-picker v-model="dateStart" :dateStart="propsDateStart" no-title @input="menu2 = false"></v-date-picker>
-        </v-menu>
-    
-
-
-
-    
-        <v-menu
-          :close-on-content-click="false"
-          v-model="menu1"
-          :nudge-right="40"
-          lazy
-          transition="scale-transition"
-          offset-y
-          full-width
-          style="float:left;"
-        >
-          <v-text-field
-            slot="activator"
-            v-model="computedEndDateFormatted"
-            label="종료날짜"
-            persistent-hint
-            prepend-icon="event"
-            readonly
-          ></v-text-field>
-          <v-date-picker v-model="dateEnd" no-title @input="menu1 = false"></v-date-picker>
-        </v-menu>
-    
 
 </div>
 </template>
@@ -77,11 +70,11 @@ export default{
             menu1: false,
             menu2: false
         }
-    }, 
-    
-    
-    
-    
+    },
+
+
+
+
     // ========== created ========== //
     created(){
         if(this.list){
@@ -89,14 +82,15 @@ export default{
         }else{
             this.$set(this, 'items', this.tempItems)
         }
-    }, 
-    
- 
-    
+    },
+
+
+
 
     // ========== computed ========== //
     computed: {
         computedStartDateFormatted () {
+          console.log("등장아아아아앙");
             var val = this.formatDate(this.dateStart)
             this.$emit('input', {
                 start: val,
@@ -136,7 +130,7 @@ export default{
 
 
 
-    
+
     // ========== data ========== //
     methods:{
 
@@ -153,7 +147,7 @@ export default{
             const [month, day, year] = date.split('/')
             return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
         }
-        
+
     }, // ========== data ========== //
 }
 </script>

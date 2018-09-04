@@ -23,14 +23,14 @@
       </v-flex>
   </v-layout>
   <!-- ========== 로딩 ========== -->
-  
+
   <!-- ========== 컨텐츠 ========== -->
   <div v-else>
       <v-layout row wrap>
         <v-flex>
           <detail-table>
             <tbody slot="contents">
-              <tr>
+              <!-- <tr>
                 <th>기간 구분</th>
                 <td>
                   <v-radio-group
@@ -41,20 +41,19 @@
                         v-for="item in ['주문 일시', '배송 요청일']"
                         :key="item">
 
-                        <!-- 기간 구분 폼 -->
                         <v-radio
                           :label="item"
                           :value="item">
                         </v-radio>
 
                       </v-flex>
-                    </v-layout>                  
+                    </v-layout>
                   </v-radio-group>
                 </td>
                 <td rowspan="3" style="width: 10%;">
-                  <v-btn small>검색</v-btn>
+                  <v-btn small @click="searchOrder()">검색</v-btn>
                 </td>
-              </tr>
+              </tr> -->
 
               <tr>
                 <th>기간</th>
@@ -66,70 +65,55 @@
                         v-model="selectPeriod"
                         v-on:input="clickPeriod">
                       </button-toggle>
-                    </v-flex>  
+                    </v-flex>
                     <v-flex xs8>
-                      <date-range 
+                      <date-range
                         propsDateStart="2016-08-01"/>
-                    </v-flex>               
-                  </v-layout>                
+                    </v-flex>
+                  </v-layout>
+                </td>
+                <td rowspan="3" style="width: 10%;">
+                  <v-btn small @click="searchOrder()">검색</v-btn>
                 </td>
               </tr>
               <tr>
-                <th>키워드 검색</th>
+                <th rowspan="2">검색</th>
                 <td>
                   <v-layout style="padding-top:20px;">
                     <v-flex xs2>
                       <select-items
-                        :items="['거래처명', '주문번호']">
-
+                        :items="['거래처명', '주문번호']"
+                        v-model="select">
                       </select-items>
                     </v-flex>
                     <v-flex xs10 style="padding: 0px 20px;">
-                      <search-form label="검색어를 입력해 주세요">
-
-                      </search-form>
+                      <v-text-field v-model="searchWord" label="검색어를 입력해 주세요">
+                        
+                      </v-text-field>
                     </v-flex>
                   </v-layout>
                 </td>
               </tr>
               <tr>
-                <th>즉시검색</th>
-                <td colspan="2">
+                <td>
                   <v-layout>
-                    <v-flex xs2 class="select-flex-container" >
-                      <v-select
-                        :items="['직배송','택배배송']"
-                        label="배송유형" />
-                    </v-flex>
-                    <v-flex xs2 class="select-flex-container">
+                    <v-flex xs4 class="select-flex-container">
                       <v-select
                         :items="['주문완료','주문변경','주문취소','반품접수','반품완료']"
+                        v-model="orderState"
                         label="주문상태"/>
                     </v-flex>
-                    <v-flex xs2 class="select-flex-container">
+                    <v-flex xs4 class="select-flex-container">
                       <v-select
-                        :items="['출고지시전','출고전','출고완료','출고거절']"
-                        label="출고상태"/>
-                    </v-flex>
-                    <v-flex xs2 class="select-flex-container">
-                      <v-select
-                        :items="['수령전','수령완료']"
-                        label="수령상태"/>
-                    </v-flex>
-                    <v-flex xs2 class="select-flex-container">
-                      <v-select
-                        :items="['박주미','배성원','김성훈']"
+                        :items="deliveryManagerList"
+                        v-model="deliveryManager"
                         label="배송담당자"/>
                     </v-flex>
-                    <v-flex xs2 class="select-flex-container">
+                    <v-flex xs4 class="select-flex-container">
                       <v-select
-                        :items="['박주미','배성원','김성훈','영업테스트']"
+                        :items="salesManList"
+                        v-model="salesMan"
                         label="영업담당자"/>
-                    </v-flex>
-                    <v-flex xs2 class="select-flex-container">
-                      <v-select
-                        :items="['테스트','테스트2','테스트3']"
-                        label="브랜드"/>
                     </v-flex>
                   </v-layout>
                 </td>
@@ -169,37 +153,34 @@
         </v-flex>
       </v-layout>
       <v-layout class="bottom-container">
-        <v-flex xs12> 
+        <v-flex xs12>
           <v-data-table
             :headers="headers"
             :items="orderData"
             hide-actions
             select-all>
-            
+
             <template slot="items" slot-scope="props">
-               <td>
-                  <v-checkbox
-                    v-model="props.selected"
-                    primary
-                    hide-details
-                  ></v-checkbox>
-                </td>
+             <td>
+                <v-checkbox
+                  v-model="props.selected"
+                  primary
+                  hide-details
+                ></v-checkbox>
+              </td>
               <td>{{props.index + 1}}</td>
               <td>{{props.item.orderDate}}</td>
-              <td>{{props.item.deliveryRequest}}</td>
-              <td>{{props.item.orderNumber}}</td>
-              <td>{{props.item.account}}</td>
-              <td>{{props.item.shippingType}}</td>
-              <td>{{props.item.allOrder}}</td>
-              <td>{{props.item.payment}}</td>
-              <td>{{props.item.orderAmount}}</td>
-              <td>{{props.item.orderStatus}}</td>
-              <td>{{props.item.outboundShipping}}</td>
-              <td>{{props.item.receiptStatus}}</td>
+              <td>{{props.item.id}}</td>
+              <td>{{props.item.cBName}}</td>
+              <td>{{props.item.dBName}}</td>
+              <td>{{props.item.cManager}}</td>
+              <td>{{props.item.amount}}</td>
+              <td>{{props.item.payMethod}}</td>
+              <td>{{props.item.payMent}}</td>
+              <td>{{props.item.orderState}}</td>
             </template>
-          
           </v-data-table>
-        </v-flex>      
+        </v-flex>
       </v-layout>
       <v-layout>
         <v-flex xs12 class="text-xs-center">
@@ -246,36 +227,82 @@
         headers: [
           { text:  'no', value: 'num', sortable: false },
           { text: '주문일시', value: 'date' },
-          { text: '배송요청일', value: 'date' },
           { text: '주문번호', value: 'num', sortable: false },
           { text: '거래처', value: 'string' },
-          { text: '배송유형', value: 'string', sortable: false },
+          { text: '배송팀', value: 'string', sortable: false },
+          { text: '영업팀', value: 'string', sortable: false },
           { text: '총 주문수량', value: 'num', sortable: false },
           { text: '결제수단', value: 'string', sortable: false },
           { text: '주문금액', value: 'string' },
-          { text: '주문상태', value: 'string', sortable: false },
-          { text: '출고상태', value: 'string', sortable: false },
-          { text: '물품수령상태', value: 'string', sortable: false },
+          { text: '주문상태', value: 'string', sortable: false }
         ],
 
-        orderData: []
+        orderData: [],
+        deliveryData: [],
+        customerData: [],
+        deliveryManagerList: [],
+        salesManList:[],
+        select:'',
+        searchWord:'',
+        orderState:'',
+        deliveryManager:'',
+        salesMan:''
       }
     },
     methods: {
       initOrderData() {
-        this.orderData = this.$models.orders;
-        console.log(this.orderData);
+        this.$axios.get('http://192.168.64.166:8080/app/order')
+        .then(res => {
+          this.orderData = res.data[2];
+          this.deliveryData = res.data[1];
+          this.customerData = res.data[0];
+          for(var i = 0; i <this.deliveryData.length;i++){
+            this.deliveryManagerList.push(this.deliveryData[i].delivererManager);
+          }
+          for(var i = 0;i < this.customerData.length;i++){
+            this.salesManList.push(this.customerData[i].sManager);
+          }
+          console.log(this.salesManList[0]);
+        })
+        .catch((ex) => {
+          console.log("Error : ",ex);
+        })
       },
 
       clickPeriod(period) {
-        alert(period)
+
+      },
+
+      searchOrder(){
+        if(this.select == "거래처명"){
+          this.$axios.post('http://192.168.64.166:8080/app/order/search',{
+            cBName:this.searchWord,
+            orderState:this.orderState,
+            dManager:this.deliveryManager,
+            sName:this.salesMan
+          }).then(res => {
+            this.orderData = res.data;
+          }).catch((ex) => {
+            console.log("Error : ",ex);
+          })
+        }else{
+          this.$axios.post('http://192.168.64.166:8080/app/order/search',{
+            id:this.searchWord,
+            orderState:this.orderState,
+            dManager:this.deliveryManager,
+            sName:this.salesMan
+          }).then(res => {
+            this.orderData = res.data;
+          }).catch((ex) => {
+            console.log("Error : ",ex);
+          })
+        }
       },
 
       moveOrderAppend() {
         this.$router.push('/order/append');
       }
     },
-
     created() {
       setTimeout(()=>{
           this.$set(this, 'loading', false);
