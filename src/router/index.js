@@ -20,6 +20,11 @@ const routes = [
                 name: 'OrderContainer.List',
                 component: () => import('@/components/OrderContainer/List')
             },
+            {
+                path: 'list/detail/:order_id',
+                name: 'OrderContainer.Detail',
+                component: () => import('@/components/OrderContainer/Detail')
+            },
             // {
             //     path: 'product',
             //     name: 'OrderContainer.ProductList',

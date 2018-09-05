@@ -542,6 +542,7 @@
           alert('상품을 먼저 등록해주세요');
         }else{
           console.log(this.orderItems+"상품들");
+        
           this.$axios.post('http://192.168.64.166:8080/app/order',{
             tbCustomer_ID:this.customersItem.id,
             itemCount:this.allCount,
@@ -550,21 +551,13 @@
             payMethod:this.payMethod,
             requests:this.requests,
             memo:this.memo,
-            product:{
-              itemCount:this.orderItems.allCount,
-              itemName:this.orderItems.itemName,
-              payment:this.orderItems.payment,
-              qTY:this.orderItems.qTY,
-              price:this.orderItems.price,
-              origin:this.orderItems.origin,
-              unit:this.orderItems.unit
-            }
+            product:this.orderItems
           }).then((res) => {
             alert('주문이 완료되었습니다.');
           }).catch((ex) => {
             console.log("Error : ",ex);
           })
-          this.$router.push('/order/list');
+          // this.$router.push('/order/list');
         }
       }
     },

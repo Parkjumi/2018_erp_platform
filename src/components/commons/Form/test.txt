@@ -1,0 +1,14 @@
+var val = this.formatDate(this.propsDateEnd,0,0,1)
+console.log(val);
+this.$emit('input', {
+    start: val,
+    end : val
+})
+return val;
+
+formatDate (date, y=0, m=0, d=0) {
+    if (!date) return null
+
+    let [year, month, day] = date.split('-');
+    return `${year-y}년 ${month-m}월 ${day-d}일`
+},

@@ -31,11 +31,6 @@
 
     <!-- ========== 컨텐츠 ========== -->
     <div v-else>
-
-
-
-
-
     <div class="cardbox cardbox-header" >
         <h3>검색</h3>
     </div>
@@ -102,12 +97,8 @@
           </tr>
         </table>
       </v-flex>
-
     </div>
 <br>
-
-
-
   <div class="cardbox cardbox-header" style="padding-top:5px; padding-bottom:5px;">
 
     <table width="100%">
@@ -184,26 +175,12 @@
                 <div class="text-xs-center pt-2">
                     <v-pagination  v-model="page" :length="6"></v-pagination>
                 </div>
-
-
             </v-flex>
-
         </v-layout>
     </v-container>
 
-
-
-
-
-
     </div>
     <!-- ========== 컨텐츠 ========== -->
-
-
-
-
-
-
 
 <!-- ===== 등록모달 ===== -->
 <modal
@@ -216,22 +193,22 @@
     <p slot="contents">
 
         <table style="width:100%;">
-                <colgroup>
-                    <col width="28%">
-                </colgroup>
-                <tr>
-                    <th><h4 class="center-align">양식다운로드</h4></th>
-                    <td>
-                        <v-btn depressed small style="width:97%;" color="success" @click.prevent="modal.taxbill = true">엑셀양식 다운로드</v-btn>
-                    </td>
-                </tr>
-                <tr>
-                    <th><h4 class="center-align">파일업로드</h4></th>
-                    <td>
-                        <v-btn depressed small outline style="width:97%;"  @click.prevent="modal.taxbill = true">엑셀파일 업로드</v-btn>
-                    </td>
-                </tr>
-            </table>
+            <colgroup>
+                <col width="28%">
+            </colgroup>
+            <tr>
+                <th><h4 class="center-align">양식다운로드</h4></th>
+                <td>
+                    <v-btn depressed small style="width:97%;" color="success" @click.prevent="modal.taxbill = true">엑셀양식 다운로드</v-btn>
+                </td>
+            </tr>
+            <tr>
+                <th><h4 class="center-align">파일업로드</h4></th>
+                <td>
+                    <v-btn depressed small outline style="width:97%;"  @click.prevent="modal.taxbill = true">엑셀파일 업로드</v-btn>
+                </td>
+            </tr>
+        </table>
     </p>
 
     <!-- <div slot="buttons">

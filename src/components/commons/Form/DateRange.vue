@@ -18,7 +18,7 @@
       prepend-icon="event"
       readonly
     ></v-text-field>
-    <v-date-picker v-model="dateStart" :dateStart="propsDateStart" no-title @input="menu2 = false"></v-date-picker>
+    <v-date-picker v-model="dateStart"  no-title @input="menu2 = false"></v-date-picker>
   </v-menu>
 
   <v-menu
@@ -50,13 +50,13 @@
 
 
 <script>
+var d = new Date();
 export default{
     name: 'DateRange',
 
     // ========== props ========== //
     props:{
-        propsDateStart: String,
-        propsDateEnd: String
+        selectPeriod: Number,
     },
 
 
@@ -64,16 +64,13 @@ export default{
     // ========== data ========== //
     data () {
         return {
-            dateStart: null,
-            dateEnd: null,
+            dateStart: "2018-01-01",
+            dateEnd: d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate(),
             dateFormatted: null,
             menu1: false,
             menu2: false
         }
     },
-
-
-
 
     // ========== created ========== //
     created(){
@@ -82,10 +79,8 @@ export default{
         }else{
             this.$set(this, 'items', this.tempItems)
         }
+        console.log(this.list);
     },
-
-
-
 
     // ========== computed ========== //
     computed: {
@@ -93,16 +88,16 @@ export default{
           console.log("등장아아아아앙");
             var val = this.formatDate(this.dateStart)
             this.$emit('input', {
-                start: val,
-                end : this.dateEnd
+                startDate: val,
+                endDate : this.dateEnd
             })
             return val
         },
         computedEndDateFormatted () {
             var val = this.formatDate(this.dateEnd)
             this.$emit('input', {
-                start: this.dateStart,
-                end : val
+                startDate: this.dateStart,
+                endDate : val
             })
             return val
         },
@@ -111,7 +106,30 @@ export default{
 
     // ========== watch ========== //
     watch: {
-
+        selectPeriod () {
+          switch (this.selectPeriod) {
+            case 0:
+              console.log("전체");
+              this.dateStart= "2018-01-01";
+              this.dateEnd= d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+              break;
+            case 1:
+              console.log("전일");
+              this.dateEnd= d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + (d.getDate()-1);
+              this.dateStart= this.dateEnd;
+              break;
+            case 2:
+              console.log("당일");
+              this.dateStart= d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+              this.dateEnd= d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+              break;
+            case 3:
+              console.log("한달");
+              this.dateStart= d.getFullYear() + '-' + d.getMonth() + '-' + d.getDate();
+              this.dateEnd= d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+              break;
+          }
+        }
         // dateStart(val){
         //     this.$emit('input', {
         //         start: val,
@@ -138,7 +156,9 @@ export default{
             if (!date) return null
 
             const [year, month, day] = date.split('-')
-            return `${year}년 ${month}월 ${day}일`
+            return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
+
+            // return `${year}년 ${month}월 ${day}일`
         },
 
         parseDate (date) {

@@ -68,7 +68,9 @@
                     </v-flex>
                     <v-flex xs8>
                       <date-range
-                        propsDateStart="2016-08-01"/>
+                        :selectPeriod="selectPeriod"
+                        v-model="selectDate"
+                        />
                     </v-flex>
                   </v-layout>
                 </td>
@@ -88,7 +90,7 @@
                     </v-flex>
                     <v-flex xs10 style="padding: 0px 20px;">
                       <v-text-field v-model="searchWord" label="검색어를 입력해 주세요">
-                        
+
                       </v-text-field>
                     </v-flex>
                   </v-layout>
@@ -170,7 +172,7 @@
               </td>
               <td>{{props.index + 1}}</td>
               <td>{{props.item.orderDate}}</td>
-              <td>{{props.item.id}}</td>
+              <td @click="$router.push('list/detail/'+props.item.id)">{{props.item.id}}</td>
               <td>{{props.item.cBName}}</td>
               <td>{{props.item.dBName}}</td>
               <td>{{props.item.cManager}}</td>
@@ -191,7 +193,7 @@
 </v-container>
 </template>
 <script>
-
+  let d = new Date();
   import {
     SearchForm,
     ButtonToggle,
@@ -221,7 +223,9 @@
       return {
         periodDivision: '주문 일시',
         period: ['전체','전일','당일','한달'],
-        selectPeriod: '',
+        periodDate: [''],
+        selectPeriod: 0,
+        selectDate:{},
         page: 1,
         loading: true,
         headers: [
@@ -250,6 +254,9 @@
       }
     },
     methods: {
+      test() {
+          console.log(this.startDate, this.endDate);
+      },
       initOrderData() {
         this.$axios.get('http://192.168.64.166:8080/app/order')
         .then(res => {
@@ -270,7 +277,7 @@
       },
 
       clickPeriod(period) {
-
+        this.selectPeriod = period;
       },
 
       searchOrder(){

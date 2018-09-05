@@ -1,7 +1,7 @@
 <template>
 <v-container style=" ">
 <!-- ========== 헤더 ========== -->
-<page-header title="거래처 상세보기" />
+<page-header title="주문 상세보기" />
 <br>
 
 
@@ -208,103 +208,6 @@
     </v-layout>
 <br>
 
-    <!-- <div class="cardbox cardbox-header" >
-        <h3>단가 그룹</h3>
-    </div>
-    <v-layout row cardbox cardbox-body style="padding:0;">
-        <v-flex xs12 md12 class="td-margin">
-
-            <table style="width:94%;">
-                <colgroup>
-                    <col width="15%">
-                    <col width="35%">
-                    <col width="15%">
-                    <col width="35%">
-                </colgroup>
-                <tr>
-                    <th><h4 class="center-align">단가그룹 선택</h4></th>
-                    <td>
-                        <v-select
-                            :items="['전체', '거래처명', '브랜드명']"
-                            label="분류"
-                        ></v-select>
-                    </td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </table>
-
-        </v-flex>
-    </v-layout>
-<br>
-
-
-
-
-    <div class="cardbox cardbox-header" >
-        <h3>할인/할증율 등급</h3>
-    </div>
-    <v-layout row cardbox cardbox-body style="padding:0;">
-        <v-flex xs12 md12 class="td-margin">
-
-            <table style="width:94%;">
-                <colgroup>
-                    <col width="15%">
-                    <col width="35%">
-                    <col width="15%">
-                    <col width="35%">
-                </colgroup>
-                <tr>
-                    <th><h4 class="center-align">할인/할증율<br>등급 선택</h4></th>
-                    <td>
-                        <v-select
-                            :items="['전체', '거래처명', '브랜드명']"
-                            label="분류"
-                        ></v-select>
-                    </td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </table>
-
-        </v-flex>
-    </v-layout>
-<br>
-
-
-    <div class="cardbox cardbox-header" >
-        <h3>수입물품 유통이력 정보</h3>
-    </div>
-    <v-layout row cardbox cardbox-body style="padding:0;">
-        <v-flex xs12 md12 class="td-margin">
-
-             <table style="width:94%;">
-                <colgroup>
-                    <col width="15%">
-                    <col width="35%">
-                    <col width="15%">
-                    <col width="35%">
-                </colgroup>
-                <tr>
-                    <th><h4 class="center-align">사업자등록증 보유 유무</h4></th>
-                    <td>
-                        <button-toggle :list="[ '유' , '무' ]" :default="0" />
-                    </td>
-                    <th><h4 class="center-align">양수자 유형</h4></th>
-                    <td>
-                        <v-select
-                            :items="['전체', '거래처명', '브랜드명']"
-
-                        ></v-select>
-                    </td>
-                </tr>
-            </table>
-
-        </v-flex>
-    </v-layout> -->
-<br>
-
-
 <v-btn
     fixed
     dark
@@ -318,11 +221,6 @@
 </v-btn>
 
 </div> <!-- ========== 컨텐츠 ========== -->
-
-
-
-
-
 
 <!-- ========== 모달 ========== -->
 
@@ -408,16 +306,10 @@
         </div>
     </modal>
 
-
 <!-- ========== 모달 ========== -->
-
-
 
 </v-container>
 </template>
-
-
-
 
 <script>
 import {
@@ -434,7 +326,6 @@ import {
     Modal,
 } from '../commons/UIComponents';
 
-
 export default{
     name : 'BrandList',
 
@@ -449,74 +340,41 @@ export default{
         Modal,
     },
 
-
-
-
-
-
-
-
-
     // ========== data ========== //
     data() {
         return {
-
             modal:{
                 taxbill : false
             },
-
-
             loading:true,
-
-
-
-
             search: '',
             pagination: {},
             selected: [],
-
-
             page: 1,
-
-            customer_id : null , // customer_id
+            order_id : null , // customer_id
             customer: null,
-
-            // 세금계산서
-            taxCalculator:{
-                name:'',
-                code:'',
-                manager:'',
-                addr:'',
-                type:'',
-                email:''
-            }//
-
-
-
+            orderData:[]
         }
     },
 
-
-
-
     // ========== created ========== //
     created(){
-        var customer_id = this.$route.params.customer_id
-        this.$set(this, 'customer_id', customer_id)
-        this.getCustomer(customer_id)
+        var order_id = this.$route.params.order_id
+        this.$set(this, 'order_id', order_id)
+        this.getCustomer(order_id);
     },
-
-
-
 
     // ========== methods ========== //
     methods: {
 
         // ===== 찾기 ===== //
-        getCustomer(idx){
-            var rid = this.$models.customers.findIndex((item)=>{
-                return item.number == idx
-            })
+        getCustomer(id){
+          console.log(id);
+          this.$axios.get('http://192.168.64.166:8080/app/order/detail/'+id)
+          .then(res => {
+            console.log(res.data)
+            this.orderData = res.data;
+          })
             var c = JSON.stringify(this.$models.customers[rid])
             var tax = JSON.stringify(this.$models.customers[rid].taxCalculator)
             this.$set(this, 'customer', JSON.parse(c))
@@ -528,24 +386,18 @@ export default{
 
         // ===== 저장 ===== //
         save(){
-            var rid = this.$models.customers.findIndex((item)=>{
-                return item.number == this.customer_id
-            })
-
-            this.customer.taxCalculator = this.taxCalculator
-            this.$models.customers[rid] = this.customer
-            alert('저장되었습니다.')
-            this.$router.push('/customers/list')
+            // var rid = this.$models.customers.findIndex((item)=>{
+            //     return item.number == this.customer_id
+            // })
+            //
+            // this.customer.taxCalculator = this.taxCalculator
+            // this.$models.customers[rid] = this.customer
+            // alert('저장되었습니다.')
+            // this.$router.push('/customers/list')
         },
-
     },
-
-
-
 }
 </script>
-
-
 
 <style>
 .listItem{
