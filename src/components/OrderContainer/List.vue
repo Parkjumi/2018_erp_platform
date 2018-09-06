@@ -161,7 +161,6 @@
             :items="orderData"
             hide-actions
             select-all>
-
             <template slot="items" slot-scope="props">
              <td>
                 <v-checkbox
@@ -232,15 +231,14 @@
           { text:  'no', value: 'num', sortable: false },
           { text: '주문일시', value: 'date' },
           { text: '주문번호', value: 'num', sortable: false },
-          { text: '거래처', value: 'string' },
+          { text: '거래처', value: 'string', sortable: false },
           { text: '배송팀', value: 'string', sortable: false },
           { text: '영업팀', value: 'string', sortable: false },
           { text: '총 주문수량', value: 'num', sortable: false },
           { text: '결제수단', value: 'string', sortable: false },
-          { text: '주문금액', value: 'string' },
+          { text: '주문금액', value: 'string', sortable: false },
           { text: '주문상태', value: 'string', sortable: false }
         ],
-
         orderData: [],
         deliveryData: [],
         customerData: [],
@@ -286,7 +284,22 @@
             cBName:this.searchWord,
             orderState:this.orderState,
             dManager:this.deliveryManager,
-            sName:this.salesMan
+            sName:this.salesMan,
+            startDay:this.selectDate.startDate,
+            endDay:this.selectDate.endDate
+          }).then(res => {
+            this.orderData = res.data;
+          }).catch((ex) => {
+            console.log("Error : ",ex);
+          })
+        }else if(this.select == "주문번호"){
+          this.$axios.post('http://192.168.64.166:8080/app/order/search',{
+            id:this.searchWord,
+            orderState:this.orderState,
+            dManager:this.deliveryManager,
+            sName:this.salesMan,
+            startDay:this.selectDate.startDate,
+            endDay:this.selectDate.endData
           }).then(res => {
             this.orderData = res.data;
           }).catch((ex) => {
@@ -294,12 +307,11 @@
           })
         }else{
           this.$axios.post('http://192.168.64.166:8080/app/order/search',{
-            id:this.searchWord,
-            orderState:this.orderState,
-            dManager:this.deliveryManager,
-            sName:this.salesMan
+            startDay:this.selectDate.startDate,
+            endDay:this.selectDate.endDate
           }).then(res => {
             this.orderData = res.data;
+            console.log(this.orderData);
           }).catch((ex) => {
             console.log("Error : ",ex);
           })

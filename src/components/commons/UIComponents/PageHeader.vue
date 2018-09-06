@@ -39,7 +39,7 @@ export default {
     props: {
 
         'title': {
-            type: String, 
+            type: String,
             default(){ return 'Page header' }
         },
 
@@ -52,15 +52,12 @@ export default {
 
     data(){
         return {
-
             items: [
                 { title: 'Click Me' },
                 { title: 'Click Me' },
                 { title: 'Click Me' },
                 { title: 'Click Me 2' }
             ]
-
-
         }
     }
 }

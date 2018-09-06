@@ -4,10 +4,6 @@
     <!-- ========== 헤더 ========== -->
     <page-header title="거래처 관리" />
     <br>
-
-
-
-
     <!-- ========== 로딩 ========== -->
     <v-layout row v-if="loading">
         <v-flex xs12 md12  style="text-align:center;">
@@ -26,9 +22,6 @@
         </v-flex>
     </v-layout>
     <!-- ========== 로딩 ========== -->
-
-
-
     <!-- ========== 컨텐츠 ========== -->
     <div v-else>
     <div class="cardbox cardbox-header" >
@@ -120,8 +113,6 @@
 
             <!-- 데이터 -->
             <v-flex sm12>
-
-
                 <v-data-table
                     :headers="[
                         { text: '번호', align:'left', sortable: 'false', value:'number' },
@@ -217,13 +208,8 @@
     </div> -->
 </modal>
 
-
-
 </v-container>
 </template>
-
-
-
 
 <script>
 import {
@@ -252,10 +238,6 @@ export default{
         ListTable,
         Modal,
     },
-
-
-
-
     // ========== data ========== //
     data() {
         return {
@@ -275,31 +257,18 @@ export default{
             pagination: {},
 
             checkList: [],
-
-            page: 1
-
-
+            page: 1,
 
         }
     },
-
-
-
-
     // ========== created ========== //
     created() {
         setTimeout(()=>{
             this.$set(this, 'loading', false)
         }, 780)
     },
-
-
-
-
     // ========== methods ========== //
     methods: {
-
-
         // ===== 목록 삭제 ===== //
         deleteList(){
             if(this.checkList.length < 1){
@@ -323,16 +292,9 @@ export default{
                 this.$set(this, 'checkList', [])
             },670)
         }
-
-
     },
-
-
-
 }
 </script>
-
-
 
 <style>
 .listItem{

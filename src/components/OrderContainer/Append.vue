@@ -37,8 +37,8 @@
                 </v-flex>
               </v-layout>
               </td>
-            <th>배송요청일</th>
-            <td style="width: 40%;">
+            <th rowspan="2">배송요청일</th>
+            <td rowspan="2" style="width: 40%;">
               <v-layout>
                 <v-flex>
                   <v-menu
@@ -71,7 +71,7 @@
             </td>
           </tr>
           <tr>
-            <th>배송 담당자</th>
+            <!-- <th>배송 담당자</th>
             <td>
               <v-layout>
                 <v-flex>
@@ -83,7 +83,7 @@
                   ></v-select>
                 </v-flex>
               </v-layout>
-            </td>
+            </td> -->
             <th>영업 담당자</th>
             <td>
               <v-layout>
@@ -378,14 +378,14 @@
         date: '',
         headers: [
           { text:  'no', value: 'num', sortable: false },
-          { text: '상품명', value: 'string' },
-          { text: '규격(단위)', value: 'string' },
+          { text: '상품명', value: 'string', sortable: false },
+          { text: '규격(단위)', value: 'string', sortable: false },
           { text: '제조사(원산지)', value: 'string', sortable: false },
-          { text: '수량', value: 'string' },
+          { text: '수량', value: 'string', sortable: false },
           { text: '단가(원)', value: 'string', sortable: false },
           { text: '공급가액', value: 'string', sortable: false },
           { text: '부가세', value: 'string', sortable: false },
-          { text: '합계금액', value: 'string' },
+          { text: '합계금액', value: 'string', sortable: false },
           { text: '삭제', value: 'string', sortable: false }
         ],
         items: [],
@@ -438,6 +438,7 @@
             this.shipping.push(this.shippingManager[i].sManager);
           }
           this.customersItems = res.data[1];
+          console.log(this.customersItems[0].id+"dsfsf");
         })
         .catch((ex) => {
           console.log("Error : ",ex);
@@ -453,7 +454,6 @@
         .catch((ex) => {
           console.log("Error : ",ex);
         })
-
         // //영업담당자 선택
         // this.$models.sales_lists.forEach((item)=>{
         //   if(item.managerName == customers.manager){
@@ -466,7 +466,6 @@
         //     this.shippingManager = item;
         //   }
         // });
-
       },
       openAppendModal() {
         if(this.customersItem == ''){
@@ -541,8 +540,6 @@
         }else if(this.orderItems.length == 0){
           alert('상품을 먼저 등록해주세요');
         }else{
-          console.log(this.orderItems+"상품들");
-        
           this.$axios.post('http://192.168.64.166:8080/app/order',{
             tbCustomer_ID:this.customersItem.id,
             itemCount:this.allCount,
@@ -557,7 +554,7 @@
           }).catch((ex) => {
             console.log("Error : ",ex);
           })
-          // this.$router.push('/order/list');
+          this.$router.push('/order/list');
         }
       }
     },
