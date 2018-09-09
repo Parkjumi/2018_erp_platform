@@ -4,10 +4,6 @@
     <!-- ========== 헤더 ========== -->
     <page-header title="거래처 관리" />
     <br>
-
-
-
-
     <!-- ========== 로딩 ========== -->
     <v-layout row v-if="loading">
         <v-flex xs12 md12  style="text-align:center;">
@@ -26,9 +22,6 @@
         </v-flex>
     </v-layout>
     <!-- ========== 로딩 ========== -->
-
-
-
     <!-- ========== 컨텐츠 ========== -->
     <div v-else>
     <div class="cardbox cardbox-header" >
@@ -40,27 +33,20 @@
           <colgroup>
             <col width="13.5%">
             <col width="1%">
-            <col width="20%">
-            <col width="1%">
             <col width="41%">
           </colgroup>
-          <!-- <tr>
+          <tr>
             <th><h3>키워드검색</h3></th>
             <td></td>
             <td>
-              <v-select
-                :items="['전체', '거래처명', '브랜드명']"
-                label="분류"
-              ></v-select>
+              <v-text-field v-model="searchWord" label="거래처명을 입력해 주세요">
+
+              </v-text-field>
             </td>
-            <td></td>
-            <td>
-              <search-form label="이름을 입력해 주세요" />
-            </td>
-            <td></td>
-          </tr> -->
+            <td><v-btn small @click="searchOrder()">검색</v-btn></td>
+          </tr>
         </table>
-        <table width="100%">
+        <!-- <table width="100%">
           <colgroup>
             <col width="13.5%">
             <col width="1%">
@@ -75,27 +61,23 @@
             <td></td>
             <td>
               <v-select
-                :items="['전체', '거래처명', '브랜드명']"
-                label="배송유형"
+                :items="shippingList"
+                label="배송 담당자"
               ></v-select>
             </td>
             <td></td>
             <td>
               <v-select
                 :items="['전체', '거래처명', '브랜드명']"
-                label="담당자"
+                label="영업 담당자"
               ></v-select>
             </td>
             <td></td>
-            <td>
-              <v-select
-                :items="['전체', '거래처명', '브랜드명']"
-                label="담당자"
-              ></v-select>
+            <td style="width: 40%;">
+              <v-btn>검색</v-btn>
             </td>
-            <td></td>
           </tr>
-        </table>
+        </table> -->
       </v-flex>
     </div>
 <br>
@@ -103,14 +85,14 @@
 
     <table width="100%">
       <colgroup>
-        <col width="60%">
+        <col width="80%">
       </colgroup>
       <tr>
         <td style="text-align:left;"><h3>거래처목록</h3></td>
-        <td><v-btn depressed outline style="width:97%;" @click.prevent="$router.push('/customers/approval/sale')">할인/할증 관리</v-btn></td>
-        <td><v-btn depressed outline style="width:97%;" @click.prevent="deleteList">삭제</v-btn></td>
+        <!-- <td><v-btn depressed outline style="width:97%;" @click.prevent="$router.push('/customers/approval/sale')">할인/할증 관리</v-btn></td> -->
+        <td><v-btn depressed outline style="width:95%;" @click.prevent="deleteList">삭제</v-btn></td>
         <!-- <td><v-btn depressed outline style="width:97%;" @click.prevent="modal.customerEdit=true">일괄수정</v-btn></td> -->
-        <td><v-btn depressed style="width:97%;" color="success" @click.prevent="$router.push('/customers/insert')">거래처 등록</v-btn></td>
+        <td><v-btn depressed style="width:95%;" color="success" @click.prevent="$router.push('/customers/insert')">거래처 등록</v-btn></td>
       </tr>
     </table>
 
@@ -120,51 +102,28 @@
 
             <!-- 데이터 -->
             <v-flex sm12>
-
-
                 <v-data-table
                     :headers="[
                         { text: '번호', align:'left', sortable: 'false', value:'number' },
                         { text: '날짜', align:'left', sortable: 'false', value:'date' },
                         { text: '거래처명', align:'left', sortable: 'false', value:'account' },
-                        { text: '브랜드', align:'left', sortable: 'false', value:'brand' },
-                        { text: '배송유형', align:'left', sortable: 'false', value:'shippingType' },
                         { text: '할인', align:'left', sortable: 'false', value:'sale' },
                         { text: '총매출', align:'left', sortable: 'false', value:'totalSales' },
                         { text: '선택', align:'left', sortable: 'false' },
                     ]"
-                    :items="$models.customers"
+                    :items="customers"
                     hide-actions
                     class=""
                 >
-                <!--
-                    {
-                        text: 'Dessert (100g serving)',
-                        align: 'left',
-                        sortable: false,
-                        value: 'name'
-                    },
-                     {
-                        "number":1,
-                        "date":"2018-08-21",
-                        "account":"서이",
-                        "brand":"",
-                        "shippingType":"직배송",
-                        "sale":"없음",
-                        "totalSales":"55,490원"
-                    },
-                 -->
                     <template slot="items" slot-scope="props" >
-                        <tr >
-                            <td class="text-xs-left">{{ props.item.number }}</td>
-                            <td class="text-xs-left">{{ props.item.date }}</td>
-                            <td class="text-xs-left" @click="$router.push('/customers/list/detail/'+props.item.number)">
-                                {{ props.item.account }}
+                        <tr @click="$router.push('/customers/list/detail/'+props.item.id)">
+                            <td class="text-xs-left">{{ props.item.id }}</td>
+                            <td class="text-xs-left">{{ props.item.regDate }}</td>
+                            <td class="text-xs-left">
+                                {{ props.item.bName }}
                             </td>
-                            <td class="text-xs-left">{{ props.item.brand }}</td>
-                            <td class="text-xs-left">{{ props.item.shippingType }}</td>
-                            <td class="text-xs-left">{{ props.item.sale }}</td>
-                            <td class="text-xs-left">{{ props.item.totalSales }}</td>
+                            <td class="text-xs-left">{{ props.item.priceRate }}</td>
+                            <td class="text-xs-left">{{ props.item.payment }}</td>
                             <td class="text-xs-left">
                                 <!-- {{ props.item.number }} -->
                                 <v-checkbox v-model="checkList" :value="props.item.number"></v-checkbox>
@@ -217,15 +176,11 @@
     </div> -->
 </modal>
 
-
-
 </v-container>
 </template>
 
-
-
-
 <script>
+let ip = "192.168.64.166";
 import {
   SearchForm,
   ButtonToggle,
@@ -252,10 +207,6 @@ export default{
         ListTable,
         Modal,
     },
-
-
-
-
     // ========== data ========== //
     data() {
         return {
@@ -275,31 +226,32 @@ export default{
             pagination: {},
 
             checkList: [],
+            page: 1,
 
-            page: 1
-
-
+            customers:[], //거래처 목록
+            shipping:[], //배송 담당자 목록
+            shippingList:[] ,// 배송 담당자 이름 목록
 
         }
     },
 
-
-
-
-    // ========== created ========== //
-    created() {
-        setTimeout(()=>{
-            this.$set(this, 'loading', false)
-        }, 780)
-    },
-
-
-
-
     // ========== methods ========== //
     methods: {
+      initCustomerData(){
+        this.$axios.get('http://'+ip+':8080/app/customer')
+        .then(res => {
+          this.customers = res.data[1];
+          this.shipping = res.data[0]
+          console.log(this.customers);
 
-
+          for(var i = 0; i <this.shipping.length;i++){
+            this.shippingList.push(this.shipping[i].delivererManager);
+          }
+        })
+        .catch((ex) => {
+          console.log("Error : ",ex);
+        })
+      },
         // ===== 목록 삭제 ===== //
         deleteList(){
             if(this.checkList.length < 1){
@@ -322,17 +274,29 @@ export default{
                 this.$set(this, 'loading', false)
                 this.$set(this, 'checkList', [])
             },670)
-        }
+        },
 
-
+        searchOrder(){
+          this.$axios.post('http://'+ip+':8080/app/customer/search',{
+            bName:this.searchWord
+          })
+          .then(res => {
+            this.customers = res.data;
+          })
+          .catch((ex) => {
+            console.log("Error : ",ex);
+          })
+        },
     },
-
-
-
+    // ========== created ========== //
+    created() {
+        setTimeout(()=>{
+            this.$set(this, 'loading', false)
+        }, 780)
+        this.initCustomerData();
+    },
 }
 </script>
-
-
 
 <style>
 .listItem{

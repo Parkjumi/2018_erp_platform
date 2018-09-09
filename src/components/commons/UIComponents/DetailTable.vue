@@ -20,25 +20,17 @@
             </tr>
         </slot>
     </table>
-
-
-
-
 </div>
 </template>
-
-
-
-
 <script>
 export default{
     name: 'TableComp',
 
     // ========== props ========== //
     props:{
-        
-        
-        
+
+
+
     }, // ========== props ========== //
 
 
@@ -46,44 +38,44 @@ export default{
     // ========== data ========== //
     data () {
         return {
-    
+
 
         }
     }, // ========== data ========== //
-    
-    
-    
-    
+
+
+
+
     // ========== created ========== //
     created(){
-        
+
     }, // ========== created ========== //
-    
-    
-    
+
+
+
 
 
     // ========== updated ========== //
     updated(){
     }, // ========== updated ========== //
-    
-    
-    
+
+
+
     // ========== mounted ========== //
     mounted(){
-        
+
     }, // ========== mounted ========== //
-    
-    
 
 
 
-    
+
+
+
     // ========== data ========== //
     methods:{
 
 
-        
+
     }, // ========== data ========== //
 }
 </script>
@@ -93,14 +85,14 @@ export default{
 <style>
 
 .detail-table{
-    padding:0; 
+    padding:0;
     width:100%;
 }
     .detail-table th{
-        background:#f1f1f1; 
+        background:#f1f1f1;
     }
     .detail-table td{
-        background:#fff; 
+        background:#fff;
     }
         .detail-table th,
         .detail-table td{

@@ -136,27 +136,36 @@
                           <v-select
                             :items="category1"
                             v-model="category"
-                            label="1차카테고리"/>
+                            label="1차카테고리를 선택하세요"/>
                         </v-flex>
                         <v-flex class="select-container" xs6>
                           <v-select
                             :items="category2"
-                            v-model="category_2"
-                            label="2차카테고리"/>
+                            v-model="secondCategory"
+                            label="2차카테고리를 선택하세요"/>
                         </v-flex>
                       </v-layout>
                     </td>
                 </tr>
                 <tr>
-                    <th><h4 class="center-align">주공급자 상호명</h4></th>
-                    <td>
-                      <v-flex class="select-container">
-                        <v-select
-                          :items="bName"
-                          v-model="name"
-                          label="주공급자 상호명"/>
-                      </v-flex>
-                    </td>
+                  <th><h4 class="center-align">주공급자 상호명</h4></th>
+                  <td>
+                    <v-flex class="select-container">
+                      <v-select
+                        :items="bName"
+                        v-model="product.bName"
+                        label="주공급자 상호명을 입력하세요"/>
+                    </v-flex>
+                  </td>
+                  <th><h4 class="center-align">판매 상태</h4></th>
+                  <td>
+                    <v-flex class="select-container">
+                      <v-select
+                        :items="['판매중','판매중지','재고부족']"
+                        v-model="product.state"
+                        label="판매 상태를 선택하세요"/>
+                    </v-flex>
+                  </td>
                 </tr>
                 <tr>
                   <th>메모</th>
@@ -165,7 +174,7 @@
                       <v-flex>
                         <v-text-field
                           textarea
-                          v-model="memo"
+                          v-model="product.memo"
                           rows="2">
                         </v-text-field>
                       </v-flex>
@@ -179,7 +188,8 @@
 <v-layout style="text-align: center;">
   <v-flex style="text-align: center">
     <v-btn @click="$router.push('/product/product')">목록으로</v-btn>
-    <v-btn @click="saveItem()">등록하기</v-btn>
+    <v-btn @click="saveItem()">수정하기</v-btn>
+    <v-btn @click="deleteProduct()">삭제하기</v-btn>
   </v-flex>
 </v-layout>
 </v-btn>
@@ -191,7 +201,8 @@
 
 <script>
 let ip = "192.168.64.166";
-
+var product_id;
+var category;
 import {
   SearchForm,
   ButtonToggle,
@@ -239,6 +250,7 @@ export default{
             category2:[],
             memo:'',
             name:'',
+            secondCategory:'',
 
             bNameList:[],
             bName:[],
@@ -248,25 +260,14 @@ export default{
             page: 1,
 
             customer_id : null , // customer_id
-            product: {},
+            product: [],
         }
     },
     // ========== created ========== //
     created(){
-      this.$axios.get('http://'+ip+':8080/app/item/insertset')
-      .then(res => {
-        this.category1List = res.data[0];
-        this.bNameList = res.data[1];
-        for(var i = 0;i < this.category1List.length;i++){
-          this.category1.push(this.category1List[i].first);
-        }
-        for(var i = 0;i < this.bNameList.length;i++){
-          this.bName.push(this.bNameList[i].bName);
-        }
-      })
-      .catch((ex) => {
-        console.log("Error : ",ex);
-      })
+      product_id = this.$route.params.product_id
+      this.$set(this, 'product_id', product_id)
+      this.getProduct(product_id);
         setTimeout(()=>{ this.$set(this, 'loading', false) }, 750)
     },
 
@@ -274,7 +275,7 @@ export default{
     methods: {
         // ===== 저장 ===== //
         saveItem(){
-          this.$axios.post('http://'+ip+':8080/app/item',{
+          this.$axios.put('http://'+ip+':8080/app/item/'+product_id,{
             itemName:this.product.itemName,
             itemQTY:this.product.itemQTY,
             manufacturer:this.product.manufacturer,
@@ -286,18 +287,66 @@ export default{
             price3:this.product.price3,
             purchasePrice:this.product.purchasePrice,
             first:this.category,
-            second:this.category_2,
-            bName:this.name,
-            memo:this.memo
+            second:this.secondCategory,
+            bName:this.product.bName,
+            memo:this.product.memo,
+            state:this.product.state,
           })
           .then(res => {
-            alert('저장되었습니다.')
+            alert('수정되었습니다.')
+            this.$router.push('/product/product')
           })
           .catch((ex) => {
             console.log("Error : ",ex);
           })
-          this.$router.push('/product/product')
-        }
+        },
+
+        getProduct(product_id){
+          this.$axios.get('http://'+ip+':8080/app/item/detail/'+product_id)
+          .then(res => {
+            this.product = res.data;
+            this.category = this.product.first;
+            category = this.category;
+            this.secondCategory = this.product.second;
+          })
+          .catch((ex) => {
+            console.log("Error : ",ex);
+          })
+
+          this.$axios.get('http://'+ip+':8080/app/item/insertset')
+          .then(res => {
+            this.category1List = res.data[0];
+            this.bNameList = res.data[1];
+            for(var i = 0;i < this.category1List.length;i++){
+              this.category1.push(this.category1List[i].first);
+            }
+            for(var i = 0;i < this.bNameList.length;i++){
+              this.bName.push(this.bNameList[i].bName);
+            }
+
+            for(var i = 0;i < this.category1List.length;i++){
+              if(this.category1List[i].first == category){
+                for(var j = 0;j < this.category1List[i].secondCategoryList.length;j++){
+                  this.category2.push(this.category1List[i].secondCategoryList[j].second);
+                }
+              }
+            }
+          })
+          .catch((ex) => {
+            console.log("Error : ",ex);
+          })
+        },
+
+        deleteProduct(){ // 상품 삭제
+          this.$axios.delete('http://'+ip+':8080/app/item/'+product_id)
+          .then(res => {
+            alert('삭제가 완료되었습니다.');
+            this.$router.push('/product/product');
+          })
+          .catch((ex) => {
+            console.log("Error : ",ex);
+          })
+        },
     },
 
     watch:{
@@ -311,7 +360,7 @@ export default{
           }
         }
       }
-    }
+    },
 }
 </script>
 

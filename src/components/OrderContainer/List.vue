@@ -161,7 +161,6 @@
             :items="orderData"
             hide-actions
             select-all>
-
             <template slot="items" slot-scope="props">
              <td>
                 <v-checkbox
@@ -194,6 +193,7 @@
 </template>
 <script>
   let d = new Date();
+  let ip = "192.168.64.166";
   import {
     SearchForm,
     ButtonToggle,
@@ -232,15 +232,14 @@
           { text:  'no', value: 'num', sortable: false },
           { text: '주문일시', value: 'date' },
           { text: '주문번호', value: 'num', sortable: false },
-          { text: '거래처', value: 'string' },
+          { text: '거래처', value: 'string', sortable: false },
           { text: '배송팀', value: 'string', sortable: false },
           { text: '영업팀', value: 'string', sortable: false },
           { text: '총 주문수량', value: 'num', sortable: false },
           { text: '결제수단', value: 'string', sortable: false },
-          { text: '주문금액', value: 'string' },
+          { text: '주문금액', value: 'string', sortable: false },
           { text: '주문상태', value: 'string', sortable: false }
         ],
-
         orderData: [],
         deliveryData: [],
         customerData: [],
@@ -254,11 +253,8 @@
       }
     },
     methods: {
-      test() {
-          console.log(this.startDate, this.endDate);
-      },
       initOrderData() {
-        this.$axios.get('http://192.168.64.166:8080/app/order')
+        this.$axios.get('http://'+ip+':8080/app/order')
         .then(res => {
           this.orderData = res.data[2];
           this.deliveryData = res.data[1];
@@ -269,7 +265,6 @@
           for(var i = 0;i < this.customerData.length;i++){
             this.salesManList.push(this.customerData[i].sManager);
           }
-          console.log(this.salesManList[0]);
         })
         .catch((ex) => {
           console.log("Error : ",ex);
@@ -282,22 +277,35 @@
 
       searchOrder(){
         if(this.select == "거래처명"){
-          this.$axios.post('http://192.168.64.166:8080/app/order/search',{
+          this.$axios.post('http://'+ip+':8080/app/order/search',{
             cBName:this.searchWord,
             orderState:this.orderState,
             dManager:this.deliveryManager,
-            sName:this.salesMan
+            sName:this.salesMan,
+            startDay:this.selectDate.startDate,
+            endDay:this.selectDate.endDate
+          }).then(res => {
+            this.orderData = res.data;
+          }).catch((ex) => {
+            console.log("Error : ",ex);
+          })
+        }else if(this.select == "주문번호"){
+          this.$axios.post('http://'+ip+':8080/app/order/search',{
+            id:this.searchWord,
+            orderState:this.orderState,
+            dManager:this.deliveryManager,
+            sName:this.salesMan,
+            startDay:this.selectDate.startDate,
+            endDay:this.selectDate.endData
           }).then(res => {
             this.orderData = res.data;
           }).catch((ex) => {
             console.log("Error : ",ex);
           })
         }else{
-          this.$axios.post('http://192.168.64.166:8080/app/order/search',{
-            id:this.searchWord,
-            orderState:this.orderState,
-            dManager:this.deliveryManager,
-            sName:this.salesMan
+          this.$axios.post('http://'+ip+':8080/app/order/search',{
+            startDay:this.selectDate.startDate,
+            endDay:this.selectDate.endDate
           }).then(res => {
             this.orderData = res.data;
           }).catch((ex) => {

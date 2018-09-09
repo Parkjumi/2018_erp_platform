@@ -10,9 +10,6 @@
 </div>
 </template>
 
-
-
-
 <script>
 export default{
     name: 'SearchForm',
@@ -29,8 +26,6 @@ export default{
 
     }, // ========== props ========== //
 
-
-
     // ========== data ========== //
     data(){
         return {
@@ -39,23 +34,15 @@ export default{
 
         }
     }, // ========== data ========== //
-    
-    
-    
-    
+
     // ========== created ========== //
     created(){
     }, // ========== created ========== //
-    
-    
-    
 
 
     // ========== updated ========== //
     updated(){
     }, // ========== updated ========== //
-    
-    
 
     watch: {
         selected(v){
@@ -64,11 +51,9 @@ export default{
     },
 
 
-
-    
     // ========== data ========== //
     methods:{
-        
+
     }, // ========== data ========== //
 }
 </script>

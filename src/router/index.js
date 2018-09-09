@@ -95,15 +95,17 @@ const routes = [
                 component: () => import('@/components/ProductContainer/Product')
             },
             {
+                path: 'list/detail/:product_id',
+                name: 'ProductContainer.Detail',
+                component: () => import('@/components/ProductContainer/Detail')
+            },
+            {
                 path: 'apply',
                 name: 'ProductContainer.Product',
                 component: () => import('@/components/ProductContainer/ProductApply')
             }
         ]
     },
-
-
-
 
     { // ===== 거래처관리 ===== //
 

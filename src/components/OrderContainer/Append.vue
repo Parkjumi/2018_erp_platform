@@ -37,8 +37,8 @@
                 </v-flex>
               </v-layout>
               </td>
-            <th>배송요청일</th>
-            <td style="width: 40%;">
+            <th rowspan="2">배송요청일</th>
+            <td rowspan="2" style="width: 40%;">
               <v-layout>
                 <v-flex>
                   <v-menu
@@ -71,7 +71,7 @@
             </td>
           </tr>
           <tr>
-            <th>배송 담당자</th>
+            <!-- <th>배송 담당자</th>
             <td>
               <v-layout>
                 <v-flex>
@@ -83,7 +83,7 @@
                   ></v-select>
                 </v-flex>
               </v-layout>
-            </td>
+            </td> -->
             <th>영업 담당자</th>
             <td>
               <v-layout>
@@ -156,12 +156,12 @@
           </td>
           <td>{{props.item.itemName}}</td>
           <td>{{props.item.unit}}</td>
-          <td>{{props.item.origin}}</td>
+          <td>{{props.item.manufacturer}}</td>
           <td>1</td>
-          <td>{{props.item.price}}</td>
-          <td>{{props.item.payment}}</td>
-          <td>{{props.item.qTY}}</td>
-          <td>{{props.item.purchasePrice}}</td>
+          <td>{{props.item.price1}}</td>
+          <td>{{props.item.price2}}</td>
+          <td>{{props.item.price3}}</td>
+          <td>{{props.item.price1}}</td>
           <td>
             <v-btn outline @click="deleteOneOrderItem(props.item)">삭제</v-btn>
           </td>
@@ -254,7 +254,7 @@
           </v-flex>
         </v-layout>
         <v-layout style="margin-top:15px;">
-          <v-flex xs7 style="padding: 0px 5px;">
+          <v-flex xs8 style="padding: 0px 5px;">
             <v-layout>
               <v-flex>
                 *해당 거래처에서 자주 주문한 상품 순입니다.
@@ -272,8 +272,9 @@
                   <template slot="items" slot-scope="props">
                     <td>{{props.item.itemName}}</td>
                     <td>{{props.item.itemQTY}}</td>
-                    <td>{{props.item.payment}}</td>
-                    <td>{{props.item.price}}</td>
+                    <td>{{props.item.price1}}</td>
+                    <td>{{props.item.price2}}</td>
+                    <td>{{props.item.price3}}</td>
                     <td>
                       <v-btn outline @click="selectProduct(props.item)">선택</v-btn>
                     </td>
@@ -282,7 +283,7 @@
               </v-flex>
             </v-layout>
           </v-flex>
-          <v-flex xs5 style="padding: 0px 5px;">
+          <v-flex xs4 style="padding: 0px 5px;">
             <v-layout>
               <v-flex>
                 <span>선택상품 목록(전체 {{allCount}}건)</span>
@@ -318,7 +319,7 @@
                           </span>
                         </v-flex>
                         <v-flex>
-                          <input type="text" v-model="props.item.price" style="text-align:right;">원
+                          <input type="text" v-model="props.item.price2" style="text-align:right;">원
                         </v-flex>
                       </v-layout>
                     </td>
@@ -350,6 +351,7 @@
 </v-container>
 </template>
 <script>
+  let ip = "192.168.64.166";
   import {
     SearchForm,
     ButtonToggle,
@@ -378,14 +380,14 @@
         date: '',
         headers: [
           { text:  'no', value: 'num', sortable: false },
-          { text: '상품명', value: 'string' },
-          { text: '규격(단위)', value: 'string' },
+          { text: '상품명', value: 'string', sortable: false },
+          { text: '규격(단위)', value: 'string', sortable: false },
           { text: '제조사(원산지)', value: 'string', sortable: false },
-          { text: '수량', value: 'string' },
-          { text: '단가(원)', value: 'string', sortable: false },
-          { text: '공급가액', value: 'string', sortable: false },
-          { text: '부가세', value: 'string', sortable: false },
-          { text: '합계금액', value: 'string' },
+          { text: '수량', value: 'string', sortable: false },
+          { text: '배송 단가', value: 'string', sortable: false },
+          { text: '소비자 가격', value: 'string', sortable: false },
+          { text: '예비 가격', value: 'string', sortable: false },
+          { text: '합계금액', value: 'string', sortable: false },
           { text: '삭제', value: 'string', sortable: false }
         ],
         items: [],
@@ -393,8 +395,9 @@
         productHeaders: [
           { text:  '상품명', value: 'strings', sortable: false },
           { text: '재고량', value: 'string', sortable: false },
-          { text: '매입 단가', value: 'string', sortable: false },
-          { text: '판매 단가', value: 'string', sortable: false },
+          { text: '배송 단가', value: 'string', sortable: false },
+          { text: '소비자 가격', value: 'string', sortable: false },
+          { text: '예비 가격', value: 'string', sortable: false },
           { text: '선택', value: 'string', sortable: false }
         ],
         customersModalCheck: false,
@@ -423,7 +426,7 @@
       sumPrice: function(){
         let sum = 0;
         this.selectItems.forEach(item => {
-          sum += Number(item.price);
+          sum += Number(item.price2);
         });
         this.payment = sum;
         return sum;
@@ -431,42 +434,31 @@
     },
     methods: {
       initCustormer(){
-        this.$axios.get('http://192.168.64.166:8080/app/order/setinsert')
+        this.$axios.get('http://'+ip+':8080/app/order/setinsert')
         .then(res => {
           this.shippingManager = res.data[0];
           for(var i = 0;i< this.shippingManager.length;i++){
             this.shipping.push(this.shippingManager[i].sManager);
           }
           this.customersItems = res.data[1];
+          console.log(this.customersItems[0].id+"dsfsf");
         })
         .catch((ex) => {
           console.log("Error : ",ex);
         })
       },
-      selectCustomer(customers) { //상품 선택 누를시
+      selectCustomer(customers) { //거래처 선택 누를시
         this.customersItem = customers;
+        this.orderItems = [];
+        this.selectItems = [];
         this.customersModalCheck = false;
-        this.$axios.get('http://192.168.64.166:8080/app/order/setinsert/'+this.customersItem.id)
+        this.$axios.get('http://'+ip+':8080/app/order/setinsert/'+this.customersItem.id)
         .then(res => {
           this.customerProducts = res.data;
         })
         .catch((ex) => {
           console.log("Error : ",ex);
         })
-
-        // //영업담당자 선택
-        // this.$models.sales_lists.forEach((item)=>{
-        //   if(item.managerName == customers.manager){
-        //     this.manager = item;
-        //   }
-        // });
-        // //배송담당자 선택
-        // this.$models.delivery_lists.forEach((item)=>{
-        //   if(item.managerName == customers.shippingManager){
-        //     this.shippingManager = item;
-        //   }
-        // });
-
       },
       openAppendModal() {
         if(this.customersItem == ''){
@@ -475,18 +467,20 @@
         }
         this.appendModalCheck = !this.appendModalCheck;
       },
-      initCustomerProduct() {
-        this.customerProducts = [];
-        this.customersItem.product.forEach((item,index)=>{
-          var _number = item;
-          this.$models.products.forEach((product)=>{
-            if(product.productNum == _number){
-              this.customerProducts.push(product);
-            }
-          });
-        });
-      },
+      // initCustomerProduct() {
+      //   this.customerProducts = [];
+      //   this.customersItem.product.forEach((item,index)=>{
+      //     var _number = item;
+      //     this.$models.products.forEach((product)=>{
+      //       if(product.productNum == _number){
+      //         this.customerProducts.push(product);
+      //       }
+      //     });
+      //   });
+      // },
       selectProduct(item){
+        item.qTY = this.count;
+        item.amount = this.count * item.price2;
         this.selectItems.push(item);
         this.allCount++;
       },
@@ -517,9 +511,10 @@
       saveOrderItem() { //상품 추가 후 저장 누를 시
         this.orderItems = this.selectItems;
         this.appendModalCheck = false;
-        this.$axios.get('http://192.168.64.166:8080/app/order/setinsert/'+this.customersItem.id)
+        this.$axios.get('http://'+ip+':8080/app/order/setinsert/'+this.customersItem.id)
         .then(res => {
           this.customerProducts = res.data;
+          console.log(this.customerProducts);
         })
         .catch((ex) => {
           console.log("Error : ",ex);
@@ -534,6 +529,7 @@
         this.allCount--;
       },
       regOrder() { //등록하기 버튼 누를 시
+        console.log(this.orderItems[0].amount+'ㅇㅇㅇ');
         if(!this.customersItem.bName){
           alert('거래처가 선택되지 않았습니다.');
         }else if(this.date == ''){
@@ -541,9 +537,7 @@
         }else if(this.orderItems.length == 0){
           alert('상품을 먼저 등록해주세요');
         }else{
-          console.log(this.orderItems+"상품들");
-        
-          this.$axios.post('http://192.168.64.166:8080/app/order',{
+          this.$axios.post('http://'+ip+':8080/app/order',{
             tbCustomer_ID:this.customersItem.id,
             itemCount:this.allCount,
             amount:this.allCount,
@@ -557,7 +551,7 @@
           }).catch((ex) => {
             console.log("Error : ",ex);
           })
-          // this.$router.push('/order/list');
+          this.$router.push('/order/list');
         }
       }
     },
