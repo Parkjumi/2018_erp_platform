@@ -144,7 +144,7 @@
     <hr/>
       <v-layout>
         <v-flex style="text-align:left">
-          <span>전체 0건</span>
+          <span>전체 {{total}}건</span>
           <v-btn>출고지시 완료</v-btn>
           <v-btn>출고 완료</v-btn>
         </v-flex>
@@ -162,23 +162,25 @@
             hide-actions
             select-all>
             <template slot="items" slot-scope="props">
-             <td>
-                <v-checkbox
-                  v-model="props.selected"
-                  primary
-                  hide-details
-                ></v-checkbox>
-              </td>
-              <td>{{props.index + 1}}</td>
-              <td>{{props.item.orderDate}}</td>
-              <td @click="$router.push('list/detail/'+props.item.id)">{{props.item.id}}</td>
-              <td>{{props.item.cBName}}</td>
-              <td>{{props.item.dBName}}</td>
-              <td>{{props.item.cManager}}</td>
-              <td>{{props.item.amount}}</td>
-              <td>{{props.item.payMethod}}</td>
-              <td>{{props.item.payMent}}</td>
-              <td>{{props.item.orderState}}</td>
+              <tr>
+                <td>
+                   <v-checkbox
+                     v-model="props.selected"
+                     primary
+                     hide-details
+                   ></v-checkbox>
+                 </td>
+                 <td>{{props.index + 1}}</td>
+                 <td @click="$router.push('list/detail/'+props.item.id)">{{props.item.orderDate}}</td>
+                 <td @click="$router.push('list/detail/'+props.item.id)">{{props.item.id}}</td>
+                 <td >{{props.item.cBName}}</td>
+                 <td>{{props.item.dBName}}</td>
+                 <td>{{props.item.cManager}}</td>
+                 <td>{{props.item.amount}}</td>
+                 <td>{{props.item.payMethod}}</td>
+                 <td>{{props.item.payMent}}</td>
+                 <td>{{props.item.orderState}}</td>
+              </tr>
             </template>
           </v-data-table>
         </v-flex>
@@ -193,7 +195,7 @@
 </template>
 <script>
   let d = new Date();
-  let ip = "192.168.64.166";
+  let ip = "35.200.2.168";
   import {
     SearchForm,
     ButtonToggle,
@@ -249,12 +251,13 @@
         searchWord:'',
         orderState:'',
         deliveryManager:'',
-        salesMan:''
+        salesMan:'',
+        total:'',
       }
     },
     methods: {
       initOrderData() {
-        this.$axios.get('http://'+ip+':8080/app/order')
+        this.$axios.get('http://freshntech.cafe24.com/order')
         .then(res => {
           this.orderData = res.data[2];
           this.deliveryData = res.data[1];
@@ -265,6 +268,7 @@
           for(var i = 0;i < this.customerData.length;i++){
             this.salesManList.push(this.customerData[i].sManager);
           }
+          this.total = res.data[2].length;
         })
         .catch((ex) => {
           console.log("Error : ",ex);
@@ -277,7 +281,7 @@
 
       searchOrder(){
         if(this.select == "거래처명"){
-          this.$axios.post('http://'+ip+':8080/app/order/search',{
+          this.$axios.post('http://freshntech.cafe24.com/order/search',{
             cBName:this.searchWord,
             orderState:this.orderState,
             dManager:this.deliveryManager,
@@ -290,7 +294,7 @@
             console.log("Error : ",ex);
           })
         }else if(this.select == "주문번호"){
-          this.$axios.post('http://'+ip+':8080/app/order/search',{
+          this.$axios.post('http://freshntech.cafe24.com/order/search',{
             id:this.searchWord,
             orderState:this.orderState,
             dManager:this.deliveryManager,
@@ -303,7 +307,7 @@
             console.log("Error : ",ex);
           })
         }else{
-          this.$axios.post('http://'+ip+':8080/app/order/search',{
+          this.$axios.post('http://freshntech.cafe24.com/order/search',{
             startDay:this.selectDate.startDate,
             endDay:this.selectDate.endDate
           }).then(res => {

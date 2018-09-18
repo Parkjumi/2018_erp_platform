@@ -79,70 +79,72 @@
                         title: '주문 관리',
                         subItems: [
                             { title: '주문 목록', component: '/order/list', isActive: false },
-                            { title: '상품별 주문 목록', component: '/order/product', isActive: false },
-                            { title: '반품 내역', component: '/order/return', isActive: false }
+                            // { title: '상품별 주문 목록', component: '/order/product', isActive: false },
+                            // { title: '반품 내역', component: '/order/return', isActive: false }
                         ]
                     },
                     {
                         title: '매입 관리',
-                        subItems: []
+                        subItems: [
+
+                        ]
                     },
                     {
                         title: '상품 관리',
                         subItems: [
-                            { title: '상품 관리', component: '/product/product', isActive: true },
-                            { title: '카테고리 설정', component: '/product/category', isActive: false }
+                            { title: '상품 목록', component: '/product/product', isActive: true },
+                            // { title: '카테고리 설정', component: '/product/category', isActive: false }
                         ]
                     },
-                    {
-                        title: '단가 관리',
-                        subItems: []
-                    },
-                    {
-                        title: '재고 관리',
-                        subItems: [
-                            { title: '입/출고 관리', component: '/inventory/srmanagement', isActive: false },
-                            { title: '입/출고 내역', component: '/inventory/list', isActive: false },
-                            { title: '재고현황', component: '/inventory/stock', isActive: false },
-                            { title: '구역관리', component: '/inventory/area', isActive: false }
-                        ]
-                    },
+                    // {
+                    //     title: '단가 관리',
+                    //     subItems: []
+                    // },
+                    // {
+                    //     title: '재고 관리',
+                    //     subItems: [
+                    //         { title: '입/출고 관리', component: '/inventory/srmanagement', isActive: false },
+                    //         { title: '입/출고 내역', component: '/inventory/list', isActive: false },
+                    //         { title: '재고현황', component: '/inventory/stock', isActive: false },
+                    //         { title: '구역관리', component: '/inventory/area', isActive: false }
+                    //     ]
+                    // },
                     {
                         title: '거래처 관리',
                         subItems: [
                             { title: '거래처 목록', component: '/customers/list' , isActive: false },
                             // { title: '할인/할증목록', component: '/customers/sale' , isActive: false },
-                            { title: '거래처 예치금관리', component: '/customers/deposit' , isActive: false },
-                            { title: '결제수단 관리', component: '/customers/payment' , isActive: false },
+                            // { title: '거래처 예치금관리', component: '/customers/deposit' , isActive: false },
+                            // { title: '결제수단 관리', component: '/customers/payment' , isActive: false },
                             // { title: '외상한도 잔액관리', component: '/customers/credit' , isActive: false },
-                            { title: '견적서 관리', component: '/customers/estimate' , isActive: false },
+                            // { title: '견적서 관리', component: '/customers/estimate' , isActive: false },
                             // { title: '간편가입 신청 목록', component: '/customers/applicant' , isActive: false }
                         ]
                     },
-                    {
-                        title: '브랜드 관리',
-                        subItems: [
-                            { title: '브랜드 목록', component: '/brands/list' , isActive: false },
-                            { title: '브랜드 상품관리', component: '/brands/products' , isActive: false },
-                            { title: '브랜드 거래처관리', component: '/brands/customers' , isActive: false },
-                        ]
-                    },
-                    {
-                        title: '매출 관리',
-                        subItems: []
-                    },
-                    {
-                        title: '외상잔액 관리',
-                        subItems: []
-                    },
-                    {
-                        title: '정산 관리',
-                        subItems: []
-                    },
-                    {
-                        title: '통계',
-                        subItems: []
-                    }
+                    // {
+                    //     title: '브랜드 관리',
+                    //     subItems: [
+                    //         { title: '브랜드 목록', component: '/brands/list' , isActive: false },
+                    //         { title: '브랜드 상품관리', component: '/brands/products' , isActive: false },
+                    //         { title: '브랜드 거래처관리', component: '/brands/customers' , isActive: false },
+                    //     ]
+                    // },
+                    // {
+                    //     title: '매출 관리',
+                    //     subItems: []
+                    // },
+                    // {
+                    //     title: '외상잔액 관리',
+                    //     subItems: []
+                    // },
+                    // {
+                    //     title: '정산 관리',
+                    //     subItems: []
+                    // },
+                    // {
+                    //     title: '통계',
+                    //     subItems: []
+                    // }
                 ],
                 miniVariant: false,
                 right: true,

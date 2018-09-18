@@ -351,7 +351,7 @@
 </v-container>
 </template>
 <script>
-  let ip = "192.168.64.166";
+
   import {
     SearchForm,
     ButtonToggle,
@@ -434,14 +434,13 @@
     },
     methods: {
       initCustormer(){
-        this.$axios.get('http://'+ip+':8080/app/order/setinsert')
+        this.$axios.get('http://freshntech.cafe24.com/order/setinsert')
         .then(res => {
           this.shippingManager = res.data[0];
           for(var i = 0;i< this.shippingManager.length;i++){
             this.shipping.push(this.shippingManager[i].sManager);
           }
           this.customersItems = res.data[1];
-          console.log(this.customersItems[0].id+"dsfsf");
         })
         .catch((ex) => {
           console.log("Error : ",ex);
@@ -452,7 +451,7 @@
         this.orderItems = [];
         this.selectItems = [];
         this.customersModalCheck = false;
-        this.$axios.get('http://'+ip+':8080/app/order/setinsert/'+this.customersItem.id)
+        this.$axios.get('http://freshntech.cafe24.com/order/setinsert/'+this.customersItem.id)
         .then(res => {
           this.customerProducts = res.data;
         })
@@ -467,17 +466,6 @@
         }
         this.appendModalCheck = !this.appendModalCheck;
       },
-      // initCustomerProduct() {
-      //   this.customerProducts = [];
-      //   this.customersItem.product.forEach((item,index)=>{
-      //     var _number = item;
-      //     this.$models.products.forEach((product)=>{
-      //       if(product.productNum == _number){
-      //         this.customerProducts.push(product);
-      //       }
-      //     });
-      //   });
-      // },
       selectProduct(item){
         item.qTY = this.count;
         item.amount = this.count * item.price2;
@@ -511,10 +499,9 @@
       saveOrderItem() { //상품 추가 후 저장 누를 시
         this.orderItems = this.selectItems;
         this.appendModalCheck = false;
-        this.$axios.get('http://'+ip+':8080/app/order/setinsert/'+this.customersItem.id)
+        this.$axios.get('http://freshntech.cafe24.com/order/setinsert/'+this.customersItem.id)
         .then(res => {
           this.customerProducts = res.data;
-          console.log(this.customerProducts);
         })
         .catch((ex) => {
           console.log("Error : ",ex);
@@ -537,7 +524,7 @@
         }else if(this.orderItems.length == 0){
           alert('상품을 먼저 등록해주세요');
         }else{
-          this.$axios.post('http://'+ip+':8080/app/order',{
+          this.$axios.post('http://freshntech.cafe24.com/order',{
             tbCustomer_ID:this.customersItem.id,
             itemCount:this.allCount,
             amount:this.allCount,

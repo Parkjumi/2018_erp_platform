@@ -190,7 +190,6 @@
 </template>
 
 <script>
-let ip = "192.168.64.166";
 
 import {
   SearchForm,
@@ -253,7 +252,7 @@ export default{
     },
     // ========== created ========== //
     created(){
-      this.$axios.get('http://'+ip+':8080/app/item/insertset')
+      this.$axios.get('http://freshntech.cafe24.com/item/insertset')
       .then(res => {
         this.category1List = res.data[0];
         this.bNameList = res.data[1];
@@ -274,7 +273,7 @@ export default{
     methods: {
         // ===== 저장 ===== //
         saveItem(){
-          this.$axios.post('http://'+ip+':8080/app/item',{
+          this.$axios.post('http://freshntech.cafe24.com/item',{
             itemName:this.product.itemName,
             itemQTY:this.product.itemQTY,
             manufacturer:this.product.manufacturer,

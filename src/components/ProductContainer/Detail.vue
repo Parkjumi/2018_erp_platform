@@ -200,7 +200,6 @@
 </template>
 
 <script>
-let ip = "192.168.64.166";
 var product_id;
 var category;
 import {
@@ -275,7 +274,7 @@ export default{
     methods: {
         // ===== 저장 ===== //
         saveItem(){
-          this.$axios.put('http://'+ip+':8080/app/item/'+product_id,{
+          this.$axios.put('http://freshntech.cafe24.com/item/'+product_id,{
             itemName:this.product.itemName,
             itemQTY:this.product.itemQTY,
             manufacturer:this.product.manufacturer,
@@ -302,7 +301,7 @@ export default{
         },
 
         getProduct(product_id){
-          this.$axios.get('http://'+ip+':8080/app/item/detail/'+product_id)
+          this.$axios.get('http://freshntech.cafe24.com/item/detail/'+product_id)
           .then(res => {
             this.product = res.data;
             this.category = this.product.first;
@@ -313,7 +312,7 @@ export default{
             console.log("Error : ",ex);
           })
 
-          this.$axios.get('http://'+ip+':8080/app/item/insertset')
+          this.$axios.get('http://freshntech.cafe24.com/insertset')
           .then(res => {
             this.category1List = res.data[0];
             this.bNameList = res.data[1];
@@ -338,7 +337,7 @@ export default{
         },
 
         deleteProduct(){ // 상품 삭제
-          this.$axios.delete('http://'+ip+':8080/app/item/'+product_id)
+          this.$axios.delete('http://freshntech.cafe24.com/item/'+product_id)
           .then(res => {
             alert('삭제가 완료되었습니다.');
             this.$router.push('/product/product');

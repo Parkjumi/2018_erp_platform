@@ -180,7 +180,6 @@
 </template>
 
 <script>
-let ip = "192.168.64.166";
 import {
   SearchForm,
   ButtonToggle,
@@ -238,7 +237,7 @@ export default{
     // ========== methods ========== //
     methods: {
       initCustomerData(){
-        this.$axios.get('http://'+ip+':8080/app/customer')
+        this.$axios.get('http://freshntech.cafe24.com/customer')
         .then(res => {
           this.customers = res.data[1];
           this.shipping = res.data[0]
@@ -277,7 +276,7 @@ export default{
         },
 
         searchOrder(){
-          this.$axios.post('http://'+ip+':8080/app/customer/search',{
+          this.$axios.post('http://freshntech.cafe24.com/customer/search',{
             bName:this.searchWord
           })
           .then(res => {

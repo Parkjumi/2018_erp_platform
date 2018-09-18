@@ -452,7 +452,7 @@ export default{
 
         // ===== 찾기 ===== //
         getCustomer(id){
-          this.$axios.get('http://'+ip+':8080/app/order/detail/'+id)
+          this.$axios.get('http://freshntech.cafe24.com/order/detail/'+id)
           .then(res => {
             this.orderData = res.data[0];
             this.orderItems = res.data[1];
@@ -483,7 +483,7 @@ export default{
 
         // ===== 수정 ===== //
         regOrder(){
-          this.$axios.put('http://'+ip+':8080/app/order',{
+          this.$axios.put('http://freshntech.cafe24.com/order',{
             id:this.orderData.id,
             requests:this.orderData.requests,
             memo:this.orderData.memo,
@@ -499,7 +499,7 @@ export default{
         },
 
         deleteOrder(){
-          this.$axios.delete('http://'+ip+':8080/app/order/'+this.orderData.id)
+          this.$axios.delete('http://freshntech.cafe24.com/order/'+this.orderData.id)
           .then(res => {
             alert('삭제가 완료되었습니다.');
           })
@@ -517,7 +517,7 @@ export default{
           this.updateItems = this.updateItems.concat(this.selectItems);
           this.orderItems = this.selectItems.concat(this.orderItems);
           this.appendModalCheck = false;
-          this.$axios.get('http://'+ip+':8080/app/order/setinsert/'+this.customersItem.id)
+          this.$axios.get('http://freshntech.cafe24.com/order/setinsert/'+this.customersItem.id)
           .then(res => {
             this.customerProducts = res.data;
           })

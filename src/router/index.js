@@ -11,6 +11,11 @@ const routes = [
         component: () => import('@/components/CommonTest/Test')
     },
     {
+        path: '/main',
+        name: 'Main',
+        component: () => import('@/components/CommonTest/Main')
+    },
+    {
         path: '/order',
         name: 'OrderContainer',
         component: () => import('@/components/Dashboard/Layout'),

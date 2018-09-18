@@ -121,7 +121,6 @@
 </v-container>
 </template>
 <script>
-let ip = "192.168.64.166";
   import {
     SearchForm,
     ButtonToggle,
@@ -174,7 +173,7 @@ let ip = "192.168.64.166";
     },
     methods: {
       initProduct() {
-        this.$axios.get('http://'+ip+':8080/app/item')
+        this.$axios.get('http://freshntech.cafe24.com/item')
         .then(res => {
           this.products = res.data[0];
           this.categoryList = res.data[1];
@@ -194,7 +193,7 @@ let ip = "192.168.64.166";
 
     watch:{
       productState(){
-        this.$axios.post('http://'+ip+':8080/app/item/search',{
+        this.$axios.post('http://freshntech.cafe24.com/item/search',{
           state:this.productState,
           first:this.category,
           second:this.category_2
@@ -215,7 +214,7 @@ let ip = "192.168.64.166";
             }
           }
         }
-        this.$axios.post('http://'+ip+':8080/app/item/search',{
+        this.$axios.post('http://freshntech.cafe24.com/item/search',{
           state:this.productState,
           first:this.category,
           second:this.category_2
@@ -228,7 +227,7 @@ let ip = "192.168.64.166";
         })
       },
       category_2(){
-        this.$axios.post('http://'+ip+':8080/app/item/search',{
+        this.$axios.post('http://freshntech.cafe24.com/item/search',{
           state:this.productState,
           first:this.category,
           second:this.category_2
