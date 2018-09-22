@@ -86,7 +86,8 @@
                     {
                         title: '매입 관리',
                         subItems: [
-
+                          { title: '발주 관리', component:'/purchase/list', isActive: false},
+                          { title: '매입처 관리', component:'/purchase/buyerList', isActive: false},
                         ]
                     },
                     {

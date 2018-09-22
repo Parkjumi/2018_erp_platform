@@ -3,7 +3,7 @@
 
   <!-- ========== 헤더 ========== -->
   <page-header
-    title="주문 목록"/>
+    title="발주 관리"/>
 
   <!-- ========== 로딩 ========== -->
   <v-layout row v-if="loading">
@@ -103,37 +103,32 @@
         <v-flex xs6>
           <v-layout>
             <v-flex xs4 style="text-align:left">
-              <v-btn outline color="black"><v-icon small light>fas fa-print</v-icon>&nbsp;거래명세표 출력</v-btn>
-            </v-flex>
-            <v-flex style="text-align:left">
-              <v-btn outline color="black"><v-icon small light>fas fa-print</v-icon>&nbsp;거래명세표 출력</v-btn>
+              <v-btn outline color="black"><v-icon small light>fas fa-print</v-icon>&nbsp;발주서 출력</v-btn>
             </v-flex>
           </v-layout>
         </v-flex>
         <v-flex xs6>
           <v-flex style="text-align:right">
-            <v-btn outline color="indigo" @click="moveOrderAppend()"><v-icon small>far fa-file-alt</v-icon>&nbsp;신규주문 등록</v-btn>
+            <v-btn outline color="indigo" @click="moveOrderAppend()"><v-icon small>far fa-file-alt</v-icon>&nbsp;신규 발주 등록</v-btn>
           </v-flex>
         </v-flex>
       </v-layout>
+    <br>
     <hr/>
+    <br>
       <v-layout>
         <v-flex style="text-align:left">
           <span>전체 {{total}}건</span>
-          <v-btn>출고지시 완료</v-btn>
-          <v-btn>출고 완료</v-btn>
         </v-flex>
         <v-flex style="text-align:right">
-          <span>* 전일~당일까지의 주문내역이 기본으로 노출됩니다.</span>
-          <v-btn><v-icon>fas fa-file-download</v-icon>&nbsp;택배원장</v-btn>
-          <v-btn><v-icon>fas fa-file-download</v-icon>&nbsp;주문내역</v-btn>
+          <span>* 전일~당일까지의 발주내역이 기본으로 노출됩니다.</span>
         </v-flex>
       </v-layout>
       <v-layout class="bottom-container">
         <v-flex xs12>
           <v-data-table
             :headers="headers"
-            :items="orderData"
+            :items="purchaseData"
             hide-actions
             select-all>
             <template slot="items" slot-scope="props">
@@ -146,8 +141,8 @@
                    ></v-checkbox>
                  </td>
                  <td>{{props.index + 1}}</td>
-                 <td @click="$router.push('list/detail/'+props.item.id)">{{props.item.orderDate}}</td>
                  <td @click="$router.push('list/detail/'+props.item.id)">{{props.item.id}}</td>
+                 <td>{{props.item.bName}}</td>
                  <td >{{props.item.cBName}}</td>
                  <td>{{props.item.dBName}}</td>
                  <td>{{props.item.cManager}}</td>
@@ -170,7 +165,6 @@
 </template>
 <script>
   let d = new Date();
-  let ip = "35.200.2.168";
   import {
     SearchForm,
     ButtonToggle,
@@ -207,17 +201,17 @@
         loading: true,
         headers: [
           { text:  'no', value: 'num', sortable: false },
-          { text: '주문일시', value: 'date' },
-          { text: '주문번호', value: 'num', sortable: false },
-          { text: '거래처', value: 'string', sortable: false },
-          { text: '배송팀', value: 'string', sortable: false },
-          { text: '영업팀', value: 'string', sortable: false },
-          { text: '총 주문수량', value: 'num', sortable: false },
-          { text: '결제수단', value: 'string', sortable: false },
-          { text: '주문금액', value: 'string', sortable: false },
-          { text: '주문상태', value: 'string', sortable: false }
+          { text: '발주번호', value: 'date', sortable: true },
+          { text: '매입처', value: 'string', sortable: false },
+          { text: '발주일시', value: 'string', sortable: false },
+          { text: '총 발주 수량', value: 'string', sortable: false },
+          { text: '발주금액', value: 'string', sortable: false },
+          { text: '발주유형', value: 'num', sortable: false },
+          { text: '발주상태', value: 'string', sortable: false },
+          { text: '매입처출고상태', value: 'string', sortable: false },
+          { text: '입고상태', value: 'string', sortable: false }
         ],
-        orderData: [],
+        purchaseData: [],
         deliveryData: [],
         customerData: [],
         deliveryManagerList: [],
@@ -231,16 +225,11 @@
       }
     },
     methods: {
-      initOrderData() {
-        this.$axios.get('http://freshntech.cafe24.com/order')
+      initPurchaseData() {
+        this.$axios.get('http://freshntech.cafe24.com/purchase')
         .then(res => {
-          this.orderData = res.data[2];
-          this.customerData = res.data[0];
-          for(var i = 0;i < this.customerData.length;i++){
-            this.salesManList.push(this.customerData[i].sManager);
-            this.deliveryManagerList.push(this.customerData[i].sManager);
-          }
-          this.total = res.data[2].length;
+          this.purchaseData = res.data;
+          this.total = res.data.length;
         })
         .catch((ex) => {
           console.log("Error : ",ex);
@@ -261,7 +250,7 @@
             startDay:this.selectDate.startDate,
             endDay:this.selectDate.endDate
           }).then(res => {
-            this.orderData = res.data;
+            this.purchaseData = res.data;
           }).catch((ex) => {
             console.log("Error : ",ex);
           })
@@ -274,7 +263,7 @@
             startDay:this.selectDate.startDate,
             endDay:this.selectDate.endData
           }).then(res => {
-            this.orderData = res.data;
+            this.purchaseData = res.data;
           }).catch((ex) => {
             console.log("Error : ",ex);
           })
@@ -286,7 +275,7 @@
             sName:this.salesMan,
             cName:this.deliveryManager
           }).then(res => {
-            this.orderData = res.data;
+            this.purchaseData = res.data;
           }).catch((ex) => {
             console.log("Error : ",ex);
           })
@@ -294,14 +283,14 @@
       },
 
       moveOrderAppend() {
-        this.$router.push('/order/append');
+        this.$router.push('/purchase/append');
       }
     },
     created() {
       setTimeout(()=>{
           this.$set(this, 'loading', false);
       }, 780)
-      this.initOrderData();
+      this.initPurchaseData();
     }
   }
 </script>
@@ -320,7 +309,7 @@
   }
 
   .middle-container{
-    margin-top: 30px;
+    margin-top: 10px;
   }
 
   .bottom-container{

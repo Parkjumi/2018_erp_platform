@@ -1,14 +1,14 @@
 <template>
 <v-container>
-  <page-header title="신규 주문 등록"/>
-  <h3 style="margin-top: 15px;">주문 정보</h3>
+  <page-header title="신규 발주 등록"/>
+  <h3 style="margin-top: 15px;">발주 정보</h3>
   <v-layout>
     <v-flex>
       <detail-table>
         <tbody slot="contents">
           <tr>
-            <th>거래처 선택 *</th>
-            <td colspan="3">
+            <th>매입처*</th>
+            <td colspan="3" style="width: 35%;">
               <v-layout>
                 <v-flex xs5>
                   <v-text-field v-model="customersItem.bName"/>
@@ -17,103 +17,57 @@
                   <v-btn
                     @click.stop="customersModalCheck = !customersModalCheck"
                     outline>
-                    거래처 선택
+                    매입처 선택
                   </v-btn>
                 </v-flex>
               </v-layout>
             </td>
           </tr>
           <tr>
-            <th>결제 방법</th>
-            <td style="width: 30%;">
+            <th>담당자*</th>
+            <td style="width: 35%;">
               <v-layout>
                 <v-flex>
                   <v-select
                     :items="['신용카드','현금결제']"
                     item-text="paymentName"
-                    label="결제 방법"
+                    label="담당자 선택"
                     v-model="payMethod"
                   ></v-select>
                 </v-flex>
               </v-layout>
-              </td>
-            <th rowspan="2">배송요청일</th>
-            <td rowspan="2" style="width: 40%;">
-              <v-layout>
-                <v-flex>
-                  <v-menu
-                    ref="menu"
-                    :close-on-content-click="false"
-                    v-model="menu"
-                    :nudge-right="40"
-                    :return-value.sync="date"
-                    lazy
-                    transition="scale-transition"
-                    offset-y
-                    full-width
-                    min-width="120px"
-                  >
-                    <v-text-field
-                      slot="activator"
-                      v-model="date"
-                      label="Picker in menu"
-                      prepend-icon="event"
-                      readonly
-                    ></v-text-field>
-                    <v-date-picker v-model="date" no-title scrollable>
-                      <v-spacer></v-spacer>
-                      <v-btn flat color="primary" @click="menu = false">취소</v-btn>
-                      <v-btn flat color="primary" @click="$refs.menu.save(date)">적용</v-btn>
-                    </v-date-picker>
-                  </v-menu>
-                </v-flex>
-              </v-layout>
             </td>
-          </tr>
-          <tr>
-            <!-- <th>배송 담당자</th>
+            <th>납기일자*</th>
             <td>
-              <v-layout>
-                <v-flex>
-                  <v-select
-                    :items="shipping"
-                    item-text="managerName"
-                    label="배송 담당자"
-                    v-model="shippingManager"
-                  ></v-select>
-                </v-flex>
-              </v-layout>
-            </td> -->
-            <th>영업 담당자</th>
-            <td>
-              <v-layout>
-                <v-flex>
-                  <v-select
-                    :items="shipping"
-                    item-text="managerName"
-                    label="영업 담당자"
-                    v-model="manager"
-                  ></v-select>
-                </v-flex>
-              </v-layout>
+              <v-menu
+                ref="menu"
+                :close-on-content-click="false"
+                v-model="menu"
+                :nudge-right="40"
+                :return-value.sync="date"
+                lazy
+                transition="scale-transition"
+                offset-y
+                full-width
+                min-width="290px"
+              >
+                <v-text-field
+                  slot="activator"
+                  v-model="date"
+                  label="납기일자를 선택하세요"
+                  prepend-icon="event"
+                  readonly
+                ></v-text-field>
+                <v-date-picker v-model="date" no-title scrollable>
+                  <v-spacer></v-spacer>
+                  <v-btn flat color="primary" @click="menu = false">Cancel</v-btn>
+                  <v-btn flat color="primary" @click="$refs.menu.save(date)">OK</v-btn>
+                </v-date-picker>
+              </v-menu>
             </td>
           </tr>
           <tr>
-            <th>요청사항</th>
-            <td colspan="3">
-              <v-layout>
-                <v-flex>
-                  <v-text-field
-                    textarea
-                    v-model="requests"
-                    rows="2">
-                  </v-text-field>
-                </v-flex>
-              </v-layout>
-            </td>
-          </tr>
-          <tr>
-            <th>메모</th>
+            <th>비고</th>
             <td colspan="3">
               <v-layout>
                 <v-flex>
@@ -130,7 +84,7 @@
       </detail-table>
     </v-flex>
   </v-layout>
-  <h3 style="margin-top: 15px;">상품 목록</h3>
+  <h3 style="margin-top: 15px;">발주 목록</h3>
   <v-layout style="padding-top: 20px;">
     <v-flex>
       전체 {{allCount}}건
@@ -171,17 +125,17 @@
   </v-layout>
   <v-layout style="margin-top:20px;">
     <v-flex style="text-align: center">
-      <v-btn @click="$router.push('/order/list')">목록으로</v-btn>
+      <v-btn @click="$router.push('/purchase/list')">목록으로</v-btn>
       <v-btn @click="regOrder()">등록하기</v-btn>
     </v-flex>
   </v-layout>
-  <!-- 거래처 선택 모달 시작 -->
+  <!-- 매입처 선택 모달 시작 -->
   <v-dialog
     v-model="customersModalCheck"
     width="50%">
     <v-card>
       <div style="padding: 10px; background-color: #263238; color: white; height: 48px;">
-        <h3>거래처 검색</h3>
+        <h3>매입처 검색</h3>
       </div>
       <v-layout style="padding: 20px 30px;">
         <v-flex xs1 style="padding-top: 20px;">
@@ -211,7 +165,7 @@
       </v-layout>
     </v-card>
   </v-dialog>
-  <!-- 거래처 선택 모달 종료 -->
+  <!-- 매입처 선택 모달 종료 -->
   <!-- 상품 추가 모달 시작 -->
   <v-dialog
     v-model="appendModalCheck"
@@ -257,7 +211,7 @@
           <v-flex xs8 style="padding: 0px 5px;">
             <v-layout>
               <v-flex>
-                *해당 거래처에서 자주 주문한 상품 순입니다.
+                *해당 매입처에서 자주 주문한 상품 순입니다.
               </v-flex>
               <v-flex>
                 전체 {{allCount}}건
@@ -274,6 +228,8 @@
                     <td>{{props.item.itemQTY}}</td>
                     <td>{{props.item.price1}}</td>
                     <td>{{props.item.price2}}</td>
+                    <td>{{props.item.price3}}</td>
+                    <td>{{props.item.price3}}</td>
                     <td>{{props.item.price3}}</td>
                     <td>
                       <v-btn outline @click="selectProduct(props.item)">선택</v-btn>
@@ -393,17 +349,19 @@
         items: [],
         appendModalCheck: false,
         productHeaders: [
-          { text:  '상품명', value: 'strings', sortable: false },
-          { text: '재고량', value: 'string', sortable: false },
-          { text: '배송 단가', value: 'string', sortable: false },
-          { text: '소비자 가격', value: 'string', sortable: false },
-          { text: '예비 가격', value: 'string', sortable: false },
+          { text:  '상품코드', value: 'string', sortable: false },
+          { text: '상품명', value: 'string', sortable: false },
+          { text: '카테고리', value: 'string', sortable: false },
+          { text: '규격(단위)', value: 'string', sortable: false },
+          { text: '제조사(원산지)', value: 'string', sortable: false },
+          { text: '부가세여부', value: 'string', sortable: false },
+          { text: '매입단가', value: 'string', sortable: false },
           { text: '선택', value: 'string', sortable: false }
         ],
         customersModalCheck: false,
         customersHeaders: [
           { text: 'no', value: 'num', sortable: false },
-          { text:  '거래처명', value: 'string', sortable: false },
+          { text:  '매입처명', value: 'string', sortable: false },
           { text: '거래처 연락처', value: 'string', sortable: false },
           { text: '배송 담당자', value: 'string', sortable: false },
           { text: '거래처 선택', value: 'string', sortable: false }
@@ -462,7 +420,7 @@
       },
       openAppendModal() {
         if(this.customersItem == ''){
-          alert('거래처를 선택하십시오');
+          alert('매입처를 선택하십시오');
           return;
         }
         this.appendModalCheck = !this.appendModalCheck;
@@ -520,9 +478,9 @@
       regOrder() { //등록하기 버튼 누를 시
         console.log(this.orderItems[0].amount+'ㅇㅇㅇ');
         if(!this.customersItem.bName){
-          alert('거래처가 선택되지 않았습니다.');
+          alert('매입처가 선택되지 않았습니다.');
         }else if(this.date == ''){
-          alert('배송요청일을 선택해주세요');
+          alert('납기일자를 선택해주세요');
         }else if(this.orderItems.length == 0){
           alert('상품을 먼저 등록해주세요');
         }else{

@@ -3,7 +3,7 @@
 
   <!-- ========== 헤더 ========== -->
   <page-header
-    title="주문 목록"/>
+    title="매입처 관리"/>
 
   <!-- ========== 로딩 ========== -->
   <v-layout row v-if="loading">
@@ -31,67 +31,19 @@
           <detail-table>
             <tbody slot="contents">
               <tr>
-                <th>기간</th>
-                <td>
-                  <v-layout>
-                    <v-flex xs4 style="padding-top:14px;">
-                      <button-toggle
-                        :list="period"
-                        v-model="selectPeriod"
-                        v-on:input="clickPeriod">
-                      </button-toggle>
-                    </v-flex>
-                    <v-flex xs8>
-                      <date-range
-                        :selectPeriod="selectPeriod"
-                        v-model="selectDate"
-                        />
-                    </v-flex>
-                  </v-layout>
-                </td>
-                <td rowspan="3" style="width: 10%;">
-                  <v-btn small @click="searchOrder()">검색</v-btn>
-                </td>
-              </tr>
-              <tr>
-                <th rowspan="2">검색</th>
+                <th>키워드 검색</th>
                 <td>
                   <v-layout style="padding-top:20px;">
                     <v-flex xs2>
                       <select-items
-                        :items="['거래처명', '주문번호']"
+                        :items="['매입처명', '매입처코드']"
                         v-model="select">
                       </select-items>
                     </v-flex>
-                    <v-flex xs10 style="padding: 0px 20px;">
-                      <v-text-field v-model="searchWord" label="검색어를 입력해 주세요">
-
-                      </v-text-field>
+                    <v-flex xs7 style="padding: 0px 20px;">
+                      <v-text-field v-model="searchWord" label="검색어를 입력해 주세요"></v-text-field>
                     </v-flex>
-                  </v-layout>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <v-layout>
-                    <v-flex xs4 class="select-flex-container">
-                      <v-select
-                        :items="['주문완료','주문변경','주문취소','반품접수','반품완료']"
-                        v-model="orderState"
-                        label="주문상태"/>
-                    </v-flex>
-                    <v-flex xs4 class="select-flex-container">
-                      <v-select
-                        :items="deliveryManagerList"
-                        v-model="deliveryManager"
-                        label="배송담당자"/>
-                    </v-flex>
-                    <v-flex xs4 class="select-flex-container">
-                      <v-select
-                        :items="salesManList"
-                        v-model="salesMan"
-                        label="영업담당자"/>
-                    </v-flex>
+                    <v-btn>검색</v-btn>
                   </v-layout>
                 </td>
               </tr>
@@ -100,40 +52,22 @@
         </v-flex>
       </v-layout>
       <v-layout row wrap class="middle-container">
-        <v-flex xs6>
-          <v-layout>
-            <v-flex xs4 style="text-align:left">
-              <v-btn outline color="black"><v-icon small light>fas fa-print</v-icon>&nbsp;거래명세표 출력</v-btn>
-            </v-flex>
-            <v-flex style="text-align:left">
-              <v-btn outline color="black"><v-icon small light>fas fa-print</v-icon>&nbsp;거래명세표 출력</v-btn>
-            </v-flex>
-          </v-layout>
-        </v-flex>
-        <v-flex xs6>
+        <v-flex xs12>
           <v-flex style="text-align:right">
-            <v-btn outline color="indigo" @click="moveOrderAppend()"><v-icon small>far fa-file-alt</v-icon>&nbsp;신규주문 등록</v-btn>
+            <v-btn outline color="indigo" @click="moveOrderAppend()"><v-icon small>far fa-file-alt</v-icon>&nbsp;신규 매입처 등록</v-btn>
           </v-flex>
         </v-flex>
       </v-layout>
-    <hr/>
       <v-layout>
         <v-flex style="text-align:left">
           <span>전체 {{total}}건</span>
-          <v-btn>출고지시 완료</v-btn>
-          <v-btn>출고 완료</v-btn>
-        </v-flex>
-        <v-flex style="text-align:right">
-          <span>* 전일~당일까지의 주문내역이 기본으로 노출됩니다.</span>
-          <v-btn><v-icon>fas fa-file-download</v-icon>&nbsp;택배원장</v-btn>
-          <v-btn><v-icon>fas fa-file-download</v-icon>&nbsp;주문내역</v-btn>
         </v-flex>
       </v-layout>
       <v-layout class="bottom-container">
         <v-flex xs12>
           <v-data-table
             :headers="headers"
-            :items="orderData"
+            :items="purchaseData"
             hide-actions
             select-all>
             <template slot="items" slot-scope="props">
@@ -146,15 +80,10 @@
                    ></v-checkbox>
                  </td>
                  <td>{{props.index + 1}}</td>
-                 <td @click="$router.push('list/detail/'+props.item.id)">{{props.item.orderDate}}</td>
-                 <td @click="$router.push('list/detail/'+props.item.id)">{{props.item.id}}</td>
-                 <td >{{props.item.cBName}}</td>
-                 <td>{{props.item.dBName}}</td>
-                 <td>{{props.item.cManager}}</td>
-                 <td>{{props.item.amount}}</td>
-                 <td>{{props.item.payMethod}}</td>
-                 <td>{{props.item.payMent}}</td>
-                 <td>{{props.item.orderState}}</td>
+                 <td @click="$router.push('buyer/detail/'+props.item.id)">{{props.item.id}}</td>
+                 <td>{{props.item.bName}}</td>
+                 <td >{{props.item.count}}개</td>
+                 <td><v-btn>삭제</v-btn></td>
               </tr>
             </template>
           </v-data-table>
@@ -170,7 +99,6 @@
 </template>
 <script>
   let d = new Date();
-  let ip = "35.200.2.168";
   import {
     SearchForm,
     ButtonToggle,
@@ -198,26 +126,16 @@
     },
     data(){
       return {
-        periodDivision: '주문 일시',
-        period: ['전체','전일','당일','한달'],
-        periodDate: [''],
-        selectPeriod: 0,
-        selectDate:{},
         page: 1,
         loading: true,
         headers: [
           { text:  'no', value: 'num', sortable: false },
-          { text: '주문일시', value: 'date' },
-          { text: '주문번호', value: 'num', sortable: false },
-          { text: '거래처', value: 'string', sortable: false },
-          { text: '배송팀', value: 'string', sortable: false },
-          { text: '영업팀', value: 'string', sortable: false },
-          { text: '총 주문수량', value: 'num', sortable: false },
-          { text: '결제수단', value: 'string', sortable: false },
-          { text: '주문금액', value: 'string', sortable: false },
-          { text: '주문상태', value: 'string', sortable: false }
+          { text: '매입처코드', value: 'string', sortable: false },
+          { text: '매입처명', value: 'num', sortable: false },
+          { text: '상품수', value: 'string', sortable: false },
+          { text: '삭제', value: 'string', sortable: false },
         ],
-        orderData: [],
+        purchaseData: [],
         deliveryData: [],
         customerData: [],
         deliveryManagerList: [],
@@ -231,26 +149,16 @@
       }
     },
     methods: {
-      initOrderData() {
-        this.$axios.get('http://freshntech.cafe24.com/order')
+      initPurchaseData() {
+        this.$axios.get('http://freshntech.cafe24.com/purchase')
         .then(res => {
-          this.orderData = res.data[2];
-          this.customerData = res.data[0];
-          for(var i = 0;i < this.customerData.length;i++){
-            this.salesManList.push(this.customerData[i].sManager);
-            this.deliveryManagerList.push(this.customerData[i].sManager);
-          }
-          this.total = res.data[2].length;
+          this.purchaseData = res.data;
+          this.total = res.data.length;
         })
         .catch((ex) => {
           console.log("Error : ",ex);
         })
       },
-
-      clickPeriod(period) {
-        this.selectPeriod = period;
-      },
-
       searchOrder(){
         if(this.select == "거래처명"){
           this.$axios.post('http://freshntech.cafe24.com/order/search',{
@@ -294,14 +202,14 @@
       },
 
       moveOrderAppend() {
-        this.$router.push('/order/append');
+        this.$router.push('/purchase/appendBuyer');
       }
     },
     created() {
       setTimeout(()=>{
           this.$set(this, 'loading', false);
       }, 780)
-      this.initOrderData();
+      this.initPurchaseData();
     }
   }
 </script>

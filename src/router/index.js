@@ -85,6 +85,43 @@ const routes = [
         ]
     },
     {
+      path:'/purchase',
+      name:'PurchaseContainer',
+      component: () => import('@/components/Dashboard/Layout'),
+      children:[
+        {
+          path:'list', // 발주 관리
+          name:'PurchaseContainer.List',
+          component: () => import('@/components/Purchase/PurchaseList')
+        },
+        {
+          path: 'list/detail/:order_id', // 발주관리 상세보기
+          name:'PurchaseContainer.purchaseDetail',
+          component: () => import('@/components/Purchase/PurchaseDetail')
+        },
+        {
+          path:'append', // 신규 발주 등록
+          name:'PurchaseContainer.Append',
+          component: () => import('@/components/Purchase/Append')
+        },
+        {
+          path:'buyerList', // 매입처 관리
+          name:'PurchaseContainer.BuyerList',
+          component: () => import('@/components/Purchase/BuyerList')
+        },
+        {
+          path: 'buyer/detail/:buyer_id', // 매입처 관리 상세보기
+          name:'PurchaseContainer.buyerDetail',
+          component: () => import('@/components/Purchase/buyerDetail')
+        },
+        {
+          path:'appendBuyer', // 신규 매입처 등록
+          name:'PurchaseContainer.AppendBuyer',
+          component: () => import('@/components/Purchase/AppendBuyer')
+        },
+      ]
+    },
+    {
         path: '/product',
         name: 'ProductContainer',
         component: () => import('@/components/Dashboard/Layout'),
@@ -108,7 +145,7 @@ const routes = [
                 path: 'apply',
                 name: 'ProductContainer.Product',
                 component: () => import('@/components/ProductContainer/ProductApply')
-            }
+            },
         ]
     },
 

@@ -1,7 +1,7 @@
 <template>
 <v-container style=" ">
 <!-- ========== 헤더 ========== -->
-<page-header title="주문 상세보기" />
+<page-header title="발주 수정" />
 <br>
 <v-layout row v-if="loading">
     <v-flex xs12 md12  style="text-align:center;">
@@ -22,7 +22,7 @@
 <!-- ========== 컨텐츠 ========== -->
 <div v-else>
     <div class="cardbox cardbox-header" >
-        <h3>주문 정보</h3>
+        <h3>발주 정보</h3>
     </div>
     <v-layout row cardbox cardbox-body style="padding:0;">
         <v-flex xs12 md12 >
@@ -34,124 +34,106 @@
                     <col width="35%">
                 </colgroup>
                 <tr>
-                    <th><h4 class="center-align">주문 번호</h4></th>
+                  <th>매입처*</th>
+                  <td colspan="3" style="width: 35%;">
+                    <v-layout>
+                      <v-flex xs5>
+                        <v-text-field v-model="customersItem.bName"/>
+                      </v-flex>
+                      <v-flex xs4 style="padding-top: 8px;">
+                        <v-btn
+                          @click.stop="customersModalCheck = !customersModalCheck"
+                          outline>
+                          매입처 선택
+                        </v-btn>
+                      </v-flex>
+                    </v-layout>
+                  </td>
+                </tr>
+                <tr>
+                    <th><h4 class="center-align">담당자*</h4></th>
                     <td>
-                      {{orderData.id}}
+                      <v-layout>
+                        <v-flex>
+                          <v-select
+                            :items="['신용카드','현금결제']"
+                            item-text="paymentName"
+                            label="담당자 선택"
+                            v-model="payMethod"
+                          ></v-select>
+                        </v-flex>
+                      </v-layout>
                     </td>
-                    <th><h4 class="center-align">주문 일자</h4></th>
+                    <th><h4 class="center-align">거래처</h4></th>
                     <td>
-                      {{orderData.reqDate}}
+
                     </td>
                 </tr>
                 <tr>
-                    <th><h4 class="center-align">거래처명</h4></th>
+                    <th><h4 class="center-align">관련 주문번호</h4></th>
                     <td>
-                      {{orderData.cBName}}
+
                     </td>
-                    <th><h4 class="center-align">결제 수단</h4></th>
+                    <th><h4 class="center-align">납기일자*</h4></th>
                     <td>
-                      {{orderData.payMethod}}
+                      <v-menu
+                        ref="menu"
+                        :close-on-content-click="false"
+                        v-model="menu"
+                        :nudge-right="40"
+                        :return-value.sync="date"
+                        lazy
+                        transition="scale-transition"
+                        offset-y
+                        full-width
+                        min-width="290px"
+                      >
+                        <v-text-field
+                          slot="activator"
+                          v-model="date"
+                          label="납기일자를 선택하세요"
+                          prepend-icon="event"
+                          readonly
+                        ></v-text-field>
+                        <v-date-picker v-model="date" no-title scrollable>
+                          <v-spacer></v-spacer>
+                          <v-btn flat color="primary" @click="menu = false">Cancel</v-btn>
+                          <v-btn flat color="primary" @click="$refs.menu.save(date)">OK</v-btn>
+                        </v-date-picker>
+                      </v-menu>
                     </td>
                 </tr>
                 <tr>
-                    <th><h4 class="center-align">담당자 / 연락처</h4></th>
-                    <td>
-                      {{orderData.dManager}} / {{orderData.tel}}
-                    </td>
-                    <th><h4 class="center-align">총 주문 금액</h4></th>
-                    <td>
-                      {{numberWithCommas(orderData.payment)}}원
-                    </td>
-                </tr>
-                <tr>
-                    <th><h4 class="center-align">거래처 주소</h4></th>
+                    <th><h4 class="center-align">발주 유형</h4></th>
                     <td colspan="3">
-                      {{orderData.address1}} {{orderData.address2}} {{orderData.address3}}
+
+                    </td>
+                </tr>
+                <tr>
+                    <th><h4 class="center-align">거래처 배송요청 사항</h4></th>
+                    <td colspan="3">
+
+                    </td>
+                </tr>
+                <tr>
+                    <th><h4 class="center-align">비고</h4></th>
+                    <td colspan="3">
+                      <v-layout>
+                        <v-flex>
+                          <v-text-field
+                            textarea
+                            v-model="memo"
+                            rows="2">
+                          </v-text-field>
+                        </v-flex>
+                      </v-layout>
                     </td>
                 </tr>
             </table>
         </v-flex>
     </v-layout>
 <br>
-
-<div class="cardbox cardbox-header" >
-    <h3>배송 정보</h3>
-</div>
-<v-layout row cardbox cardbox-body style="padding:0;">
-    <v-flex xs12 md12 >
-        <table style="width:94%;" class="td-margin">
-            <colgroup>
-                <col width="15%">
-                <col width="35%">
-                <col width="15%">
-                <col width="35%">
-            </colgroup>
-            <tr>
-              <th><h4 class="center-align">배송 요청일</h4></th>
-              <td>
-                <v-menu
-                  ref="menu"
-                  :close-on-content-click="false"
-                  v-model="menu"
-                  :nudge-right="40"
-                  :return-value.sync="date"
-                  lazy
-                  transition="scale-transition"
-                  offset-y
-                  full-width
-                  min-width="290px"
-                >
-                  <v-text-field
-                    slot="activator"
-                    v-model="orderData.reqDate"
-                    label="배송 요청일을 선택하세요"
-                    prepend-icon="event"
-                    readonly
-                  ></v-text-field>
-                  <v-date-picker v-model="orderData.reqDate" no-title scrollable>
-                    <v-spacer></v-spacer>
-                    <v-btn flat color="primary" @click="menu = false">Cancel</v-btn>
-                    <v-btn flat color="primary" @click="$refs.menu.save(date)">OK</v-btn>
-                  </v-date-picker>
-                </v-menu>
-              </td>
-
-            </tr>
-            <tr>
-                <th><h4 class="center-align">배송 담당자</h4></th>
-                <td>
-                  {{orderData.dManager}}
-                </td>
-                <th><h4 class="center-align">영업 담당자</h4></th>
-                <td>
-                  {{orderData.cManager}}
-                </td>
-            </tr>
-            <tr>
-                <th><h4 class="center-align">요청 사항</h4></th>
-                <td colspan="3">
-                  <v-text-field
-                    outline
-                    v-model="orderData.requests"
-                    rows="2">
-                  </v-text-field>
-                </td>
-            </tr>
-            <tr>
-                <th><h4 class="center-align">메모</h4></th>
-                <td colspan="3">
-                  <v-text-field
-                    outline
-                    v-model="orderData.memo"
-                    rows="2">
-                  </v-text-field>
-                </td>
-            </tr>
-        </table>
-    </v-flex>
-</v-layout>
-<br>
-<h3 style="margin-top: 15px;">상품 목록</h3>
+<h3 style="margin-top: 15px;">발주 상품</h3>
 <v-layout style="padding-top: 20px;">
   <v-flex>
     전체 {{allCount}}건
@@ -197,6 +179,43 @@
     <v-btn @click="deleteOrder()">삭제하기</v-btn>
   </v-flex>
 </v-layout>
+<!-- 매입처 선택 모달 시작 -->
+<v-dialog
+  v-model="customersModalCheck"
+  width="50%">
+  <v-card>
+    <div style="padding: 10px; background-color: #263238; color: white; height: 48px;">
+      <h3>매입처 검색</h3>
+    </div>
+    <v-layout style="padding: 20px 30px;">
+      <v-flex xs1 style="padding-top: 20px;">
+        <h2>검색</h2>
+      </v-flex>
+      <v-flex xs8>
+        <search-form />
+      </v-flex>
+    </v-layout>
+    <v-layout>
+      <v-flex style="padding: 0px 30px;">
+        <v-data-table
+          :headers="customersHeaders"
+          :items="customersItems"
+          hide-actions>
+          <template slot="items" slot-scope="props">
+            <td>{{props.item.id}}</td>
+            <td>{{props.item.bName}}</td>
+            <td>{{props.item.mobile}}</td>
+            <td>{{props.item.manager}}</td>
+            <td>
+              <v-btn outline sm @click="selectCustomer(props.item)">선택</v-btn>
+            </td>
+          </template>
+        </v-data-table>
+      </v-flex>
+    </v-layout>
+  </v-card>
+</v-dialog>
+<!-- 매입처 선택 모달 종료 -->
 <!-- 상품 추가 모달 시작 -->
 <v-dialog
   v-model="appendModalCheck"
@@ -408,6 +427,7 @@ export default{
             appendModalCheck: false,
             loading:true,
             search: '',
+            customersItem: '',
             customerProducts: [],   //거래처가 취급하는 상품 데이터,
             selectItems: [],         //거래처가 취급하는 상품중 선택된 상품
             pagination: {},
@@ -427,7 +447,6 @@ export default{
             deleteOrderItems:[],//삭제할 주문 아이디
         }
     },
-
     // ========== created ========== //
     created(){
         var order_id = this.$route.params.order_id
@@ -462,6 +481,20 @@ export default{
             console.log("Error : ",ex);
           })
             setTimeout(()=>{ this.$set(this, 'loading', false) }, 750)
+        },
+
+        selectCustomer(customers) { //매입처 선택 누를시
+          this.customersItem = customers;
+          this.orderItems = [];
+          this.selectItems = [];
+          this.customersModalCheck = false;
+          this.$axios.get('http://freshntech.cafe24.com/order/setinsert/'+this.customersItem.id)
+          .then(res => {
+            this.customerProducts = res.data;
+          })
+          .catch((ex) => {
+            console.log("Error : ",ex);
+          })
         },
 
         selectProduct(item){ // 상품 추가

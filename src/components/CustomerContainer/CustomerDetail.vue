@@ -229,6 +229,7 @@
     <v-flex style="text-align: center">
       <v-btn @click="$router.push('/customers/list')">목록으로</v-btn>
       <v-btn @click="saveOrderItem()">수정하기</v-btn>
+      <v-btn @click="deleteProduct()">삭제하기</v-btn>
     </v-flex>
   </v-layout>
 <br>
@@ -237,7 +238,7 @@
 </template>
 
 <script>
-let ip = "192.168.64.166";
+var customer_id;
 import {
   SearchForm,
   ButtonToggle,
@@ -292,9 +293,9 @@ export default{
 
     // ========== created ========== //
     created(){
-        var customer_id = this.$route.params.customer_id
+        customer_id = this.$route.params.customer_id
         this.$set(this, 'customer_id', customer_id)
-        this.$axios.get('http://'+ip+':8080/app/customer/detail/'+customer_id)
+        this.$axios.get('http://freshntech.cafe24.com/customer/detail/'+customer_id)
         .then(res => {
           this.customer = res.data[0]
           this.shippingList = res.data[2];
@@ -316,7 +317,7 @@ export default{
     methods: {
         // ===== 저장 ===== //
         saveOrderItem(){
-            this.$axios.put('http://'+ip+':8080/app/customer',{
+            this.$axios.put('http://freshntech.cafe24.com/customer',{
               bName:this.customer.bName,
               bNumber:this.customer.bNumber,
               chief:this.customer.chief,
@@ -344,6 +345,17 @@ export default{
             .catch((ex) => {
               console.log("Error : ",ex);
             })
+        },
+
+        deleteProduct(){ // 상품 삭제
+          this.$axios.delete('http://freshntech.cafe24.com/customer/'+customer_id)
+          .then(res => {
+            alert('삭제가 완료되었습니다.');
+            this.$router.push('/customers/list');
+          })
+          .catch((ex) => {
+            console.log("Error : ",ex);
+          })
         },
     },
 }

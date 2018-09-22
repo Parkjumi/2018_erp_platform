@@ -312,7 +312,7 @@ export default{
             console.log("Error : ",ex);
           })
 
-          this.$axios.get('http://freshntech.cafe24.com/insertset')
+          this.$axios.get('http://freshntech.cafe24.com/item/insertset')
           .then(res => {
             this.category1List = res.data[0];
             this.bNameList = res.data[1];

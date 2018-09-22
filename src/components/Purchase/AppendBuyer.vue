@@ -1,126 +1,191 @@
 <template>
 <v-container>
-  <page-header title="신규 주문 등록"/>
-  <h3 style="margin-top: 15px;">주문 정보</h3>
+  <page-header title="신규 매입처 등록"/>
+  <h3 style="margin-top: 15px;">기본 정보</h3>
   <v-layout>
     <v-flex>
       <detail-table>
         <tbody slot="contents">
           <tr>
-            <th>거래처 선택 *</th>
-            <td colspan="3">
+            <th>매입처코드</th>
+            <td style="width: 35%;">
               <v-layout>
-                <v-flex xs5>
-                  <v-text-field v-model="customersItem.bName"/>
-                </v-flex>
-                <v-flex xs4 style="padding-top: 8px;">
-                  <v-btn
-                    @click.stop="customersModalCheck = !customersModalCheck"
-                    outline>
-                    거래처 선택
-                  </v-btn>
+                <v-flex xs12 style="padding: 0px">
+                  <v-text-field v-model="searchWord" label="매입처코드를 입력해 주세요">
+
+                  </v-text-field>
                 </v-flex>
               </v-layout>
             </td>
-          </tr>
-          <tr>
-            <th>결제 방법</th>
-            <td style="width: 30%;">
+            <th>매입처명*</th>
+            <td style="width: 35%;">
               <v-layout>
-                <v-flex>
-                  <v-select
-                    :items="['신용카드','현금결제']"
-                    item-text="paymentName"
-                    label="결제 방법"
-                    v-model="payMethod"
-                  ></v-select>
-                </v-flex>
-              </v-layout>
-              </td>
-            <th rowspan="2">배송요청일</th>
-            <td rowspan="2" style="width: 40%;">
-              <v-layout>
-                <v-flex>
-                  <v-menu
-                    ref="menu"
-                    :close-on-content-click="false"
-                    v-model="menu"
-                    :nudge-right="40"
-                    :return-value.sync="date"
-                    lazy
-                    transition="scale-transition"
-                    offset-y
-                    full-width
-                    min-width="120px"
-                  >
-                    <v-text-field
-                      slot="activator"
-                      v-model="date"
-                      label="Picker in menu"
-                      prepend-icon="event"
-                      readonly
-                    ></v-text-field>
-                    <v-date-picker v-model="date" no-title scrollable>
-                      <v-spacer></v-spacer>
-                      <v-btn flat color="primary" @click="menu = false">취소</v-btn>
-                      <v-btn flat color="primary" @click="$refs.menu.save(date)">적용</v-btn>
-                    </v-date-picker>
-                  </v-menu>
-                </v-flex>
-              </v-layout>
-            </td>
-          </tr>
-          <tr>
-            <!-- <th>배송 담당자</th>
-            <td>
-              <v-layout>
-                <v-flex>
-                  <v-select
-                    :items="shipping"
-                    item-text="managerName"
-                    label="배송 담당자"
-                    v-model="shippingManager"
-                  ></v-select>
-                </v-flex>
-              </v-layout>
-            </td> -->
-            <th>영업 담당자</th>
-            <td>
-              <v-layout>
-                <v-flex>
-                  <v-select
-                    :items="shipping"
-                    item-text="managerName"
-                    label="영업 담당자"
-                    v-model="manager"
-                  ></v-select>
-                </v-flex>
-              </v-layout>
-            </td>
-          </tr>
-          <tr>
-            <th>요청사항</th>
-            <td colspan="3">
-              <v-layout>
-                <v-flex>
-                  <v-text-field
-                    textarea
-                    v-model="requests"
-                    rows="2">
+                <v-flex xs12 style="padding: 0px">
+                  <v-text-field v-model="searchWord" label="매입처명을 입력해 주세요">
+
                   </v-text-field>
                 </v-flex>
               </v-layout>
             </td>
           </tr>
           <tr>
-            <th>메모</th>
-            <td colspan="3">
+            <th>사업자등록번호</th>
+            <td style="width: 35%;">
               <v-layout>
-                <v-flex>
-                  <v-text-field
-                    textarea
-                    v-model="memo"
-                    rows="2">
+                <v-flex xs12 style="padding: 0px">
+                  <v-text-field v-model="searchWord" label="사업자등록번호를 입력해 주세요">
+
+                  </v-text-field>
+                </v-flex>
+              </v-layout>
+            </td>
+            <th>대표자 명</th>
+            <td style="width: 35%;">
+              <v-layout>
+                <v-flex xs12 style="padding: 0px">
+                  <v-text-field v-model="searchWord" label="대표자 명을 입력해 주세요">
+
+                  </v-text-field>
+                </v-flex>
+              </v-layout>
+            </td>
+          </tr>
+          <tr>
+            <th>대표 전화번호</th>
+            <td style="width: 35%;">
+              <v-layout>
+                <v-flex xs12 style="padding: 0px">
+                  <v-text-field v-model="searchWord" label="대표 전화번호를 입력해 주세요">
+
+                  </v-text-field>
+                </v-flex>
+              </v-layout>
+            </td>
+            <th>업종/업태</th>
+            <td style="width: 35%;">
+              <v-layout>
+                <v-flex xs12 style="padding: 0px">
+                  <v-text-field v-model="searchWord" label="업종을 입력해 주세요">
+
+                  </v-text-field>
+                  <v-text-field v-model="searchWord" label="업태을 입력해 주세요">
+
+                  </v-text-field>
+                </v-flex>
+              </v-layout>
+            </td>
+          </tr>
+          <tr>
+            <th>FAX 번호</th>
+            <td colspan="3" style="width: 35%;">
+              <v-layout>
+                <v-flex xs5 style="padding: 0px">
+                  <v-text-field v-model="searchWord" label="FAX 번호를 입력해 주세요">
+
+                  </v-text-field>
+                </v-flex>
+              </v-layout>
+            </td>
+          </tr>
+          <tr>
+          <tr>
+            <th><h4 class="center-align">배송지</h4></th>
+            <td colspan="3">
+              <v-text-field
+                  label="우편번호를 입력해 주세요"
+                  required
+                  style="width:50%;"
+              ></v-text-field>
+              <v-text-field
+                  label="광역시/도를 입력해 주세요"
+                  required
+                  style="width:50%;"
+              ></v-text-field>
+              <v-text-field
+                  label="도로명을 입력해 주세요"
+                  required
+                  style="width:50%;"
+              ></v-text-field>
+              <v-text-field
+                  label="상세주소를 입력해 주세요"
+                  required
+                  style="width:50%;"
+              ></v-text-field>
+            </td>
+          </tr>
+        </tbody>
+      </detail-table>
+    </v-flex>
+  </v-layout>
+  <br>
+  <h3 style="margin-top: 15px;">매입처 계정 정보</h3>
+  <v-layout>
+    <v-flex>
+      <detail-table>
+        <tbody slot="contents">
+          <tr>
+            <th>아이디</th>
+            <td colspan="3" style="width: 35%;">
+              <v-layout>
+                <v-flex xs5 style="padding: 0px">
+                  <v-text-field v-model="searchWord" label="4자 이상 영문 또는 숫자만 사용 가능">
+
+                  </v-text-field>
+                </v-flex>
+              </v-layout>
+            </td>
+          </tr>
+          <tr>
+            <th>비밀번호</th>
+            <td style="width: 35%;">
+              <v-layout>
+                <v-flex xs12 style="padding: 0px">
+                  <v-text-field v-model="searchWord" label="4자 이상 영문 또는 숫자만 사용 가능">
+
+                  </v-text-field>
+                </v-flex>
+              </v-layout>
+            </td>
+            <th>비밀번호 확인</th>
+            <td style="width: 35%;">
+              <v-layout>
+                <v-flex xs12 style="padding: 0px">
+                  <v-text-field v-model="searchWord" label="비밀번호를 다시 입력해주세요">
+
+                  </v-text-field>
+                </v-flex>
+              </v-layout>
+            </td>
+          </tr>
+          <tr>
+            <th>담당자</th>
+            <td style="width: 35%;">
+              <v-layout>
+                <v-flex xs12 style="padding: 0px">
+                  <v-text-field v-model="searchWord" label="담당자를 입력해 주세요">
+
+                  </v-text-field>
+                </v-flex>
+              </v-layout>
+            </td>
+            <th>담당자 휴대폰</th>
+            <td style="width: 35%;">
+              <v-layout>
+                <v-flex xs12 style="padding: 0px">
+                  <v-text-field v-model="searchWord" label="숫자만 입력해 주세요">
+
+                  </v-text-field>
+                </v-flex>
+              </v-layout>
+            </td>
+          </tr>
+          <tr>
+            <th>비고</th>
+            <td colspan="3" style="width: 35%;">
+              <v-layout>
+                <v-flex xs5 style="padding: 0px">
+                  <v-text-field v-model="searchWord" label="내용을 입력해 주세요">
+
                   </v-text-field>
                 </v-flex>
               </v-layout>
@@ -130,7 +195,7 @@
       </detail-table>
     </v-flex>
   </v-layout>
-  <h3 style="margin-top: 15px;">상품 목록</h3>
+  <h3 style="margin-top: 15px;">발주 목록</h3>
   <v-layout style="padding-top: 20px;">
     <v-flex>
       전체 {{allCount}}건
@@ -171,7 +236,7 @@
   </v-layout>
   <v-layout style="margin-top:20px;">
     <v-flex style="text-align: center">
-      <v-btn @click="$router.push('/order/list')">목록으로</v-btn>
+      <v-btn @click="$router.push('/purchase/buyerList')">목록으로</v-btn>
       <v-btn @click="regOrder()">등록하기</v-btn>
     </v-flex>
   </v-layout>
@@ -486,7 +551,7 @@
         this.allCount = 0;
       },
       deleteOneItem(product) {
-        this.selectItems.forEach((item, index, array)=>{
+        this.selectItems.forEach((item, index, array) => {
           if(item == product){
             array.splice(index,1);
           }
