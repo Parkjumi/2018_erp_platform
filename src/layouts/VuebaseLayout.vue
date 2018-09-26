@@ -122,30 +122,12 @@
                             // { title: '간편가입 신청 목록', component: '/customers/applicant' , isActive: false }
                         ]
                     },
-                    // {
-                    //     title: '브랜드 관리',
-                    //     subItems: [
-                    //         { title: '브랜드 목록', component: '/brands/list' , isActive: false },
-                    //         { title: '브랜드 상품관리', component: '/brands/products' , isActive: false },
-                    //         { title: '브랜드 거래처관리', component: '/brands/customers' , isActive: false },
-                    //     ]
-                    // },
-                    // {
-                    //     title: '매출 관리',
-                    //     subItems: []
-                    // },
-                    // {
-                    //     title: '외상잔액 관리',
-                    //     subItems: []
-                    // },
-                    // {
-                    //     title: '정산 관리',
-                    //     subItems: []
-                    // },
-                    // {
-                    //     title: '통계',
-                    //     subItems: []
-                    // }
+                    {
+                        title: '직원 관리',
+                        subItems: [
+                            { title: '직원 목록', component: '/employee/list' , isActive: false },
+                        ]
+                    },
                 ],
                 miniVariant: false,
                 right: true,

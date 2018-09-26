@@ -1,31 +1,19 @@
 <template>
 <v-container>
-  <page-header title="신규 매입처 등록"/>
+  <page-header title="신규 매입처 수정"/>
   <h3 style="margin-top: 15px;">기본 정보</h3>
   <v-layout>
     <v-flex>
       <detail-table>
         <tbody slot="contents">
-          <tr>
+          <tr style="height:70px">
             <th>매입처코드</th>
             <td style="width: 35%;">
-              <v-layout>
-                <v-flex xs12 style="padding: 0px">
-                  <v-text-field v-model="searchWord" label="매입처코드를 입력해 주세요">
-
-                  </v-text-field>
-                </v-flex>
-              </v-layout>
+              {{buyer.id}}
             </td>
             <th>매입처명*</th>
             <td style="width: 35%;">
-              <v-layout>
-                <v-flex xs12 style="padding: 0px">
-                  <v-text-field v-model="searchWord" label="매입처명을 입력해 주세요">
-
-                  </v-text-field>
-                </v-flex>
-              </v-layout>
+              {{buyer.bName}}
             </td>
           </tr>
           <tr>
@@ -33,7 +21,7 @@
             <td style="width: 35%;">
               <v-layout>
                 <v-flex xs12 style="padding: 0px">
-                  <v-text-field v-model="searchWord" label="사업자등록번호를 입력해 주세요">
+                  <v-text-field v-model="buyer.bNumber" label="사업자등록번호를 입력해 주세요">
 
                   </v-text-field>
                 </v-flex>
@@ -43,7 +31,7 @@
             <td style="width: 35%;">
               <v-layout>
                 <v-flex xs12 style="padding: 0px">
-                  <v-text-field v-model="searchWord" label="대표자 명을 입력해 주세요">
+                  <v-text-field v-model="buyer.chief" label="대표자 명을 입력해 주세요">
 
                   </v-text-field>
                 </v-flex>
@@ -55,7 +43,7 @@
             <td style="width: 35%;">
               <v-layout>
                 <v-flex xs12 style="padding: 0px">
-                  <v-text-field v-model="searchWord" label="대표 전화번호를 입력해 주세요">
+                  <v-text-field v-model="buyer.tel" label="대표 전화번호를 입력해 주세요">
 
                   </v-text-field>
                 </v-flex>
@@ -65,10 +53,7 @@
             <td style="width: 35%;">
               <v-layout>
                 <v-flex xs12 style="padding: 0px">
-                  <v-text-field v-model="searchWord" label="업종을 입력해 주세요">
-
-                  </v-text-field>
-                  <v-text-field v-model="searchWord" label="업태을 입력해 주세요">
+                  <v-text-field v-model="buyer.bSector" label="업종을 입력해 주세요">
 
                   </v-text-field>
                 </v-flex>
@@ -80,7 +65,7 @@
             <td colspan="3" style="width: 35%;">
               <v-layout>
                 <v-flex xs5 style="padding: 0px">
-                  <v-text-field v-model="searchWord" label="FAX 번호를 입력해 주세요">
+                  <v-text-field v-model="buyer.fax" label="FAX 번호를 입력해 주세요">
 
                   </v-text-field>
                 </v-flex>
@@ -93,21 +78,25 @@
             <td colspan="3">
               <v-text-field
                   label="우편번호를 입력해 주세요"
+                  v-model="buyer.postNo"
                   required
                   style="width:50%;"
               ></v-text-field>
               <v-text-field
                   label="광역시/도를 입력해 주세요"
+                  v-model="buyer.address1"
                   required
                   style="width:50%;"
               ></v-text-field>
               <v-text-field
                   label="도로명을 입력해 주세요"
+                  v-model="buyer.address2"
                   required
                   style="width:50%;"
               ></v-text-field>
               <v-text-field
                   label="상세주소를 입력해 주세요"
+                  v-model="buyer.address3"
                   required
                   style="width:50%;"
               ></v-text-field>
@@ -117,83 +106,7 @@
       </detail-table>
     </v-flex>
   </v-layout>
-  <br>
-  <h3 style="margin-top: 15px;">매입처 계정 정보</h3>
-  <v-layout>
-    <v-flex>
-      <detail-table>
-        <tbody slot="contents">
-          <tr>
-            <th>아이디</th>
-            <td colspan="3" style="width: 35%;">
-              <v-layout>
-                <v-flex xs5 style="padding: 0px">
-                  <v-text-field v-model="searchWord" label="4자 이상 영문 또는 숫자만 사용 가능">
 
-                  </v-text-field>
-                </v-flex>
-              </v-layout>
-            </td>
-          </tr>
-          <tr>
-            <th>비밀번호</th>
-            <td style="width: 35%;">
-              <v-layout>
-                <v-flex xs12 style="padding: 0px">
-                  <v-text-field v-model="searchWord" label="4자 이상 영문 또는 숫자만 사용 가능">
-
-                  </v-text-field>
-                </v-flex>
-              </v-layout>
-            </td>
-            <th>비밀번호 확인</th>
-            <td style="width: 35%;">
-              <v-layout>
-                <v-flex xs12 style="padding: 0px">
-                  <v-text-field v-model="searchWord" label="비밀번호를 다시 입력해주세요">
-
-                  </v-text-field>
-                </v-flex>
-              </v-layout>
-            </td>
-          </tr>
-          <tr>
-            <th>담당자</th>
-            <td style="width: 35%;">
-              <v-layout>
-                <v-flex xs12 style="padding: 0px">
-                  <v-text-field v-model="searchWord" label="담당자를 입력해 주세요">
-
-                  </v-text-field>
-                </v-flex>
-              </v-layout>
-            </td>
-            <th>담당자 휴대폰</th>
-            <td style="width: 35%;">
-              <v-layout>
-                <v-flex xs12 style="padding: 0px">
-                  <v-text-field v-model="searchWord" label="숫자만 입력해 주세요">
-
-                  </v-text-field>
-                </v-flex>
-              </v-layout>
-            </td>
-          </tr>
-          <tr>
-            <th>비고</th>
-            <td colspan="3" style="width: 35%;">
-              <v-layout>
-                <v-flex xs5 style="padding: 0px">
-                  <v-text-field v-model="searchWord" label="내용을 입력해 주세요">
-
-                  </v-text-field>
-                </v-flex>
-              </v-layout>
-            </td>
-          </tr>
-        </tbody>
-      </detail-table>
-    </v-flex>
   </v-layout>
   <h3 style="margin-top: 15px;">발주 목록</h3>
   <v-layout style="padding-top: 20px;">
@@ -213,20 +126,26 @@
     <v-flex>
       <v-data-table
         :headers="headers"
-        :items="orderItems"
+        :items="purchaseItems"
         hide-actions>
         <template slot="items" slot-scope="props">
           <td>
             {{props.index + 1}}
           </td>
+          <td>{{props.item.id}}</td>
           <td>{{props.item.itemName}}</td>
+          <td>{{props.item.first}}</td>
           <td>{{props.item.unit}}</td>
           <td>{{props.item.manufacturer}}</td>
-          <td>1</td>
-          <td>{{props.item.price1}}</td>
-          <td>{{props.item.price2}}</td>
-          <td>{{props.item.price3}}</td>
-          <td>{{props.item.price1}}</td>
+          <td>
+            <v-layout>
+              <v-flex xs10 style="padding: 0px">
+                <v-text-field v-model="props.item.price">
+
+                </v-text-field>
+              </v-flex>
+            </v-layout>
+          </td>
           <td>
             <v-btn outline @click="deleteOneOrderItem(props.item)">삭제</v-btn>
           </td>
@@ -237,46 +156,10 @@
   <v-layout style="margin-top:20px;">
     <v-flex style="text-align: center">
       <v-btn @click="$router.push('/purchase/buyerList')">목록으로</v-btn>
-      <v-btn @click="regOrder()">등록하기</v-btn>
+      <v-btn @click="updateBuyer()">수정하기</v-btn>
+      <v-btn @click="deleteProduct()">삭제하기</v-btn>
     </v-flex>
   </v-layout>
-  <!-- 거래처 선택 모달 시작 -->
-  <v-dialog
-    v-model="customersModalCheck"
-    width="50%">
-    <v-card>
-      <div style="padding: 10px; background-color: #263238; color: white; height: 48px;">
-        <h3>거래처 검색</h3>
-      </div>
-      <v-layout style="padding: 20px 30px;">
-        <v-flex xs1 style="padding-top: 20px;">
-          <h2>검색</h2>
-        </v-flex>
-        <v-flex xs8>
-          <search-form />
-        </v-flex>
-      </v-layout>
-      <v-layout>
-        <v-flex style="padding: 0px 30px;">
-          <v-data-table
-            :headers="customersHeaders"
-            :items="customersItems"
-            hide-actions>
-            <template slot="items" slot-scope="props">
-              <td>{{props.item.id}}</td>
-              <td>{{props.item.bName}}</td>
-              <td>{{props.item.mobile}}</td>
-              <td>{{props.item.manager}}</td>
-              <td>
-                <v-btn outline sm @click="selectCustomer(props.item)">선택</v-btn>
-              </td>
-            </template>
-          </v-data-table>
-        </v-flex>
-      </v-layout>
-    </v-card>
-  </v-dialog>
-  <!-- 거래처 선택 모달 종료 -->
   <!-- 상품 추가 모달 시작 -->
   <v-dialog
     v-model="appendModalCheck"
@@ -321,9 +204,7 @@
         <v-layout style="margin-top:15px;">
           <v-flex xs8 style="padding: 0px 5px;">
             <v-layout>
-              <v-flex>
-                *해당 거래처에서 자주 주문한 상품 순입니다.
-              </v-flex>
+
               <v-flex>
                 전체 {{allCount}}건
               </v-flex>
@@ -332,7 +213,7 @@
               <v-flex>
                 <v-data-table
                   :headers="productHeaders"
-                  :items="customerProducts"
+                  :items="purchaseProducts"
                   hide-actions>
                   <template slot="items" slot-scope="props">
                     <td>{{props.item.itemName}}</td>
@@ -389,15 +270,7 @@
                       </v-layout>
                     </td>
                   </template>
-                  <template
-                    slot="footer">
-                    <td>
-                      <v-layout>
-                        <v-flex>합계 금액</v-flex>
-                        <v-flex style="text-align:right">{{sumPrice}}원</v-flex>
-                      </v-layout>
-                    </td>
-                  </template>
+
                 </v-data-table>
               </v-flex>
             </v-layout>
@@ -445,14 +318,12 @@
         date: '',
         headers: [
           { text:  'no', value: 'num', sortable: false },
+          { text: '상품코드', value: 'string', sortable: false },
           { text: '상품명', value: 'string', sortable: false },
+          { text: '카테고리', value: 'string', sortable: false },
           { text: '규격(단위)', value: 'string', sortable: false },
           { text: '제조사(원산지)', value: 'string', sortable: false },
-          { text: '수량', value: 'string', sortable: false },
-          { text: '배송 단가', value: 'string', sortable: false },
-          { text: '소비자 가격', value: 'string', sortable: false },
-          { text: '예비 가격', value: 'string', sortable: false },
-          { text: '합계금액', value: 'string', sortable: false },
+          { text: '매입단가(원)', value: 'string', sortable: false },
           { text: '삭제', value: 'string', sortable: false }
         ],
         items: [],
@@ -475,16 +346,18 @@
         ],
         customersItems: [],     //거래처 모든 데이터
         customersItem: '',      //선택된 거래처 1개의 데이터
-        customerProducts: [],   //거래처가 취급하는 상품 데이터,
+        purchaseProducts:[],
+        customerProducts: [],
         selectItems: [],         //거래처가 취급하는 상품중 선택된 상품
         count: 1,
-        deliveryCategory: '직배송',
-        manager: '',            //영업담당자
-        shippingManager: '',     //배송담당자
-        orderItems: [],
+        buyer:[], //매입처 정보
+        purchaseItems: [],
         shipping:[],
         allCount:0, //전체 상품 개수,
-        payment:0
+        payment:0,
+        deleteProvierItemList:[], //삭제한 상품
+        updateItems:[],// 수정한 아이템,
+        insertProvierItemList:[],// 원래 아이템
       }
     },
     computed: {
@@ -494,42 +367,33 @@
           sum += Number(item.price2);
         });
         this.payment = sum*this.count;
-
         return sum*this.count;
       }
     },
     methods: {
-      initCustormer(){
-        this.$axios.get('http://freshntech.cafe24.com/order/setinsert')
+      initBuyer(id){
+        this.$axios.get('http://freshntech.cafe24.com/purchase/detail/'+id)
         .then(res => {
-          this.shippingManager = res.data[0];
-          for(var i = 0;i< this.shippingManager.length;i++){
-            this.shipping.push(this.shippingManager[i].sManager);
+          this.buyer = res.data[0];
+          this.purchaseItems = res.data[1];
+          for(var i = 0;i < res.data[1].length;i++){
+            this.insertProvierItemList.push(this.purchaseItems[i])
           }
-          this.customersItems = res.data[1];
+          this.allCount = res.data[1].length;
+          console.log(this.insertProvierItemList+"ss1");
         })
         .catch((ex) => {
           console.log("Error : ",ex);
         })
-      },
-      selectCustomer(customers) { //거래처 선택 누를시
-        this.customersItem = customers;
-        this.orderItems = [];
-        this.selectItems = [];
-        this.customersModalCheck = false;
-        this.$axios.get('http://freshntech.cafe24.com/order/setinsert/'+this.customersItem.id)
+        this.$axios.get('http://freshntech.cafe24.com/item')
         .then(res => {
-          this.customerProducts = res.data;
+          this.purchaseProducts = res.data[0];
         })
         .catch((ex) => {
           console.log("Error : ",ex);
         })
       },
       openAppendModal() {
-        if(this.customersItem == ''){
-          alert('거래처를 선택하십시오');
-          return;
-        }
         this.appendModalCheck = !this.appendModalCheck;
       },
       selectProduct(item){
@@ -550,8 +414,9 @@
         this.selectItems = [];
         this.allCount = 0;
       },
-      deleteOneItem(product) {
-        this.selectItems.forEach((item, index, array) => {
+      deleteOneOrderItem(product) {
+        this.deleteProvierItemList.push(product.id);
+        this.purchaseItems.forEach((item, index, array)=>{
           if(item == product){
             array.splice(index,1);
           }
@@ -564,53 +429,48 @@
         this.appendModalCheck = false;
       },
       saveOrderItem() { //상품 추가 후 저장 누를 시
-        this.orderItems = this.selectItems;
+        this.updateItems = this.updateItems.concat(this.selectItems);
+        for(var i =0; i < this.selectItems.length;i++){
+          this.purchaseItems.push(this.selectItems[i])
+        }
+        this.selectItems = [];
         this.appendModalCheck = false;
-        this.$axios.get('http://freshntech.cafe24.com/order/setinsert/'+this.customersItem.id)
+      },
+      updateBuyer(){
+      console.log(this.insertProvierItemList+"ss2");
+        this.$axios.put('http://freshntech.cafe24.com/purchase',{
+          bName:this.buyer.bName,
+          bNumber:this.buyer.bNumber,
+          bSector:this.buyer.bSector,
+          chief:this.buyer.chief,
+          manager:this.buyer.manager,
+          tel:this.buyer.tel,
+          fax:this.buyer.fax,
+          email:this.buyer.email,
+          mobile:this.buyer.mobile,
+          postNo:this.buyer.postNo,
+          address1:this.buyer.address1,
+          address2:this.buyer.address2,
+          address3:this.buyer.address3,
+          remark1:this.buyer.remark1,
+          id:this.buyer.id,
+          insertProvierItemList:this.updateItems,
+          updateProvierItemList:this.insertProvierItemList,
+          deleteProvierItemList:this.deleteProvierItemList
+        })
         .then(res => {
-          this.customerProducts = res.data;
+          alert('수정되었습니다.')
+          this.$router.push('/purchase/buyerList')
         })
         .catch((ex) => {
           console.log("Error : ",ex);
         })
       },
-      deleteOneOrderItem(product) {
-        this.orderItems.forEach((item, index, array)=>{
-          if(item == product){
-            array.splice(index, 1);
-          }
-        })
-        this.allCount--;
-      },
-      regOrder() { //등록하기 버튼 누를 시
-        console.log(this.orderItems[0].amount+'ㅇㅇㅇ');
-        if(!this.customersItem.bName){
-          alert('거래처가 선택되지 않았습니다.');
-        }else if(this.date == ''){
-          alert('배송요청일을 선택해주세요');
-        }else if(this.orderItems.length == 0){
-          alert('상품을 먼저 등록해주세요');
-        }else{
-          this.$axios.post('http://freshntech.cafe24.com/order',{
-            tbCustomer_ID:this.customersItem.id,
-            itemCount:this.allCount,
-            amount:this.allCount,
-            payment:this.payment,
-            payMethod:this.payMethod,
-            requests:this.requests,
-            memo:this.memo,
-            product:this.orderItems
-          }).then((res) => {
-            alert('주문이 완료되었습니다.');
-          }).catch((ex) => {
-            console.log("Error : ",ex);
-          })
-          this.$router.push('/order/list');
-        }
-      }
     },
     created() {
-      this.initCustormer();
+      var buyer_id = this.$route.params.buyer_id
+      this.$set(this, 'buyer_id', buyer_id)
+      this.initBuyer(buyer_id);
     }
   }
 </script>

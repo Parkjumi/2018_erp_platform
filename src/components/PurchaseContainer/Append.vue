@@ -362,9 +362,9 @@
         customersHeaders: [
           { text: 'no', value: 'num', sortable: false },
           { text:  '매입처명', value: 'string', sortable: false },
-          { text: '거래처 연락처', value: 'string', sortable: false },
-          { text: '배송 담당자', value: 'string', sortable: false },
-          { text: '거래처 선택', value: 'string', sortable: false }
+          { text: '대표자 연락처', value: 'string', sortable: false },
+          { text: '상품 수', value: 'num', sortable: false },
+          { text: '매입처 선택', value: 'string', sortable: false }
         ],
         customersItems: [],     //거래처 모든 데이터
         customersItem: '',      //선택된 거래처 1개의 데이터

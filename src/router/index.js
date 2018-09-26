@@ -15,7 +15,7 @@ const routes = [
         name: 'Main',
         component: () => import('@/components/CommonTest/Main')
     },
-    {
+    { // ===== 주문 관리 ===== //
         path: '/order',
         name: 'OrderContainer',
         component: () => import('@/components/Dashboard/Layout'),
@@ -57,7 +57,7 @@ const routes = [
             }
         ]
     },
-    {
+    { // ===== 재고 관리 ===== //
         path: '/inventory',
         name: 'InventoryContainer',
         component: () => import('@/components/Dashboard/Layout'),
@@ -84,7 +84,7 @@ const routes = [
             }
         ]
     },
-    {
+    { // ===== 매입 관리 ===== //
       path:'/purchase',
       name:'PurchaseContainer',
       component: () => import('@/components/Dashboard/Layout'),
@@ -92,36 +92,36 @@ const routes = [
         {
           path:'list', // 발주 관리
           name:'PurchaseContainer.List',
-          component: () => import('@/components/Purchase/PurchaseList')
+          component: () => import('@/components/PurchaseContainer/PurchaseList')
         },
         {
           path: 'list/detail/:order_id', // 발주관리 상세보기
           name:'PurchaseContainer.purchaseDetail',
-          component: () => import('@/components/Purchase/PurchaseDetail')
+          component: () => import('@/components/PurchaseContainer/PurchaseDetail')
         },
         {
           path:'append', // 신규 발주 등록
           name:'PurchaseContainer.Append',
-          component: () => import('@/components/Purchase/Append')
+          component: () => import('@/components/PurchaseContainer/Append')
         },
         {
           path:'buyerList', // 매입처 관리
           name:'PurchaseContainer.BuyerList',
-          component: () => import('@/components/Purchase/BuyerList')
+          component: () => import('@/components/PurchaseContainer/BuyerList')
         },
         {
           path: 'buyer/detail/:buyer_id', // 매입처 관리 상세보기
           name:'PurchaseContainer.buyerDetail',
-          component: () => import('@/components/Purchase/buyerDetail')
+          component: () => import('@/components/PurchaseContainer/buyerDetail')
         },
         {
           path:'appendBuyer', // 신규 매입처 등록
           name:'PurchaseContainer.AppendBuyer',
-          component: () => import('@/components/Purchase/AppendBuyer')
+          component: () => import('@/components/PurchaseContainer/AppendBuyer')
         },
       ]
     },
-    {
+    { // ===== 상품관리 ===== //
         path: '/product',
         name: 'ProductContainer',
         component: () => import('@/components/Dashboard/Layout'),
@@ -234,9 +234,6 @@ const routes = [
         ]
 
     }, // ===== 거래처관리 ===== //
-
-
-
     {
         path: '/dashboard',
         name: 'dashboard',
@@ -259,62 +256,28 @@ const routes = [
             }
         ]
     },
-
-
-
-
-    { // ===== 브랜드관리 - seongh7800 ===== //
-        path: '/brands',
-        name: 'Brand',
-        component:()=> import('@/components/Dashboard/Layout'),
+    { // ===== 직원 관리 ===== //
+        path: '/employee',
+        name: 'EmployeeContainer',
+        component: () => import('@/components/Dashboard/Layout'),
         children: [
-            // { // === 목록 ==== //
-            //     path: 'list',
-            //     name: 'BrandList',
-            //     component: ()=> import('@/components/BrandContainer/BrandList')
-            // },
-
-            // { // === 상품목록 ==== //
-            //     path: 'products',
-            //     name: 'BrandProducts',
-            //     component: ()=> import('@/components/BrandContainer/BrandProducts')
-            // },
-            //     { // === 상품상세 ==== //
-            //         path: 'products/:brand_id',
-            //         name: 'BrandProductDetail',
-            //         component: ()=> import('@/components/BrandContainer/BrandProductDetail')
-            //     },
-
-            // { // === 거래처목록 ==== //
-            //     path: 'customers',
-            //     name: 'BrandCustomers',
-            //     component: ()=> import('@/components/BrandContainer/BrandCustomers')
-            // },
-            //     { // === 거래처상세 ==== //
-            //         path: 'customers/:brand_id',
-            //         name: 'BrandCustomerDetail',
-            //         component: ()=> import('@/components/BrandContainer/BrandCustomerDetail')
-            //     },
-
-            // { // === 입점요청 ==== //
-            //     path: 'applicant',
-            //     name: 'BrandApplicant',
-            //     component: ()=> import('@/components/BrandContainer/BrandApplicant')
-            // },
-
-            // { // === 상세 ==== //
-            //     path: ':brand_id',
-            //     name: 'BrandDetail',
-            //     component: ()=> import('@/components/BrandContainer/BrandDetail')
-            // },
+            {
+                path: 'list',
+                name: 'EmployeeContainer.employeeList',
+                component: () => import('@/components/EmployeeContainer/employeeList')
+            },
+            {
+                path: 'append',
+                name: 'EmployeeContainer.appendEmployee',
+                component: () => import('@/components/EmployeeContainer/appendEmployee')
+            },
+            {
+                path: 'detail',
+                name: 'EmployeeContainer.detailEmployee',
+                component: () => import('@/components/EmployeeContainer/detailEmployee')
+            },
         ]
-    },// ===== 브랜드관리 - seongh7800 ===== //
-
-
-
-
-
-
+    },
 ]
 
 export default new VueRouter({

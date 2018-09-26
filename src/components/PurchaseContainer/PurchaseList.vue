@@ -226,10 +226,10 @@
     },
     methods: {
       initPurchaseData() {
-        this.$axios.get('http://freshntech.cafe24.com/purchase')
+        this.$axios.get('http://freshntech.cafe24.com/purchaseitem')
         .then(res => {
-          this.purchaseData = res.data;
-          this.total = res.data.length;
+          this.purchaseData = res.data[0];
+          this.total = res.data[0].length;
         })
         .catch((ex) => {
           console.log("Error : ",ex);
