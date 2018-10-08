@@ -46,38 +46,6 @@
             <td><v-btn small @click="searchOrder()">검색</v-btn></td>
           </tr>
         </table>
-        <!-- <table width="100%">
-          <colgroup>
-            <col width="13.5%">
-            <col width="1%">
-            <col width="20%">
-            <col width="1%">
-            <col width="20%">
-            <col width="1%">
-            <col width="20%">
-          </colgroup>
-          <tr>
-            <th><h3>즉시검색</h3></th>
-            <td></td>
-            <td>
-              <v-select
-                :items="shippingList"
-                label="배송 담당자"
-              ></v-select>
-            </td>
-            <td></td>
-            <td>
-              <v-select
-                :items="['전체', '거래처명', '브랜드명']"
-                label="영업 담당자"
-              ></v-select>
-            </td>
-            <td></td>
-            <td style="width: 40%;">
-              <v-btn>검색</v-btn>
-            </td>
-          </tr>
-        </table> -->
       </v-flex>
     </div>
 <br>
@@ -228,7 +196,6 @@ export default{
             page: 1,
 
             customers:[], //거래처 목록
-            shipping:[], //배송 담당자 목록
             shippingList:[] ,// 배송 담당자 이름 목록
 
         }
@@ -240,12 +207,7 @@ export default{
         this.$axios.get('http://freshntech.cafe24.com/customer')
         .then(res => {
           this.customers = res.data[1];
-          this.shipping = res.data[0]
-          console.log(this.customers);
-
-          for(var i = 0; i <this.shipping.length;i++){
-            this.shippingList.push(this.shipping[i].delivererManager);
-          }
+          console.log(this.customers + "등장");
         })
         .catch((ex) => {
           console.log("Error : ",ex);

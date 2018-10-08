@@ -341,8 +341,6 @@
 </template>
 
 <script>
-
-let ip = "192.168.64.166";
 import {
   SearchForm,
   ButtonToggle,
@@ -423,16 +421,10 @@ export default{
             modal: false,
             menu2: false,
             count:1, // 상품 개수,
-            updateItems:[],// 수정한 아이템,
-            deleteOrderItems:[],//삭제할 주문 아이디
+            updateItems:[],// 수정한 아이템
+            deleteOrderItems:[],//삭제한 상품
+            insertProvierItemList:[], //원래 아이템
         }
-    },
-
-    // ========== created ========== //
-    created(){
-        var order_id = this.$route.params.order_id
-        this.$set(this, 'order_id', order_id)
-        this.getCustomer(order_id);
     },
 
     computed: {
@@ -448,7 +440,6 @@ export default{
 
     // ========== methods ========== //
     methods: {
-
         // ===== 찾기 ===== //
         getCustomer(id){
           this.$axios.get('http://freshntech.cafe24.com/order/detail/'+id)
@@ -457,6 +448,9 @@ export default{
             this.orderItems = res.data[1];
             this.customerProducts = res.data[2];
             this.allCount = this.orderItems.length;
+            for(var i = 0;i < res.data[1].length;i++){
+              this.insertProvierItemList.push(this.orderItems[i])
+            }
           })
           .catch((ex) => {
             console.log("Error : ",ex);
@@ -487,8 +481,9 @@ export default{
             requests:this.orderData.requests,
             memo:this.orderData.memo,
             reqDate:this.orderData.reqDate,
-            product:this.updateItems,
-            orderItemId:this.deleteOrderItems
+            insertProduct:this.updateItems,
+            updateProduct:this.insertProvierItemList,
+            deleteProduct:this.deleteOrderItems
           }).then((res) => {
             alert('수정이 완료되었습니다.');
             this.$router.push('/order/list');
@@ -535,6 +530,13 @@ export default{
           this.allCount--;
         },
     },
+
+    // ========== created ========== //
+    created(){
+      var order_id = this.$route.params.order_id
+      this.$set(this, 'order_id', order_id)
+      this.getCustomer(order_id);
+    },
 }
 </script>
 
@@ -542,5 +544,4 @@ export default{
 .listItem{
     cursor: pointer;
 }
-
 </style>

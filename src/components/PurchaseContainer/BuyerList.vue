@@ -68,21 +68,13 @@
           <v-data-table
             :headers="headers"
             :items="purchaseData"
-            hide-actions
-            select-all>
+            hide-actions>
             <template slot="items" slot-scope="props">
               <tr>
-                <td>
-                   <v-checkbox
-                     v-model="props.selected"
-                     primary
-                     hide-details
-                   ></v-checkbox>
-                 </td>
                  <td>{{props.index + 1}}</td>
                  <td @click="$router.push('buyer/detail/'+props.item.id)">{{props.item.id}}</td>
                  <td>{{props.item.bName}}</td>
-                 <td >{{props.item.count}}개</td>
+                 <td>{{props.item.count}}개</td>
                  <td><v-btn>삭제</v-btn></td>
               </tr>
             </template>

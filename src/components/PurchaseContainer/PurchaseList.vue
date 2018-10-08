@@ -143,13 +143,10 @@
                  <td>{{props.index + 1}}</td>
                  <td @click="$router.push('list/detail/'+props.item.id)">{{props.item.id}}</td>
                  <td>{{props.item.bName}}</td>
-                 <td >{{props.item.cBName}}</td>
-                 <td>{{props.item.dBName}}</td>
-                 <td>{{props.item.cManager}}</td>
-                 <td>{{props.item.amount}}</td>
-                 <td>{{props.item.payMethod}}</td>
-                 <td>{{props.item.payMent}}</td>
-                 <td>{{props.item.orderState}}</td>
+                 <td>{{props.item.dDay}}</td>
+                 <td>{{props.item.count}}</td>
+                 <td>{{props.item.sum}}</td>
+                 <td>{{props.item.state}}</td>
               </tr>
             </template>
           </v-data-table>
@@ -206,10 +203,7 @@
           { text: '발주일시', value: 'string', sortable: false },
           { text: '총 발주 수량', value: 'string', sortable: false },
           { text: '발주금액', value: 'string', sortable: false },
-          { text: '발주유형', value: 'num', sortable: false },
-          { text: '발주상태', value: 'string', sortable: false },
-          { text: '매입처출고상태', value: 'string', sortable: false },
-          { text: '입고상태', value: 'string', sortable: false }
+          { text: '발주상태', value: 'string', sortable: false }
         ],
         purchaseData: [],
         deliveryData: [],
@@ -228,8 +222,8 @@
       initPurchaseData() {
         this.$axios.get('http://freshntech.cafe24.com/purchaseitem')
         .then(res => {
-          this.purchaseData = res.data[0];
-          this.total = res.data[0].length;
+          this.purchaseData = res.data;
+          this.total = this.purchaseData.length;
         })
         .catch((ex) => {
           console.log("Error : ",ex);

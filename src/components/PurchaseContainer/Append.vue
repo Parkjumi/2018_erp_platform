@@ -8,9 +8,9 @@
         <tbody slot="contents">
           <tr>
             <th>매입처*</th>
-            <td colspan="3" style="width: 35%;">
+            <td style="width: 35%;">
               <v-layout>
-                <v-flex xs5>
+                <v-flex xs8>
                   <v-text-field v-model="customersItem.bName"/>
                 </v-flex>
                 <v-flex xs4 style="padding-top: 8px;">
@@ -19,21 +19,6 @@
                     outline>
                     매입처 선택
                   </v-btn>
-                </v-flex>
-              </v-layout>
-            </td>
-          </tr>
-          <tr>
-            <th>담당자*</th>
-            <td style="width: 35%;">
-              <v-layout>
-                <v-flex>
-                  <v-select
-                    :items="['신용카드','현금결제']"
-                    item-text="paymentName"
-                    label="담당자 선택"
-                    v-model="payMethod"
-                  ></v-select>
                 </v-flex>
               </v-layout>
             </td>
@@ -73,7 +58,7 @@
                 <v-flex>
                   <v-text-field
                     textarea
-                    v-model="memo"
+                    v-model="purchase.remark"
                     rows="2">
                   </v-text-field>
                 </v-flex>
@@ -111,11 +96,15 @@
           <td>{{props.item.itemName}}</td>
           <td>{{props.item.unit}}</td>
           <td>{{props.item.manufacturer}}</td>
-          <td>1</td>
+          <td>
+            <v-text-field v-model="qTY[props.index]"/>
+          </td>
           <td>{{props.item.price1}}</td>
           <td>{{props.item.price2}}</td>
           <td>{{props.item.price3}}</td>
-          <td>{{props.item.price1}}</td>
+          <td>
+            {{qTY[props.index] * props.item.price3}}
+          </td>
           <td>
             <v-btn outline @click="deleteOneOrderItem(props.item)">삭제</v-btn>
           </td>
@@ -208,13 +197,10 @@
           </v-flex>
         </v-layout>
         <v-layout style="margin-top:15px;">
-          <v-flex xs8 style="padding: 0px 5px;">
+          <v-flex xs12 style="padding: 0px 5px;">
             <v-layout>
               <v-flex>
                 *해당 매입처에서 자주 주문한 상품 순입니다.
-              </v-flex>
-              <v-flex>
-                전체 {{allCount}}건
               </v-flex>
             </v-layout>
             <v-layout style="margin-top: 10px;">
@@ -224,13 +210,12 @@
                   :items="customerProducts"
                   hide-actions>
                   <template slot="items" slot-scope="props">
+                    <td>{{props.item.id}}</td>
                     <td>{{props.item.itemName}}</td>
-                    <td>{{props.item.itemQTY}}</td>
-                    <td>{{props.item.price1}}</td>
+                    <td>{{props.item.first}}</td>
+                    <td>{{props.item.unit}}</td>
+                    <td>{{props.item.manufacturer}}</td>
                     <td>{{props.item.price2}}</td>
-                    <td>{{props.item.price3}}</td>
-                    <td>{{props.item.price3}}</td>
-                    <td>{{props.item.price3}}</td>
                     <td>
                       <v-btn outline @click="selectProduct(props.item)">선택</v-btn>
                     </td>
@@ -239,59 +224,6 @@
               </v-flex>
             </v-layout>
           </v-flex>
-          <v-flex xs4 style="padding: 0px 5px;">
-            <v-layout>
-              <v-flex>
-                <span>선택상품 목록(전체 {{allCount}}건)</span>
-              </v-flex>
-              <v-flex style="text-align:right;">
-                <v-btn @click="defaultSelectItem()">초기화</v-btn>
-              </v-flex>
-            </v-layout>
-            <v-layout style="margin-top: 10px; border: 2px solid #cccccc; min-height: 600px;">
-              <v-flex xs12 md12 sm12>
-                <v-data-table
-                  hide-headers
-                  hide-actions
-                  :items="selectItems">
-                  <template slot="items" slot-scope="props">
-                    <td>
-                      <v-layout>
-                        <v-flex xs11>{{props.item.itemName}}</v-flex>
-                        <v-flex xs1>
-                          <span @click="deleteOneItem(props.item)">
-                            <span class="fas fa-times"></span>
-                          </span>
-                        </v-flex>
-                      </v-layout>
-                      <v-layout>
-                        <v-flex>
-                          <span @click="countModify('up', props.index, props.item)">
-                            <span class="fas fa-angle-up"></span>
-                          </span>
-                          <input type="text" v-model="count" style="width: 30px; text-align:center;">
-                          <span @click="countModify('down', props.item)">
-                            <span class="fas fa-angle-down"></span>
-                          </span>
-                        </v-flex>
-                        <v-flex>
-                          <input type="text" v-model="props.item.price2" style="text-align:right;">원
-                        </v-flex>
-                      </v-layout>
-                    </td>
-                  </template>
-                  <template
-                    slot="footer">
-                    <td>
-                      <v-layout>
-                        <v-flex>합계 금액</v-flex>
-                        <v-flex style="text-align:right">{{sumPrice}}원</v-flex>
-                      </v-layout>
-                    </td>
-                  </template>
-                </v-data-table>
-              </v-flex>
-            </v-layout>
           </v-flex>
         </v-layout>
         <v-layout style="text-align: center;">
@@ -354,7 +286,6 @@
           { text: '카테고리', value: 'string', sortable: false },
           { text: '규격(단위)', value: 'string', sortable: false },
           { text: '제조사(원산지)', value: 'string', sortable: false },
-          { text: '부가세여부', value: 'string', sortable: false },
           { text: '매입단가', value: 'string', sortable: false },
           { text: '선택', value: 'string', sortable: false }
         ],
@@ -377,7 +308,9 @@
         orderItems: [],
         shipping:[],
         allCount:0, //전체 상품 개수,
-        payment:0
+        payment:0,
+        purchase:[],
+        qTY:[],//수량 배열
       }
     },
     computed: {
@@ -426,8 +359,14 @@
         this.appendModalCheck = !this.appendModalCheck;
       },
       selectProduct(item){
-        item.qTY = this.count;
-        item.amount = this.count * item.price2;
+        this.orderItems = this.selectItems;
+        this.$axios.get('http://freshntech.cafe24.com/order/setinsert/'+this.customersItem.id)
+        .then(res => {
+          this.customerProducts = res.data;
+        })
+        .catch((ex) => {
+          console.log("Error : ",ex);
+        })
         this.selectItems.push(item);
         this.allCount++;
       },
@@ -476,7 +415,11 @@
         this.allCount--;
       },
       regOrder() { //등록하기 버튼 누를 시
-        console.log(this.orderItems[0].amount+'ㅇㅇㅇ');
+        this.orderItems.qTY = this.qTY
+        for(var i = 0;i < this.orderItems.length;i++){
+          this.orderItems[i].qTY = this.qTY[i];
+        }
+        console.log(this.orderItems);
         if(!this.customersItem.bName){
           alert('매입처가 선택되지 않았습니다.');
         }else if(this.date == ''){
@@ -484,21 +427,18 @@
         }else if(this.orderItems.length == 0){
           alert('상품을 먼저 등록해주세요');
         }else{
-          this.$axios.post('http://freshntech.cafe24.com/order',{
-            tbCustomer_ID:this.customersItem.id,
-            itemCount:this.allCount,
-            amount:this.allCount,
-            payment:this.payment,
-            payMethod:this.payMethod,
-            requests:this.requests,
-            memo:this.memo,
-            product:this.orderItems
+          this.$axios.post('http://freshntech.cafe24.com/purchaseitem',{
+            id:this.purchase.id,
+            tbProvider_ID:this.customersItem.id,
+            remark:this.purchase.remark,
+            dDay:this.date,
+            insertPurchaseItemVOList:this.orderItems
           }).then((res) => {
-            alert('주문이 완료되었습니다.');
+            alert('등록이 완료되었습니다.');
+            this.$router.push('/purchase/list');
           }).catch((ex) => {
             console.log("Error : ",ex);
           })
-          this.$router.push('/order/list');
         }
       }
     },

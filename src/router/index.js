@@ -174,56 +174,6 @@ const routes = [
 
                 },
 
-
-            // { // === 할인/할증목록 === //
-            //     path: 'approval/sale',
-            //     name: 'CustomerContainer.SaleList',
-            //     component: () => import('@/components/CustomerContainer/SaleList'),
-            //
-            // },
-
-
-            // { // === 거래처 예치금관리 === //
-            //     path: 'deposit',
-            //     name: 'CustomerContainer.DepositList',
-            //     component: () => import('@/components/CustomerContainer/DepositList'),
-            //
-            // },
-                // { // === 예치금상세 === //
-                //     path: 'deposit/detail/:deposit_id',
-                //     name: 'CustomerContainer.DepositDetail',
-                //     component: () => import('@/components/CustomerContainer/DepositDetail'),
-                //
-                // },
-
-
-            // { // === 결제수단 관리 === //
-            //     path: 'payment',
-            //     name: 'CustomerContainer.PaymentList',
-            //     component: () => import('@/components/CustomerContainer/PaymentList'),
-            //
-            // },
-
-            // { // === 외상한도 잔액관리 === //
-            //     path: 'credit',
-            //     name: 'CustomerContainer.Credit',
-            //     component: () => import('@/components/CustomerContainer/Credit'),
-            //
-            // },
-
-            // { // === 견적서 관리 === //
-            //     path: 'estimate',
-            //     name: 'CustomerContainer.EstimateList',
-            //     component: () => import('@/components/CustomerContainer/EstimateList'),
-            //
-            // },
-                // { // === 견적서 상세 === //
-                //     path: 'estimate/detail/:est_id',
-                //     name: 'CustomerContainer.EstimateDetail',
-                //     component: () => import('@/components/CustomerContainer/EstimateDetail'),
-                //
-                // },
-
             { // === 가입신청목록 === //
                 path: 'applicant',
                 name: 'CustomerContainer.ApplicantList',

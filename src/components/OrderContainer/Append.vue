@@ -71,19 +71,6 @@
             </td>
           </tr>
           <tr>
-            <!-- <th>배송 담당자</th>
-            <td>
-              <v-layout>
-                <v-flex>
-                  <v-select
-                    :items="shipping"
-                    item-text="managerName"
-                    label="배송 담당자"
-                    v-model="shippingManager"
-                  ></v-select>
-                </v-flex>
-              </v-layout>
-            </td> -->
             <th>영업 담당자</th>
             <td>
               <v-layout>
@@ -158,10 +145,10 @@
           <td>{{props.item.unit}}</td>
           <td>{{props.item.manufacturer}}</td>
           <td>1</td>
-          <td>{{props.item.price1}}</td>
-          <td>{{props.item.price2}}</td>
-          <td>{{props.item.price3}}</td>
-          <td>{{props.item.price1}}</td>
+          <td>{{numberWithCommas(props.item.price1)}}</td>
+          <td>{{numberWithCommas(props.item.price2)}}</td>
+          <td>{{numberWithCommas(props.item.price3)}}</td>
+          <td>{{numberWithCommas(props.item.price1)}}</td>
           <td>
             <v-btn outline @click="deleteOneOrderItem(props.item)">삭제</v-btn>
           </td>
@@ -272,9 +259,9 @@
                   <template slot="items" slot-scope="props">
                     <td>{{props.item.itemName}}</td>
                     <td>{{props.item.itemQTY}}</td>
-                    <td>{{props.item.price1}}</td>
-                    <td>{{props.item.price2}}</td>
-                    <td>{{props.item.price3}}</td>
+                    <td>{{numberWithCommas(props.item.price1)}}</td>
+                    <td>{{numberWithCommas(props.item.price2)}}</td>
+                    <td>{{numberWithCommas(props.item.price3)}}</td>
                     <td>
                       <v-btn outline @click="selectProduct(props.item)">선택</v-btn>
                     </td>
@@ -310,16 +297,10 @@
                       </v-layout>
                       <v-layout>
                         <v-flex>
-                          <span @click="countModify('up', props.index, props.item)">
-                            <span class="fas fa-angle-up"></span>
-                          </span>
-                          <input type="text" v-model="count" style="width: 30px; text-align:center;">
-                          <span @click="countModify('down', props.item)">
-                            <span class="fas fa-angle-down"></span>
-                          </span>
+                          <input type="text" placeholder="입력" v-model="count[props.index]" style="width: 60px; text-align:center;">개
                         </v-flex>
                         <v-flex>
-                          <input type="text" v-model="props.item.price2" style="text-align:right;">원
+                          {{numberWithCommas(count[props.index]*props.item.price2)}}원
                         </v-flex>
                       </v-layout>
                     </td>
@@ -329,7 +310,7 @@
                     <td>
                       <v-layout>
                         <v-flex>합계 금액</v-flex>
-                        <v-flex style="text-align:right">{{sumPrice}}원</v-flex>
+                        <v-flex style="text-align:right">{{numberWithCommas(sumPrice)}}원</v-flex>
                       </v-layout>
                     </td>
                   </template>
@@ -412,7 +393,7 @@
         customersItem: '',      //선택된 거래처 1개의 데이터
         customerProducts: [],   //거래처가 취급하는 상품 데이터,
         selectItems: [],         //거래처가 취급하는 상품중 선택된 상품
-        count: 1,
+        count: [1,],
         deliveryCategory: '직배송',
         manager: '',            //영업담당자
         shippingManager: '',     //배송담당자
@@ -425,12 +406,11 @@
     computed: {
       sumPrice: function(){
         let sum = 0;
-        this.selectItems.forEach(item => {
-          sum += Number(item.price2);
-        });
-        this.payment = sum*this.count;
-
-        return sum*this.count;
+        for(var i = 0;i < this.selectItems.length;i++){
+          sum += this.count[i]*Number(this.selectItems[i].price2);
+        }
+        this.payment = sum;
+        return sum;
       }
     },
     methods: {
@@ -476,7 +456,6 @@
       countModify(mode, index, item){
         if(mode == 'up'){
           this.count += 1;
-          console.log(item);
         }else{
           this.count -= 1;
         }
@@ -489,6 +468,7 @@
         this.selectItems.forEach((item, index, array)=>{
           if(item == product){
             array.splice(index,1);
+            this.count.splice(index,1);
           }
         })
         this.allCount--;
@@ -518,7 +498,6 @@
         this.allCount--;
       },
       regOrder() { //등록하기 버튼 누를 시
-        console.log(this.orderItems[0].amount+'ㅇㅇㅇ');
         if(!this.customersItem.bName){
           alert('거래처가 선택되지 않았습니다.');
         }else if(this.date == ''){
@@ -534,15 +513,19 @@
             payMethod:this.payMethod,
             requests:this.requests,
             memo:this.memo,
-            product:this.orderItems
+            insertProduct:this.orderItems
           }).then((res) => {
             alert('주문이 완료되었습니다.');
+            this.$router.push('/order/list');
           }).catch((ex) => {
+            alert('에러 발생');
             console.log("Error : ",ex);
           })
-          this.$router.push('/order/list');
         }
-      }
+      },
+      numberWithCommas(x) { //원화
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      },
     },
     created() {
       this.initCustormer();

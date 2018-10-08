@@ -380,7 +380,6 @@
             this.insertProvierItemList.push(this.purchaseItems[i])
           }
           this.allCount = res.data[1].length;
-          console.log(this.insertProvierItemList+"ss1");
         })
         .catch((ex) => {
           console.log("Error : ",ex);
@@ -405,7 +404,6 @@
       countModify(mode, index, item){
         if(mode == 'up'){
           this.count += 1;
-          console.log(item);
         }else{
           this.count -= 1;
         }
@@ -437,7 +435,6 @@
         this.appendModalCheck = false;
       },
       updateBuyer(){
-      console.log(this.insertProvierItemList+"ss2");
         this.$axios.put('http://freshntech.cafe24.com/purchase',{
           bName:this.buyer.bName,
           bNumber:this.buyer.bNumber,

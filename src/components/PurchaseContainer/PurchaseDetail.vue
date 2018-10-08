@@ -467,7 +467,6 @@ export default{
 
     // ========== methods ========== //
     methods: {
-
         // ===== 찾기 ===== //
         getCustomer(id){
           this.$axios.get('http://freshntech.cafe24.com/order/detail/'+id)
