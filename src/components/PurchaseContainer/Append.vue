@@ -313,17 +313,6 @@
         qTY:[],//수량 배열
       }
     },
-    computed: {
-      sumPrice: function(){
-        let sum = 0;
-        this.selectItems.forEach(item => {
-          sum += Number(item.price2);
-        });
-        this.payment = sum*this.count;
-
-        return sum*this.count;
-      }
-    },
     methods: {
       initCustormer(){
         this.$axios.get('http://freshntech.cafe24.com/order/setinsert')

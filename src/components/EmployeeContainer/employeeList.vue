@@ -67,16 +67,15 @@
         <v-flex xs12>
           <v-data-table
             :headers="headers"
-            :items="purchaseData"
+            :items="delivererData"
             hide-actions>
             <template slot="items" slot-scope="props">
               <tr>
                  <td>{{props.index + 1}}</td>
-                 <td @click="$router.push('buyer/detail/'+props.item.id)">{{props.item.id}}</td>
+                 <td @click="$router.push('/employee/list/detail/'+props.item.id)">{{props.item.regDate}}</td>
+                 <td>{{props.item.manager}}</td>
                  <td>{{props.item.bName}}</td>
-                 <td>{{props.item.bName}}</td>
-                 <td>{{props.item.bName}}</td>
-                 <td>{{props.item.count}}개</td>
+                 <td>{{props.item.userId}}</td>
                  <td><v-btn>삭제</v-btn></td>
               </tr>
             </template>
@@ -128,7 +127,6 @@
           { text: '담당자', value: 'string', sortable: false },
           { text: '담당거래처', value: 'string', sortable: false },
           { text: '아이디', value: 'string', sortable: false },
-          { text: '비고', value: 'string', sortable: false },
           { text: '담당자 삭제', value: 'string', sortable: false },
         ],
         purchaseData: [],
@@ -146,9 +144,9 @@
     },
     methods: {
       initPurchaseData() {
-        this.$axios.get('http://freshntech.cafe24.com/purchase')
+        this.$axios.get('http://freshntech.cafe24.com/deliverer')
         .then(res => {
-          this.purchaseData = res.data;
+          this.delivererData = res.data;
           this.total = res.data.length;
         })
         .catch((ex) => {

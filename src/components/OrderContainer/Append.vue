@@ -297,10 +297,10 @@
                       </v-layout>
                       <v-layout>
                         <v-flex>
-                          <input type="text" placeholder="입력" v-model="count[props.index]" style="width: 60px; text-align:center;">개
+                          <input type="number" placeholder="입력" v-on:change="price(props.index, props.item.count, props.item.price3)" v-model="props.item.count" style="width: 60px; text-align:center;">개
                         </v-flex>
                         <v-flex>
-                          {{numberWithCommas(count[props.index]*props.item.price2)}}원
+                          <input type="text" v-model="props.item.price3" style="width: 60px; text-align:center;" disabled>원
                         </v-flex>
                       </v-layout>
                     </td>
@@ -332,7 +332,6 @@
 </v-container>
 </template>
 <script>
-
   import {
     SearchForm,
     ButtonToggle,
@@ -393,27 +392,33 @@
         customersItem: '',      //선택된 거래처 1개의 데이터
         customerProducts: [],   //거래처가 취급하는 상품 데이터,
         selectItems: [],         //거래처가 취급하는 상품중 선택된 상품
-        count: [1,],
         deliveryCategory: '직배송',
         manager: '',            //영업담당자
         shippingManager: '',     //배송담당자
         orderItems: [],
         shipping:[],
         allCount:0, //전체 상품 개수,
-        payment:0
+        payment:0,
+        qTY:[],// 상품 수
       }
     },
     computed: {
       sumPrice: function(){
         let sum = 0;
         for(var i = 0;i < this.selectItems.length;i++){
-          sum += this.count[i]*Number(this.selectItems[i].price2);
+          sum += Number(this.selectItems[i].selectPrice*this.selectItems[i].count);
         }
         this.payment = sum;
         return sum;
       }
     },
     methods: {
+      price(index,count,price){
+        console.log(index,count+"정답");
+        this.selectItems[index].count = count;
+        this.selectItems[index].price = count*this.selectItems[index].price3;
+        return count
+      },
       initCustormer(){
         this.$axios.get('http://freshntech.cafe24.com/order/setinsert')
         .then(res => {
@@ -435,6 +440,10 @@
         this.$axios.get('http://freshntech.cafe24.com/order/setinsert/'+this.customersItem.id)
         .then(res => {
           this.customerProducts = res.data;
+          for(var i =0;i < this.customerProducts.length;i++){
+            this.customerProducts[i].count = 1;
+            this.customerProducts[i].selectPrice = this.customerProducts[i].price3;
+          }
         })
         .catch((ex) => {
           console.log("Error : ",ex);
@@ -448,17 +457,8 @@
         this.appendModalCheck = !this.appendModalCheck;
       },
       selectProduct(item){
-        item.qTY = this.count;
-        item.amount = this.count * item.price2;
         this.selectItems.push(item);
         this.allCount++;
-      },
-      countModify(mode, index, item){
-        if(mode == 'up'){
-          this.count += 1;
-        }else{
-          this.count -= 1;
-        }
       },
       defaultSelectItem() {
         this.selectItems = [];
@@ -468,7 +468,6 @@
         this.selectItems.forEach((item, index, array)=>{
           if(item == product){
             array.splice(index,1);
-            this.count.splice(index,1);
           }
         })
         this.allCount--;

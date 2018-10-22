@@ -21,67 +21,20 @@ const routes = [
         component: () => import('@/components/Dashboard/Layout'),
         children: [
             {
-                path: 'list',
+                path: 'list', // 주문 리스트
                 name: 'OrderContainer.List',
                 component: () => import('@/components/OrderContainer/List')
             },
             {
-                path: 'list/detail/:order_id',
+                path: 'list/detail/:order_id', // 주문 상세보기
                 name: 'OrderContainer.Detail',
                 component: () => import('@/components/OrderContainer/Detail')
             },
-            // {
-            //     path: 'product',
-            //     name: 'OrderContainer.ProductList',
-            //     component: () => import('@/components/OrderContainer/ProductList')
-            // },
-            // {
-            //     path: 'return',
-            //     name: 'OrderContainer.Return',
-            //     component: () => import('@/components/OrderContainer/Return')
-            // },
             {
-                path: 'setting',
-                name: 'OrderContainer.Setting',
-                component: () => import('@/components/OrderContainer/Setting')
-            },
-            {
-                path: 'append',
+                path: 'append', // 주문 등록
                 name: 'OrderContainer.Append',
                 component: () => import('@/components/OrderContainer/Append')
             },
-            {
-                path: 'returnAppend',
-                name: 'OrderContainer.Append',
-                component: () => import('@/components/OrderContainer/ReturnAppend')
-            }
-        ]
-    },
-    { // ===== 재고 관리 ===== //
-        path: '/inventory',
-        name: 'InventoryContainer',
-        component: () => import('@/components/Dashboard/Layout'),
-        children: [
-            {
-                path: 'area',
-                name: 'InventoryContainer.AreaManagement',
-                component: () => import('@/components/InventoryContainer/AreaManagement')
-            },
-            {
-                path: 'list',
-                name: 'InventoryContainer.SrList',
-                component: () => import('@/components/InventoryContainer/SrList')
-            },
-            {
-                path: 'srmanagement',
-                name: 'InventoryContainer.SrManagement',
-                component: () => import('@/components/InventoryContainer/SrManagement')
-            },
-            {
-                path: 'stock',
-                name: 'InventoryContainer.StockStatus',
-                component: () => import('@/components/InventoryContainer/StockStatus')
-            }
         ]
     },
     { // ===== 매입 관리 ===== //
@@ -127,22 +80,17 @@ const routes = [
         component: () => import('@/components/Dashboard/Layout'),
         children: [
             {
-                path: 'category',
-                name: 'ProductContainer.CategorySetting',
-                component: () => import('@/components/ProductContainer/CategorySetting')
-            },
-            {
-                path: 'product',
+                path: 'product', // 상품 리스트
                 name: 'ProductContainer.Product',
                 component: () => import('@/components/ProductContainer/Product')
             },
             {
-                path: 'list/detail/:product_id',
+                path: 'list/detail/:product_id', // 상품 상세보기
                 name: 'ProductContainer.Detail',
                 component: () => import('@/components/ProductContainer/Detail')
             },
             {
-                path: 'apply',
+                path: 'apply', // 상품 등록
                 name: 'ProductContainer.Product',
                 component: () => import('@/components/ProductContainer/ProductApply')
             },
@@ -150,39 +98,27 @@ const routes = [
     },
 
     { // ===== 거래처관리 ===== //
-
         path: '/customers',
         name: 'CustomerContainer',
         component: () => import('@/components/Dashboard/Layout'),
         children: [
-
             { // === 거래처목록 === //
                 path: 'list',
                 name: 'CustomerContainer.List',
                 component: () => import('@/components/CustomerContainer/List')
             },
-                { // === 거래처상세 === //
-                    path: 'list/detail/:customer_id',
-                    name: 'CustomerContainer.CustomerDetail',
-                    component: () => import('@/components/CustomerContainer/CustomerDetail'),
-                    props: true
-                },
-                { // === 거래처등록 === //
-                    path: 'insert',
-                    name: 'CustomerContainer.CustomerDetail',
-                    component: () => import('@/components/CustomerContainer/CustomerInsert'),
-
-                },
-
-            { // === 가입신청목록 === //
-                path: 'applicant',
-                name: 'CustomerContainer.ApplicantList',
-                component: () => import('@/components/CustomerContainer/ApplicantList'),
-
+            { // === 거래처상세 === //
+                path: 'list/detail/:customer_id',
+                name: 'CustomerContainer.CustomerDetail',
+                component: () => import('@/components/CustomerContainer/CustomerDetail'),
+                props: true
             },
-
+            { // === 거래처등록 === //
+                path: 'insert',
+                name: 'CustomerContainer.CustomerDetail',
+                component: () => import('@/components/CustomerContainer/CustomerInsert'),
+            }
         ]
-
     }, // ===== 거래처관리 ===== //
     {
         path: '/dashboard',
@@ -212,17 +148,17 @@ const routes = [
         component: () => import('@/components/Dashboard/Layout'),
         children: [
             {
-                path: 'list',
+                path: 'list', // 직원 리스트
                 name: 'EmployeeContainer.employeeList',
                 component: () => import('@/components/EmployeeContainer/employeeList')
             },
             {
-                path: 'append',
+                path: 'append', // 직원 등록
                 name: 'EmployeeContainer.appendEmployee',
                 component: () => import('@/components/EmployeeContainer/appendEmployee')
             },
             {
-                path: 'detail',
+                path: 'list/detail/:employee_id', // 직원 상세보기
                 name: 'EmployeeContainer.detailEmployee',
                 component: () => import('@/components/EmployeeContainer/detailEmployee')
             },

@@ -6,25 +6,6 @@
       <v-flex>
         <detail-table>
           <tbody slot="contents">
-            <!-- <tr>
-              <th>키워드 검색</th>
-              <td>
-                <v-container>
-                  <v-layout>
-                    <v-flex>
-                      <v-select
-                        :items="['상품명', '상품코드','제조사']"/>
-                    </v-flex>
-                    <v-flex>
-                      <search-form label="검색어를 입력해 주세요"></search-form>
-                    </v-flex>
-                  </v-layout>
-                </v-container>
-              </td>
-              <td style="width: 35%;">
-                <v-btn>검색</v-btn>
-              </td>
-            </tr> -->
             <tr>
               <th>즉시 검색</th>
               <td colspan="2">
@@ -62,13 +43,6 @@
       <v-flex>
         <span>전체 0건</span>
       </v-flex>
-      <!-- <v-flex>
-        <v-btn outline>판매중</v-btn>
-        <v-btn outline>판매중지</v-btn>
-      </v-flex> -->
-      <!-- <v-flex>
-        <v-btn outline>재고변경</v-btn>
-      </v-flex> -->
       <v-flex style="text-align:right">
         <v-btn outline>삭제</v-btn>
         <v-btn outline>상품 일괄 수정</v-btn>
@@ -175,6 +149,7 @@
       initProduct() {
         this.$axios.get('http://freshntech.cafe24.com/item')
         .then(res => {
+          this.category_2 = null;
           this.products = res.data[0];
           this.categoryList = res.data[1];
           for(var i = 0;i < res.data[1].length;i++){

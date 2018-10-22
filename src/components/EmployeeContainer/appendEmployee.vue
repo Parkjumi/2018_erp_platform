@@ -2,7 +2,7 @@
 <v-container style=" ">
 
 <!-- ========== 헤더 ========== -->
-<page-header title="직원 관리" />
+<page-header title="배송팀 관리" />
 <br>
 
 
@@ -43,7 +43,7 @@
                     <td>
                         <v-text-field
                             label="담당자를 입력해 주세요"
-                            v-model="product.itemName"
+                            v-model="deliverer.manager"
                             required
                         ></v-text-field>
                     </td>
@@ -51,47 +51,148 @@
                     <td>
                         <v-text-field
                             label="숫자만 입력해 주세요"
-                            v-model="product.itemQTY"
+                            v-model="deliverer.mobile"
+                            required
+                        ></v-text-field>
+                    </td>
+                </tr>
+                <tr>
+                    <th><h4 class="center-align">상호명 *</h4></th>
+                    <td>
+                        <v-text-field
+                            label="사업자 등록번호를 입력해 주세요"
+                            v-model="deliverer.bName"
+                            required
+                        ></v-text-field>
+                    </td>
+                    <th><h4 class="center-align">사업자 등록번호 *</h4></th>
+                    <td>
+                        <v-text-field
+                            label="사업자 등록번호를 입력해 주세요"
+                            v-model="deliverer.bNumber"
+                            required
+                        ></v-text-field>
+                    </td>
+                </tr>
+                <tr>
+                  <th><h4 class="center-align">대표자 명</h4></th>
+                    <td>
+                        <v-text-field
+                            label="대표자명을 입력해 주세요"
+                            v-model="deliverer.chief"
+                            required
+                        ></v-text-field>
+                    </td>
+                    <th><h4 class="center-align">대표자 전화번호</h4></th>
+                    <td>
+                        <v-text-field
+                            label="대표자 전화번호를 입력해 주세요"
+                            v-model="deliverer.tel"
                             required
                         ></v-text-field>
                     </td>
                 </tr>
                 <tr>
                     <th><h4 class="center-align">아이디 *</h4></th>
-                    <td colspan="3">
+                    <td>
                         <v-text-field
-                            label="4자 이상 영문 또는 숫자만 사용 가능"
-                            v-model="product.manufacturer"
+                            label="아이디는 대표자 전화번호 입니다."
+                            v-model="deliverer.tel"
                             required
                         ></v-text-field>
+                    </td>
+                    <th><h4 class="center-align">업종</h4></th>
+                    <td>
+                        <v-select
+                            :items="['한식','중식','일식','수산물','분식','닭/오리','양식','패스트푸드','제빵','유흥주점','퓨전요리','커피/음료','음식배달','뷔페','기타음식점']"
+                            label="분류"
+                            v-model="deliverer.bSector"
+                        ></v-select>
                     </td>
                 </tr>
                 <tr>
-                    <th><h4 class="center-align">비밀번호 *</h4></th>
-                    <td colspan="3">
-                        <v-text-field
-                            label="4자 이상 영문 또는 숫자만 사용 가능"
-                            v-model="product.manufacturer"
-                            required
-                        ></v-text-field>
-                    </td>
+                  <th><h4 class="center-align">비밀번호 *</h4></th>
+                  <td >
+                      <v-text-field
+                          label="4자 이상 영문 또는 숫자만 사용 가능"
+                          v-model="deliverer.userPw"
+                          required
+                      ></v-text-field>
+                  </td>
+                  <th><h4 class="center-align">FAX</h4></th>
+                  <td>
+                      <v-text-field
+                          label="FAX번호를 입력해 주세요"
+                          v-model="deliverer.fax"
+                          required
+                      ></v-text-field>
+                  </td>
                 </tr>
                 <tr>
-                    <th><h4 class="center-align">비밀번호 확인*</h4></th>
-                    <td colspan="3">
-                        <v-text-field
-                            label="비밀번호를 다시 입력해주세요"
-                            v-model="product.manufacturer"
-                            required
-                        ></v-text-field>
-                    </td>
+                  <th><h4 class="center-align">Email</h4></th>
+                  <td colspan="3">
+                      <v-text-field
+                          label="Email을 입력해 주세요"
+                          v-model="deliverer.email"
+                          required
+                      ></v-text-field>
+                  </td>
+                </tr>
+                <tr>
+                  <th><h4 class="center-align">배송지</h4></th>
+                  <td colspan="3">
+                    <v-text-field
+                        label="우편번호를 입력해 주세요"
+                        v-model="deliverer.postNo"
+                        required
+                        style="width:50%;"
+                    ></v-text-field>
+                    <v-text-field
+                        label="광역시/도를 입력해 주세요"
+                        v-model="deliverer.address1"
+                        required
+                        style="width:50%;"
+                    ></v-text-field>
+                    <v-text-field
+                        label="도로명을 입력해 주세요"
+                        v-model="deliverer.address2"
+                        required
+                        style="width:50%;"
+                    ></v-text-field>
+                    <v-text-field
+                        label="상세주소를 입력해 주세요"
+                        v-model="deliverer.address3"
+                        required
+                        style="width:50%;"
+                    ></v-text-field>
+                  </td>
                 </tr>
                 <tr>
                     <th><h4 class="center-align">비고</h4></th>
                     <td colspan="3">
                         <v-text-field
                             label="내용을 입력해주세요"
-                            v-model="product.manufacturer"
+                            v-model="deliverer.remark1"
+                            required
+                        ></v-text-field>
+                    </td>
+                </tr>
+                <tr>
+                  <th><h4 class="center-align">비고2</h4></th>
+                  <td colspan="3">
+                      <v-text-field
+                          label="내용을 입력해주세요"
+                          v-model="deliverer.remark2"
+                          required
+                      ></v-text-field>
+                  </td>
+                </tr>
+                <tr>
+                    <th><h4 class="center-align">메모</h4></th>
+                    <td colspan="3">
+                        <v-text-field
+                            label="내용을 입력해주세요"
+                            v-model="deliverer.memo"
                             required
                         ></v-text-field>
                     </td>
@@ -100,6 +201,31 @@
         </v-flex>
     </v-layout>
 <br>
+<div class="cardbox cardbox-header" >
+    <h3>배송 담당자 정보</h3>
+</div>
+<v-layout row cardbox cardbox-body style="padding:0;">
+    <v-flex xs12 md12 class="td-margin">
+        <table style="width:94%;">
+            <colgroup>
+                <col width="15%">
+                <col width="35%">
+                <col width="15%">
+                <col width="35%">
+            </colgroup>
+            <tr>
+                <th><h4 class="center-align">배송 담당자 *</h4></th>
+                <td colspan="3">
+                  <v-select
+                      :items="tbDelivererName"
+                      label="배송 담당자"
+                      v-model="deliverer.tbDelivererName"
+                  ></v-select>
+                </td>
+            </tr>
+        </table>
+    </v-flex>
+</v-layout>
 <v-layout style="text-align: center;">
   <v-flex style="text-align: center">
     <v-btn @click="$router.push('/employee/list')">목록으로</v-btn>
@@ -147,11 +273,9 @@ export default{
     // ========== data ========== //
     data() {
         return {
-
             modal:{
                 taxbill : false
             },
-
             loading:true,
             search: '',
             pagination: {},
@@ -169,22 +293,17 @@ export default{
             category1List :[],
 
             page: 1,
-
+            tbDelivererName:[], //배송 담당자
             customer_id : null , // customer_id
-            product: {},
+            deliverer: {},
         }
     },
     // ========== created ========== //
     created(){
-      this.$axios.get('http://freshntech.cafe24.com/item/insertset')
+      this.$axios.get('http://freshntech.cafe24.com/member')
       .then(res => {
-        this.category1List = res.data[0];
-        this.bNameList = res.data[1];
-        for(var i = 0;i < this.category1List.length;i++){
-          this.category1.push(this.category1List[i].first);
-        }
-        for(var i = 0;i < this.bNameList.length;i++){
-          this.bName.push(this.bNameList[i].bName);
+        for(var i = 0; i < res.data.length;i++){
+          this.tbDelivererName[i] = res.data[i].name;
         }
       })
       .catch((ex) => {
@@ -197,29 +316,34 @@ export default{
     methods: {
         // ===== 저장 ===== //
         saveEmployee(){
-          this.$axios.post('http://freshntech.cafe24.com/item',{
-            itemName:this.product.itemName,
-            itemQTY:this.product.itemQTY,
-            manufacturer:this.product.manufacturer,
-            origin:this.product.origin,
-            spec:this.product.spec,
-            unit:this.product.unit,
-            price1:this.product.price1,
-            price2:this.product.price2,
-            price3:this.product.price3,
-            purchasePrice:this.product.purchasePrice,
-            first:this.category,
-            second:this.category_2,
-            bName:this.name,
-            memo:this.memo
+          this.$axios.post('http://freshntech.cafe24.com/deliverer',{
+            userId:this.deliverer.tel,
+            userPw:this.deliverer.userPw,
+            bName:this.deliverer.bName,
+            bNumber:this.deliverer.bNumber,
+            bSector:this.deliverer.bSector,
+            chief:this.deliverer.chief,
+            manager:this.deliverer.manager,
+            tel:this.deliverer.tel,
+            fax:this.deliverer.fax,
+            email:this.deliverer.email,
+            mobile:this.deliverer.mobile,
+            postNo:this.deliverer.postNo,
+            address1:this.deliverer.address1,
+            address2:this.deliverer.address2,
+            address3:this.deliverer.address3,
+            memo:this.deliverer.memo,
+            remark1:this.deliverer.remark1,
+            remark2:this.deliverer.remark2,
+            salesman_ID:"KRBS000001"
           })
           .then(res => {
             alert('저장되었습니다.')
+            this.$router.push('/employee/list')
           })
           .catch((ex) => {
             console.log("Error : ",ex);
           })
-          this.$router.push('/product/product')
         }
     },
 

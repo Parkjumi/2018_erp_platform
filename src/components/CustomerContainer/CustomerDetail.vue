@@ -224,14 +224,13 @@
       </v-flex>
   </v-layout>
 <br>
-
-  <v-layout style="text-align: center;">
-    <v-flex style="text-align: center">
-      <v-btn @click="$router.push('/customers/list')">목록으로</v-btn>
-      <v-btn @click="saveOrderItem()">수정하기</v-btn>
-      <v-btn @click="deleteProduct()">삭제하기</v-btn>
-    </v-flex>
-  </v-layout>
+<v-layout style="text-align: center;">
+  <v-flex style="text-align: center">
+    <v-btn @click="$router.push('/customers/list')">목록으로</v-btn>
+    <v-btn @click="saveOrderItem()">수정하기</v-btn>
+    <v-btn @click="deleteProduct()">삭제하기</v-btn>
+  </v-flex>
+</v-layout>
 <br>
 </div> <!-- ========== 컨텐츠 ========== -->
 </v-container>
