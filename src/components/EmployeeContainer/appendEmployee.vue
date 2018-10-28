@@ -2,7 +2,7 @@
 <v-container style=" ">
 
 <!-- ========== 헤더 ========== -->
-<page-header title="배송팀 관리" />
+<page-header title="배송팀 등록" />
 <br>
 
 
@@ -335,7 +335,7 @@ export default{
             memo:this.deliverer.memo,
             remark1:this.deliverer.remark1,
             remark2:this.deliverer.remark2,
-            salesman_ID:"KRBS000001"
+            salesman_ID:deliverer.tbDelivererName
           })
           .then(res => {
             alert('저장되었습니다.')

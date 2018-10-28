@@ -1,5 +1,5 @@
 <template>
-<div style="position:relative;">
+<div style="position:relative;margin:0">
 
     <!-- <table>
         <thead>
@@ -9,7 +9,7 @@
                 <th>Contents</th>
             </tr>
         </thead>
-        
+
         <tbody>
             <tr>
                 <td>-</td>
@@ -48,9 +48,9 @@ export default{
 
     // ========== props ========== //
     props:{
-        
-        
-        
+
+
+
     }, // ========== props ========== //
 
 
@@ -58,7 +58,7 @@ export default{
     // ========== data ========== //
     data () {
         return {
-            
+
 headers: [
           {
             text: 'Dessert (100g serving)',
@@ -164,45 +164,45 @@ headers: [
             iron: '6%'
           }
         ]
-      
+
 
 
         }
     }, // ========== data ========== //
-    
-    
-    
-    
+
+
+
+
     // ========== created ========== //
     created(){
-        
+
     }, // ========== created ========== //
-    
-    
-    
+
+
+
 
 
     // ========== updated ========== //
     updated(){
     }, // ========== updated ========== //
-    
-    
-    
+
+
+
     // ========== mounted ========== //
     mounted(){
-        
+
     }, // ========== mounted ========== //
-    
-    
 
 
 
-    
+
+
+
     // ========== data ========== //
     methods:{
 
 
-        
+
     }, // ========== data ========== //
 }
 </script>

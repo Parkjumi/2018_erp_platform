@@ -259,7 +259,6 @@ import {
 
 
 export default{
-    name : 'BrandList',
 
     // ========== components ========== //
     components: {
@@ -281,10 +280,6 @@ export default{
             loading:true,
             search: '',
             pagination: {},
-            selected: [],
-            category1:[],
-            category:'',
-            category_2:'',
             category2:[],
             memo:'',
             name:'',
@@ -308,6 +303,8 @@ export default{
       this.$axios.get('http://freshntech.cafe24.com/deliverer/'+employee_id)
       .then(res => {
         this.deliverer = res.data;
+        this.deliverer.tbDelivererName = this.deliverer.salesman_ID;
+        console.log(this.deliverer);
       })
       .catch((ex) => {
         console.log("Error : ",ex);
@@ -360,22 +357,16 @@ export default{
         },
 
         deleteEmployee(){
-          
+          this.$axios.delete('http://freshntech.cafe24.com/deliverer/'+employee_id)
+          .then(res => {
+            alert('삭제가 완료되었습니다.');
+            this.$router.push('/employee/list');
+          })
+          .catch((ex) => {
+            console.log("Error : ",ex);
+          })
         }
     },
-
-    watch:{
-      category(){
-        this.category2 = [];
-        for(var i = 0;i < this.category1List.length;i++){
-          if(this.category == this.category1List[i].first){
-            for(var j=0;j < this.category1List[i].secondCategoryList.length;j++){
-              this.category2.push(this.category1List[i].secondCategoryList[j].second)
-            }
-          }
-        }
-      }
-    }
 }
 </script>
 

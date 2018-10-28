@@ -164,6 +164,56 @@ const routes = [
             },
         ]
     },
+
+    { // ===== 공지사항 ===== //
+        path: '/notice',
+        name: 'NoticeContainer',
+        component: () => import('@/components/Dashboard/Layout'),
+        children: [
+            {
+                path: 'customer/list', // 거래처 공지사항 목록
+                name: 'NoticeContainer.CustomerNoticeList',
+                component: () => import('@/components/NoticeContainer/CustomerNoticeList')
+            },
+            {
+                path: 'customer/append', // 거래처 공지사항 등록
+                name: 'NoticeContainer.CustomerNoticeAppend',
+                component: () => import('@/components/NoticeContainer/CustomerNoticeAppend')
+            },
+            {
+                path: 'customer/detail/:notice_id', // 거래처 공지사항 수정
+                name: 'NoticeContainer.CustomerNoticeDetail',
+                component: () => import('@/components/NoticeContainer/CustomerNoticeDetail')
+            },
+            {
+                path: 'delivery/list', // 배송팀 공지사항 목록
+                name: 'NoticeContainer.DeliveryNoticeList',
+                component: () => import('@/components/NoticeContainer/DeliveryNoticeList')
+            },
+            {
+                path: 'delivery/append', // 배송팀 공지사항 등록
+                name: 'NoticeContainer.DeliveryNoticeAppend',
+                component: () => import('@/components/NoticeContainer/DeliveryNoticeAppend')
+            },
+            {
+                path: 'delivery/detail/:notice_id', // 배송팀 공지사항 수정
+                name: 'NoticeContainer.DeliveryrNoticeDetail',
+                component: () => import('@/components/NoticeContainer/DeliveryNoticeDetail')
+            },
+        ]
+    },
+    // { // ===== 로그인 ===== //
+    //     path: '/login',
+    //     name: 'LoginContainer',
+    //     component: () => import('@/components/Dashboard/Layout'),
+    //     children: [
+    //         {
+    //             path: 'login', // 로그인
+    //             name: 'LoginContainer.login',
+    //             component: () => import('@/components/LoginContainer/login')
+    //         }
+    //     ]
+    // },
 ]
 
 export default new VueRouter({

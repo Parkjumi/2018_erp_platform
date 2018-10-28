@@ -72,7 +72,7 @@
                 <tr>
                     <th><h4 class="center-align">관련 주문번호</h4></th>
                     <td>
-
+                      {{orderData.tbProvider_ID}}
                     </td>
                     <th><h4 class="center-align">납기일자*</h4></th>
                     <td>
@@ -464,14 +464,14 @@ export default{
         return sum;
       }
     },
-
     // ========== methods ========== //
     methods: {
         // ===== 찾기 ===== //
         getCustomer(id){
-          this.$axios.get('http://freshntech.cafe24.com/order/detail/'+id)
+          this.$axios.get('http://freshntech.cafe24.com/purchaseitem/detail/'+id)
           .then(res => {
             this.orderData = res.data[0];
+            this.customersItem.bName = res.data[0].bName;
             this.orderItems = res.data[1];
             this.customerProducts = res.data[2];
             this.allCount = this.orderItems.length;
@@ -523,7 +523,7 @@ export default{
             orderItemId:this.deleteOrderItems
           }).then((res) => {
             alert('수정이 완료되었습니다.');
-            this.$router.push('/order/list');
+            this.$router.push('/purchase/list');
           }).catch((ex) => {
             console.log("Error : ",ex);
           })
@@ -533,11 +533,11 @@ export default{
           this.$axios.delete('http://freshntech.cafe24.com/order/'+this.orderData.id)
           .then(res => {
             alert('삭제가 완료되었습니다.');
+            this.$router.push('/purchase/list');
           })
           .catch((ex) => {
             console.log("Error : ",ex);
           })
-          this.$router.push('/order/list');
         },
 
         numberWithCommas(x) { //원화

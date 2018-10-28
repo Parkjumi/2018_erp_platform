@@ -3,7 +3,7 @@
     <!-- <h1>공통 컴포넌트 테스트 </h1>
     <hr> -->
     <page-header />
-    
+
     <br>
     <br>
     <v-flex xs12 sm3>
@@ -19,7 +19,7 @@
       <h3>옵션 [값: {{ selectedModel }}]</h3>
       <select-items :items="['유형1','유형2', '유형3']" v-model="selectedModel" />
     </v-flex>
-    
+
 
 
     <br>
@@ -28,7 +28,7 @@
         <h3>옵션버튼 [값: {{ toggleModel }}]</h3>
       <button-toggle v-model="toggleModel" :list="[ '전체' , '일별' , '주별', '월별' ]" :default="2" />
     </v-flex>
-    
+
 
 
     <br>
@@ -37,7 +37,7 @@
       <h3>날짜범위 [값: {{ dateModel }}]</h3>
       <date-range v-model="dateModel" />
     </v-flex>
-    
+
 
 
     <br>
@@ -69,22 +69,22 @@
           </tbody>
       </list-table>
     </v-flex>
-    
+
 
     <br>
     <br>
     <v-flex xs12 sm6 style="clear:both;">
       <h3>모달 </h3>
-      
-      
+
+
       <v-btn  dark @click.prevent="modal.test=true">Open modal</v-btn>
-      <modal 
-        title="Sample Modal" 
+      <modal
+        title="Sample Modal"
         width="35%"
-        :open="modal.test" 
-        @close="modal.test = false" 
+        :open="modal.test"
+        @close="modal.test = false"
         @confirm="modal.test=false">
-          
+
         <p slot="contents">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. <br>
           Explicabo consequatur cum impedit velit autem perspiciatis qui aut fugit eligendi corporis earum, <br>
@@ -96,8 +96,8 @@
             <v-btn color="green darken-1" flat @click.native="modal.test=false">OK</v-btn>
         </div> -->
       </modal>
-    
-      
+
+
     </v-flex>
 
   </div>
@@ -106,14 +106,14 @@
 
 
 <script>
-import { 
-  SearchForm, 
+import {
+  SearchForm,
   ButtonToggle,
   DateRange,
   SelectItems,
 } from '../commons/Form'
 
-import { 
+import {
   PageHeader,
   TableComp,
   DetailTable,
@@ -139,7 +139,7 @@ import {
 
     data(){
       return{
-        
+
         searchModel:0,
         toggleModel:null,
         dateModel:null,
@@ -152,7 +152,7 @@ import {
           { id: 13, name: 'Prod 03', price: 300000 },
         ],
 
-        
+
         modal: {
           test : false,
         }
@@ -169,7 +169,7 @@ import {
     }
 
   }
-  
+
 </script>
 <style scoped>
 

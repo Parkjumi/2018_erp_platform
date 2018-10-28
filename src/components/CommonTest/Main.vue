@@ -22,63 +22,92 @@
   <div v-else style="padding:15px;">
     <!-- <h1>공통 컴포넌트 테스트 </h1>
     <hr> -->
-    <page-header title="메인 페이지" />
+    <page-header title="FRESHMAN" />
     <br>
     <h2>판매 진행 현황</h2>
     <v-container fluid grid-list-md>
-    <v-data-iterator
-      :items="items"
-      content-tag="v-layout"
-    >
-      <v-flex
-        slot="item"
-        slot-scope="props"
-        xs12
-        sm6
-        md4
-        lg3
-      >
-        <v-card>
-          <v-card-title><h4>{{ props.item.name }}</h4></v-card-title>
-          <v-divider></v-divider>
-          <v-list dense>
-            <v-list-tile>
-              <v-list-tile-content>출고전:</v-list-tile-content>
-              <v-list-tile-content class="align-end">{{ props.item.calories }}</v-list-tile-content>
-            </v-list-tile>
-            <v-list-tile>
-              <v-list-tile-content>출고 완료:</v-list-tile-content>
-              <v-list-tile-content class="align-end">{{ props.item.fat }}</v-list-tile-content>
-            </v-list-tile>
-            <v-list-tile>
-              <v-list-tile-content>출고 거절:</v-list-tile-content>
-              <v-list-tile-content class="align-end">{{ props.item.carbs }}</v-list-tile-content>
-            </v-list-tile>
-          </v-list>
-        </v-card>
-      </v-flex>
-    </v-data-iterator>
-  </v-container>
-
-  
-<!--
-    <h2>주문 현황</h2>
-    <br>
-    <v-flex xs7>
-      <v-data-table
-        :headers="orderHeader"
-        :items="desserts"
+      <h2>한달</h2>
+      <v-data-iterator
+        :items="items"
+        content-tag="v-layout"
         hide-actions
-        class="elevation-1"
       >
-      <template slot="items" slot-scope="props">
-        <td class="text-xs-left">{{ props.item.name }}</td>
-        <td class="text-xs-left">{{ props.item.calories }}</td>
-        <td class="text-xs-left">{{ props.item.fat }}</td>
-      </template>
-      </v-data-table>
-    </v-flex> -->
-
+        <v-flex
+          slot="item"
+          slot-scope="props"
+          xs2
+        >
+          <v-card>
+            <v-card-title><h4>{{ props.item.name }}</h4></v-card-title>
+            <v-divider></v-divider>
+            <v-list dense>
+              <v-list-tile>
+                <v-list-tile-content>주문 {{ props.item.countMonth }} 건</v-list-tile-content>
+                <v-list-tile-content>{{ props.item.paymentMonth }}원</v-list-tile-content>
+              </v-list-tile>
+            </v-list>
+          </v-card>
+        </v-flex>
+      </v-data-iterator>
+      <br>
+      <h2>당일</h2>
+      <v-data-iterator
+        :items="orderData"
+        content-tag="v-layout"
+        hide-actions
+      >
+        <v-flex
+          slot="item"
+          slot-scope="props"
+          xs2
+        >
+          <v-card>
+            <v-card-title><h4>{{ props.item.name }}</h4></v-card-title>
+            <v-divider></v-divider>
+            <v-list dense>
+              <v-list-tile>
+                <v-list-tile-content>주문 {{ props.item.countToday }} 건</v-list-tile-content>
+                <v-list-tile-content>{{ props.item.paymentToday }}원</v-list-tile-content>
+              </v-list-tile>
+            </v-list>
+          </v-card>
+        </v-flex>
+      </v-data-iterator>
+    </v-container>
+    <br>
+    <h2>공지사항</h2>
+    <v-container fluid grid-list-md>
+      <h2 style="margin:0;width:40%;display:inline-block;margin-right:20px">거래처 공지사항</h2>
+      <h2 style="margin:0;width:40%;display:inline-block">배송팀 공지사항</h2>
+      <v-flex xs12>
+        <div style="width:40%;display:inline-block;margin-right:20px;float:left">
+          <v-data-table
+            :headers="headers"
+            :items="customerNotice"
+            hide-actions
+            class="elevation-1"
+          >
+          <template slot="items" slot-scope="props">
+            <td @click="$router.push('/notice/customer/detail/'+props.item.id)">{{ props.item.customerTitle }}</td>
+            <td @click="$router.push('/notice/customer/detail/'+props.item.id)" class="text-xs-right">{{ props.item.customerUpdateDate }}</td>
+          </template>
+          </v-data-table>
+        </div>
+        <div style="width:40%;display:inline-block">
+          <v-data-table
+            :headers="headers"
+            :items="deliveryNotice"
+            hide-actions
+            class="elevation-1"
+          >
+          <template slot="items" slot-scope="props">
+            <td @click="$router.push('/notice/delivery/detail/'+props.item.id)">{{ props.item.delivereTitle }}</td>
+            <td @click="$router.push('/notice/delivery/detail/'+props.item.id)" class="text-xs-right">{{ props.item.deliverUpdateDate }}</td>
+          </template>
+          </v-data-table>
+        </div>
+      </v-flex>
+    </v-container>
   </div>
 </template>
 
@@ -107,41 +136,80 @@ import {
 
     data(){
       return {
-        desserts: [
+        headers: [
           {
-            name: 0,
+            text: '제목',
+            align: 'left',
+            sortable: false,
+            value: 'title'
+          },
+          {
+            text: '날짜',
+            align: 'right',
+            sortable: false,
+            value: 'date'
+          },
+        ],
+        customerNotice:[], // 거래처 공지사항
+        deliveryNotice:[], // 배송팀 공지사항
+        orderData: [], // 당일 현황
+        items: [], // 한달 현황
+      }
+    },
+    created() {
+      this.initCustormer();
+    },
+    methods: {
+      initCustormer(){
+        this.$axios.get('http://freshntech.cafe24.com/main')
+        .then(res => {
+          this.customerNotice = res.data[0]
+          this.deliveryNotice = res.data[1]
+          this.items = res.data[2]
+          this.orderData = res.data[3]
+
+          for(var i = 0;i < res.data[2].length;i++){
+            switch (this.items[i].orderStateMonth) {
+              case "결제대기":
+                this.items[i].name = "결제대기"
+                break;
+              case "진행중":
+                this.items[i].name = "진행중"
+                break;
+              case "출고거절":
+                this.items[i].name = "출고거절"
+                break;
+              case "출고완료":
+                this.items[i].name = "출고완료"
+                break;
+              case "출고전":
+                this.items[i].name = "출고전"
+                break;
+            }
           }
-        ],
-        orderHeader:[
-          { text: '당일', value: 'num', sortable: false},
-          { text: '당일', value: 'num', sortable: false},
-        ],
-
-        items: [
-          {
-            value: false,
-            name: '판매 진행 현황',
-            calories: 159,
-            fat: 6.0,
-            carbs: 24,
-            protein: 4.0,
-            sodium: 87,
-            calcium: '14%',
-            iron: '1%'
-          },
-          {
-            value: false,
-            name: '주문 현황',
-            calories: 237,
-            fat: 9.0,
-            carbs: 37,
-            protein: 4.3,
-            sodium: 129,
-            calcium: '8%',
-            iron: '1%'
-          },
-
-        ]
+          for(var i = 0;i < res.data[3].length;i++){
+            switch (this.orderData[i].orderStateToday) {
+              case "결제대기":
+                this.orderData[i].name = "결제대기"
+                break;
+              case "진행중":
+                this.orderData[i].name = "진행중"
+                break;
+              case "출고거절":
+                this.orderData[i].name = "출고거절"
+                break;
+              case "출고완료":
+                this.orderData[i].name = "출고완료"
+                break;
+              case "출고전":
+                this.orderData[i].name = "출고전"
+                break;
+            }
+          }
+        })
+        .catch((ex) => {
+          console.log("Error : ",ex);
+        })
       }
     }
   }

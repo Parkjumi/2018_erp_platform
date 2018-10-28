@@ -3,7 +3,7 @@
 
   <!-- ========== 헤더 ========== -->
   <page-header
-    title="배송팀 관리"/>
+    title="직원 관리"/>
 
   <!-- ========== 로딩 ========== -->
   <v-layout row v-if="loading">
@@ -54,7 +54,7 @@
       <v-layout row wrap class="middle-container">
         <v-flex xs12>
           <v-flex style="text-align:right">
-            <v-btn outline color="indigo" @click="moveOrderAppend()"><v-icon small>far fa-file-alt</v-icon>&nbsp;배송팀 등록</v-btn>
+            <v-btn outline color="indigo" @click="moveOrderAppend()"><v-icon small>far fa-file-alt</v-icon>&nbsp;직원 등록</v-btn>
           </v-flex>
         </v-flex>
       </v-layout>
