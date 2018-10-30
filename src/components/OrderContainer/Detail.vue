@@ -60,7 +60,7 @@
                     </td>
                     <th><h4 class="center-align">총 주문 금액</h4></th>
                     <td>
-                      {{numberWithCommas(orderData.payment)}}원
+                      {{orderData.amount}}원
                     </td>
                 </tr>
                 <tr>
@@ -130,21 +130,21 @@
             <tr>
                 <th><h4 class="center-align">요청 사항</h4></th>
                 <td colspan="3">
-                  <v-text-field
-                    outline
+                  <v-textarea
+                    name="input-7-1"
                     v-model="orderData.requests"
                     rows="2">
-                  </v-text-field>
+                  </v-textarea>
                 </td>
             </tr>
             <tr>
                 <th><h4 class="center-align">메모</h4></th>
                 <td colspan="3">
-                  <v-text-field
-                    outline
+                  <v-textarea
+                    name="input-7-1"
                     v-model="orderData.memo"
                     rows="2">
-                  </v-text-field>
+                  </v-textarea>
                 </td>
             </tr>
         </table>
@@ -178,11 +178,11 @@
         <td>{{props.item.itemName}}</td>
         <td>{{props.item.unit}}</td>
         <td>{{props.item.manufacturer}}</td>
-        <td>1</td>
+        <td>{{props.item.qTY}}</td>
         <td>{{props.item.price1}}</td>
         <td>{{props.item.price2}}</td>
         <td>{{props.item.price3}}</td>
-        <td>{{props.item.price1}}</td>
+        <td>{{props.item.price1 * props.item.qTY}}</td>
         <td>
           <v-btn outline @click="deleteOneOrderItem(props.item)">삭제</v-btn>
         </td>
@@ -295,11 +295,11 @@
                     </v-layout>
                     <v-layout>
                       <v-flex>
-                        <span @click="countModify('up', props.item)">
+                        <span @click="countModify('up', props.index, props.item)">
                           <span class="fas fa-angle-up"></span>
                         </span>
-                        <input type="text" v-model="count" style="width: 30px; text-align:center;">
-                        <span @click="countModify('down', props.item)">
+                        <input type="text" v-model="props.item.qTY" style="width: 30px; text-align:center;">
+                        <span @click="countModify('down', props.index, props.item)">
                           <span class="fas fa-angle-down"></span>
                         </span>
                       </v-flex>
@@ -314,7 +314,7 @@
                   <td>
                     <v-layout>
                       <v-flex>합계 금액</v-flex>
-                      <v-flex style="text-align:right">{{sumPrice}}원</v-flex>
+                      <v-flex style="text-align:right">{{totalPrice}}원</v-flex>
                     </v-layout>
                   </td>
                 </template>
@@ -424,18 +424,8 @@ export default{
             updateItems:[],// 수정한 아이템
             deleteOrderItems:[],//삭제한 상품
             insertProvierItemList:[], //원래 아이템
+            totalPrice:0,
         }
-    },
-
-    computed: {
-      sumPrice: function(){
-        let sum = 0;
-        this.selectItems.forEach(item => {
-          sum += Number(item.price2);
-        });
-        this.payment = sum;
-        return sum;
-      }
     },
 
     // ========== methods ========== //
@@ -448,6 +438,10 @@ export default{
             this.orderItems = res.data[1];
             this.customerProducts = res.data[2];
             this.allCount = this.orderItems.length;
+            for(var i =0;i < this.customerProducts.length;i++){
+              this.customerProducts[i].qTY = 1;
+              this.customerProducts[i].selectPrice = this.customerProducts[i].price3;
+            }
             for(var i = 0;i < res.data[1].length;i++){
               this.insertProvierItemList.push(this.orderItems[i])
             }
@@ -459,10 +453,27 @@ export default{
         },
 
         selectProduct(item){ // 상품 추가
-          item.qTY = this.count;
-          item.amount = this.count * item.price2;
-          this.selectItems.push(item);
-          this.allCount++;
+          if(this.selectItems[0] == null){
+            this.selectItems.push(item);
+            this.allCount++;
+            this.totalPrice += this.selectItems[0].price3 * this.selectItems[0].qTY;
+          }else{
+            var count = 0;
+            for(var i = 0;i < this.selectItems.length;i++){
+              if(item.itemName == this.selectItems[i].itemName){
+                this.selectItems[i].qTY++;
+                this.totalPrice += Number(this.selectItems[i].price3);
+                break;
+              }else{
+                count++;
+              }
+            }
+            if(this.selectItems.length == count){
+              this.selectItems.push(item);
+              this.totalPrice += Number(this.selectItems[count].price3);
+              this.allCount++;
+            }
+          }
         },
 
         openAppendModal() {
@@ -496,11 +507,11 @@ export default{
           this.$axios.delete('http://freshntech.cafe24.com/order/'+this.orderData.id)
           .then(res => {
             alert('삭제가 완료되었습니다.');
+            this.$router.push('/order/list');
           })
           .catch((ex) => {
             console.log("Error : ",ex);
           })
-          this.$router.push('/order/list');
         },
 
         numberWithCommas(x) { //원화
@@ -528,6 +539,16 @@ export default{
             }
           })
           this.allCount--;
+        },
+
+        countModify(mode, index, item){
+          if(mode == 'up'){
+            this.selectItems[index].qTY++;
+            this.totalPrice += Number(this.selectItems[index].price3);
+          }else if(mode == 'down'){
+            this.selectItems[index].qTY--;
+            this.totalPrice -= Number(this.selectItems[index].price3);
+          }
         },
     },
 

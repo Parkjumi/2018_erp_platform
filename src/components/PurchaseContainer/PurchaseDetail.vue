@@ -199,7 +199,7 @@
       <v-flex style="padding: 0px 30px;">
         <v-data-table
           :headers="customersHeaders"
-          :items="customersItems"
+          :items="purchaseData"
           hide-actions>
           <template slot="items" slot-scope="props">
             <td>{{props.item.id}}</td>
@@ -475,6 +475,16 @@ export default{
             this.orderItems = res.data[1];
             this.customerProducts = res.data[2];
             this.allCount = this.orderItems.length;
+          })
+          .catch((ex) => {
+            console.log("Error : ",ex);
+          })
+
+          this.$axios.get('http://freshntech.cafe24.com/purchaseitem')
+          .then(res => {
+            this.purchaseData = res.data;
+            this.total = this.purchaseData.length;
+            console.log(this.purchaseData+"ddd");
           })
           .catch((ex) => {
             console.log("Error : ",ex);

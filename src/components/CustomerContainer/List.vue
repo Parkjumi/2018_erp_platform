@@ -57,9 +57,6 @@
       </colgroup>
       <tr>
         <td style="text-align:left;"><h3>거래처목록</h3></td>
-        <!-- <td><v-btn depressed outline style="width:97%;" @click.prevent="$router.push('/customers/approval/sale')">할인/할증 관리</v-btn></td> -->
-        <td><v-btn depressed outline style="width:95%;" @click.prevent="deleteList">삭제</v-btn></td>
-        <!-- <td><v-btn depressed outline style="width:97%;" @click.prevent="modal.customerEdit=true">일괄수정</v-btn></td> -->
         <td><v-btn depressed style="width:95%;" color="success" @click.prevent="$router.push('/customers/insert')">거래처 등록</v-btn></td>
       </tr>
     </table>
@@ -72,12 +69,12 @@
             <v-flex sm12>
                 <v-data-table
                     :headers="[
+                        { text: 'no', align:'left', sortable: 'false', value:'number' },
                         { text: '번호', align:'left', sortable: 'false', value:'number' },
                         { text: '날짜', align:'left', sortable: 'false', value:'date' },
                         { text: '거래처명', align:'left', sortable: 'false', value:'account' },
                         { text: '할인', align:'left', sortable: 'false', value:'sale' },
                         { text: '총매출', align:'left', sortable: 'false', value:'totalSales' },
-                        { text: '선택', align:'left', sortable: 'false' },
                     ]"
                     :items="customers"
                     hide-actions
@@ -85,6 +82,7 @@
                 >
                     <template slot="items" slot-scope="props" >
                         <tr @click="$router.push('/customers/list/detail/'+props.item.id)">
+                            <td class="text-xs-left">{{ props.index+1 }}</td>
                             <td class="text-xs-left">{{ props.item.id }}</td>
                             <td class="text-xs-left">{{ props.item.regDate }}</td>
                             <td class="text-xs-left">
@@ -92,10 +90,6 @@
                             </td>
                             <td class="text-xs-left">{{ props.item.priceRate }}</td>
                             <td class="text-xs-left">{{ props.item.payment }}</td>
-                            <td class="text-xs-left">
-                                <!-- {{ props.item.number }} -->
-                                <v-checkbox v-model="checkList" :value="props.item.number"></v-checkbox>
-                            </td>
                         </tr>
                     </template>
                 </v-data-table>
@@ -138,10 +132,6 @@
         </table>
     </p>
 
-    <!-- <div slot="buttons">
-        <v-btn color="green darken-1" flat @click.native="modal.customerEdit=false">Close</v-btn>
-        <v-btn color="green darken-1" flat @click.native="modal.customerEdit=false">OK</v-btn>
-    </div> -->
 </modal>
 
 </v-container>

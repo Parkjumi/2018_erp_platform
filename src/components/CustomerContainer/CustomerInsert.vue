@@ -158,14 +158,7 @@
                     </td>
                 </tr>
                 <tr>
-                  <th><h4 class="center-align">거래처 연락처</h4></th>
-                  <td>
-                      <v-text-field
-                          label="연락처를 입력해 주세요"
-                          v-model="customer.id"
-                          required
-                      ></v-text-field>
-                  </td>
+
                   <th><h4 class="center-align">아이디(대표자 연락처)</h4></th>
                   <td>
                       <v-text-field
@@ -174,8 +167,6 @@
                           required
                       ></v-text-field>
                   </td>
-                </tr>
-                <tr>
                   <th><h4 class="center-align">패스워드</h4></th>
                   <td>
                       <v-text-field

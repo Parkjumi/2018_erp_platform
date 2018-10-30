@@ -41,10 +41,9 @@
   <v-container class="middle-container">
     <v-layout>
       <v-flex>
-        <span>전체 0건</span>
+        <span>전체 {{allCount}}건</span>
       </v-flex>
       <v-flex style="text-align:right">
-        <v-btn outline>삭제</v-btn>
         <v-btn outline>상품 일괄 수정</v-btn>
         <v-btn outline>상품 대량 등록</v-btn>
         <v-btn outline color="indigo" @click="moveOrderAppend()"><v-icon small>far fa-file-alt</v-icon>&nbsp;상품 등록</v-btn>
@@ -57,17 +56,9 @@
         <v-data-table
           :headers="headers"
           :items="products"
-          hide-actions
-          select-all>
+          hide-actions>
           <template slot="items" slot-scope="props">
            <tr>
-            <td>
-               <v-checkbox
-                 v-model="props.selected"
-                 primary
-                 hide-details
-               ></v-checkbox>
-             </td>
               <td @click="$router.push('/product/list/detail/'+props.item.id)">{{props.index+1}}</td>
               <td @click="$router.push('/product/list/detail/'+props.item.id)">{{props.item.id}}</td>
               <td @click="$router.push('/product/list/detail/'+props.item.id)">{{props.item.itemName}}</td>
@@ -80,7 +71,6 @@
               <td @click="$router.push('/product/list/detail/'+props.item.id)">{{props.item.state}}</td>
             </tr>
           </template>
-
         </v-data-table>
       </v-flex>
     </v-layout>
@@ -142,7 +132,7 @@
         category:'', //1차 카테고리 model
         category_2:[], //2차 카테고리 model
         productState:'',
-
+        allCount:'',
       }
     },
     methods: {
@@ -155,6 +145,7 @@
           for(var i = 0;i < res.data[1].length;i++){
             this.category1.push(this.categoryList[i].first);
           }
+          this.allCount = this.products.length
         })
         .catch((ex) => {
           console.log("Error : ",ex);

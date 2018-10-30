@@ -5,13 +5,13 @@ Vue.use(VueRouter)
 
 
 const routes = [
+    // {
+    //     path: '/',
+    //     name: 'Test',
+    //     component: () => import('@/components/CommonTest/Test')
+    // },
     {
         path: '/',
-        name: 'Test',
-        component: () => import('@/components/CommonTest/Test')
-    },
-    {
-        path: '/main',
         name: 'Main',
         component: () => import('@/components/CommonTest/Main')
     },

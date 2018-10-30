@@ -39,6 +39,23 @@
                     <col width="35%">
                 </colgroup>
                 <tr>
+                  <th>거래처 선택 *</th>
+                  <td colspan="3">
+                    <v-layout>
+                      <v-flex xs5>
+                        <v-text-field v-model="product.bName"/>
+                      </v-flex>
+                      <v-flex xs4 style="padding-top: 8px;">
+                        <v-btn
+                          @click.stop="customersModalCheck = !customersModalCheck"
+                          outline>
+                          거래처 선택
+                        </v-btn>
+                      </v-flex>
+                    </v-layout>
+                  </td>
+                </tr>
+                <tr>
                     <th><h4 class="center-align">상품명 *</h4></th>
                     <td>
                         <v-text-field
@@ -184,6 +201,43 @@
             </table>
         </v-flex>
     </v-layout>
+    <!-- 거래처 선택 모달 시작 -->
+    <v-dialog
+      v-model="customersModalCheck"
+      width="50%">
+      <v-card>
+        <div style="padding: 10px; background-color: #263238; color: white; height: 48px;">
+          <h3>거래처 검색</h3>
+        </div>
+        <v-layout style="padding: 20px 30px;">
+          <v-flex xs1 style="padding-top: 20px;">
+            <h2>검색</h2>
+          </v-flex>
+          <v-flex xs8>
+            <search-form />
+          </v-flex>
+        </v-layout>
+        <v-layout>
+          <v-flex style="padding: 0px 30px;">
+            <v-data-table
+              :headers="customersHeaders"
+              :items="customersItems"
+              hide-actions>
+              <template slot="items" slot-scope="props">
+                <td>{{props.item.id}}</td>
+                <td>{{props.item.bName}}</td>
+                <td>{{props.item.mobile}}</td>
+                <td>{{props.item.manager}}</td>
+                <td>
+                  <v-btn outline sm @click="selectCustomer(props.item)">선택</v-btn>
+                </td>
+              </template>
+            </v-data-table>
+          </v-flex>
+        </v-layout>
+      </v-card>
+    </v-dialog>
+    <!-- 거래처 선택 모달 종료 -->
 <br>
 <v-layout style="text-align: center;">
   <v-flex style="text-align: center">
@@ -238,7 +292,7 @@ export default{
             modal:{
                 taxbill : false
             },
-
+            customersModalCheck: false,
             loading:true,
             search: '',
             pagination: {},
@@ -330,6 +384,14 @@ export default{
                 }
               }
             }
+          })
+          .catch((ex) => {
+            console.log("Error : ",ex);
+          })
+
+          this.$axios.get('http://freshntech.cafe24.com/order/setinsert')
+          .then(res => {
+            this.customersItems = res.data[1];
           })
           .catch((ex) => {
             console.log("Error : ",ex);

@@ -43,7 +43,7 @@
                     <v-flex xs7 style="padding: 0px 20px;">
                       <v-text-field v-model="searchWord" label="검색어를 입력해 주세요"></v-text-field>
                     </v-flex>
-                    <v-btn>검색</v-btn>
+                    <v-btn @click="search()">검색</v-btn>
                   </v-layout>
                 </td>
               </tr>
@@ -75,7 +75,6 @@
                  <td @click="$router.push('buyer/detail/'+props.item.id)">{{props.item.id}}</td>
                  <td>{{props.item.bName}}</td>
                  <td>{{props.item.count}}개</td>
-                 <td><v-btn>삭제</v-btn></td>
               </tr>
             </template>
           </v-data-table>
@@ -125,7 +124,6 @@
           { text: '매입처코드', value: 'string', sortable: false },
           { text: '매입처명', value: 'num', sortable: false },
           { text: '상품수', value: 'string', sortable: false },
-          { text: '삭제', value: 'string', sortable: false },
         ],
         purchaseData: [],
         deliveryData: [],
@@ -151,42 +149,20 @@
           console.log("Error : ",ex);
         })
       },
-      searchOrder(){
-        if(this.select == "거래처명"){
-          this.$axios.post('http://freshntech.cafe24.com/order/search',{
-            cBName:this.searchWord,
-            orderState:this.orderState,
-            dManager:this.deliveryManager,
-            sName:this.salesMan,
-            startDay:this.selectDate.startDate,
-            endDay:this.selectDate.endDate
+      search(){
+        if(this.select == "매입처명"){
+          this.$axios.post('http://freshntech.cafe24.com/purchase/search',{
+            bName:this.searchWord,
           }).then(res => {
-            this.orderData = res.data;
+            this.purchaseData = res.data;
           }).catch((ex) => {
             console.log("Error : ",ex);
           })
-        }else if(this.select == "주문번호"){
+        }else if(this.select == "매입처코드"){
           this.$axios.post('http://freshntech.cafe24.com/order/search',{
             id:this.searchWord,
-            orderState:this.orderState,
-            dManager:this.deliveryManager,
-            sName:this.salesMan,
-            startDay:this.selectDate.startDate,
-            endDay:this.selectDate.endData
           }).then(res => {
-            this.orderData = res.data;
-          }).catch((ex) => {
-            console.log("Error : ",ex);
-          })
-        }else{
-          this.$axios.post('http://freshntech.cafe24.com/order/search',{
-            startDay:this.selectDate.startDate,
-            endDay:this.selectDate.endDate,
-            orderState:this.orderState,
-            sName:this.salesMan,
-            cName:this.deliveryManager
-          }).then(res => {
-            this.orderData = res.data;
+            this.purchaseData = res.data;
           }).catch((ex) => {
             console.log("Error : ",ex);
           })

@@ -76,7 +76,7 @@
                   <v-layout>
                     <v-flex xs4 class="select-flex-container">
                       <v-select
-                        :items="['주문완료','주문변경','주문취소','반품접수','반품완료']"
+                        :items="['결제대기','주문완료','주문취소','주문거절','주문확인','배송준비','배송중','배송완료','배송오류']"
                         v-model="orderState"
                         label="주문상태"/>
                     </v-flex>
@@ -134,26 +134,18 @@
           <v-data-table
             :headers="headers"
             :items="orderData"
-            hide-actions
-            select-all>
+            hide-actions>
             <template slot="items" slot-scope="props">
-              <tr>
-                <td>
-                   <v-checkbox
-                     v-model="props.selected"
-                     primary
-                     hide-details
-                   ></v-checkbox>
-                 </td>
+              <tr @click="$router.push('list/detail/'+props.item.id)">
                  <td>{{props.index + 1}}</td>
-                 <td @click="$router.push('list/detail/'+props.item.id)">{{props.item.orderDate}}</td>
-                 <td @click="$router.push('list/detail/'+props.item.id)">{{props.item.id}}</td>
-                 <td >{{props.item.cBName}}</td>
-                 <td>{{props.item.dBName}}</td>
-                 <td>{{props.item.cManager}}</td>
-                 <td>{{props.item.amount}}</td>
+                 <td>{{props.item.orderDate}}</td>
+                 <td>{{props.item.id}}</td>
+                 <td>{{props.item.cBName}}</td>
+                 <td>{{props.item.dManager}}</td>
+                 <td>{{props.item.sName}}</td>
+                 <td>{{props.item.amount}}개</td>
                  <td>{{props.item.payMethod}}</td>
-                 <td>{{props.item.payMent}}</td>
+                 <td>{{numberWithCommas(props.item.payMent)}}원</td>
                  <td>{{props.item.orderState}}</td>
               </tr>
             </template>
@@ -295,7 +287,10 @@
 
       moveOrderAppend() {
         this.$router.push('/order/append');
-      }
+      },
+      numberWithCommas(x) { //원화
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      },
     },
     created() {
       setTimeout(()=>{

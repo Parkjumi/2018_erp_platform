@@ -173,17 +173,17 @@ import {
               case "결제대기":
                 this.items[i].name = "결제대기"
                 break;
-              case "진행중":
-                this.items[i].name = "진행중"
+              case "주문거절":
+                this.items[i].name = "주문거절"
                 break;
-              case "출고거절":
-                this.items[i].name = "출고거절"
+              case "주문완료":
+                this.items[i].name = "주문완료"
                 break;
-              case "출고완료":
-                this.items[i].name = "출고완료"
+              case "주문취소":
+                this.items[i].name = "주문취소"
                 break;
-              case "출고전":
-                this.items[i].name = "출고전"
+              case "주문확인":
+                this.items[i].name = "주문확인"
                 break;
             }
           }
@@ -192,17 +192,17 @@ import {
               case "결제대기":
                 this.orderData[i].name = "결제대기"
                 break;
-              case "진행중":
-                this.orderData[i].name = "진행중"
+              case "주문거절":
+                this.orderData[i].name = "주문거절"
                 break;
-              case "출고거절":
-                this.orderData[i].name = "출고거절"
+              case "주문완료":
+                this.orderData[i].name = "주문완료"
                 break;
-              case "출고완료":
-                this.orderData[i].name = "출고완료"
+              case "주문취소":
+                this.orderData[i].name = "주문취소"
                 break;
-              case "출고전":
-                this.orderData[i].name = "출고전"
+              case "주문확인":
+                this.orderData[i].name = "주문확인"
                 break;
             }
           }

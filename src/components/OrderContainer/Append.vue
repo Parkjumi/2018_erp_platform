@@ -37,8 +37,8 @@
                 </v-flex>
               </v-layout>
               </td>
-            <th rowspan="2">배송요청일</th>
-            <td rowspan="2" style="width: 40%;">
+            <th>배송요청일</th>
+            <td style="width: 40%;">
               <v-layout>
                 <v-flex>
                   <v-menu
@@ -56,7 +56,7 @@
                     <v-text-field
                       slot="activator"
                       v-model="date"
-                      label="Picker in menu"
+                      label="날짜를 선택해주세요"
                       prepend-icon="event"
                       readonly
                     ></v-text-field>
@@ -71,30 +71,15 @@
             </td>
           </tr>
           <tr>
-            <th>영업 담당자</th>
-            <td>
-              <v-layout>
-                <v-flex>
-                  <v-select
-                    :items="shipping"
-                    item-text="managerName"
-                    label="영업 담당자"
-                    v-model="manager"
-                  ></v-select>
-                </v-flex>
-              </v-layout>
-            </td>
-          </tr>
-          <tr>
             <th>요청사항</th>
             <td colspan="3">
               <v-layout>
                 <v-flex>
-                  <v-text-field
-                    textarea
+                  <v-textarea
+                    name="input-7-1"
                     v-model="requests"
                     rows="2">
-                  </v-text-field>
+                  </v-textarea>
                 </v-flex>
               </v-layout>
             </td>
@@ -104,11 +89,11 @@
             <td colspan="3">
               <v-layout>
                 <v-flex>
-                  <v-text-field
-                    textarea
+                  <v-textarea
+                    name="input-7-1"
                     v-model="memo"
                     rows="2">
-                  </v-text-field>
+                  </v-textarea>
                 </v-flex>
               </v-layout>
             </td>
@@ -144,11 +129,11 @@
           <td>{{props.item.itemName}}</td>
           <td>{{props.item.unit}}</td>
           <td>{{props.item.manufacturer}}</td>
-          <td>1</td>
+          <td>{{props.item.qTY}}</td>
           <td>{{numberWithCommas(props.item.price1)}}</td>
           <td>{{numberWithCommas(props.item.price2)}}</td>
           <td>{{numberWithCommas(props.item.price3)}}</td>
-          <td>{{numberWithCommas(props.item.price1)}}</td>
+          <td>{{numberWithCommas(props.item.price1 * props.item.qTY)}}</td>
           <td>
             <v-btn outline @click="deleteOneOrderItem(props.item)">삭제</v-btn>
           </td>
@@ -297,7 +282,13 @@
                       </v-layout>
                       <v-layout>
                         <v-flex>
-                          <input type="number" placeholder="입력" v-on:change="price(props.index, props.item.count, props.item.price3)" v-model="props.item.count" style="width: 60px; text-align:center;">개
+                          <span @click="countModify('up', props.index, props.item)">
+                            <span class="fas fa-angle-up"></span>
+                          </span>
+                          <input type="text" v-model="props.item.qTY" style="width: 30px; text-align:center;">
+                          <span @click="countModify('down', props.index, props.item)">
+                            <span class="fas fa-angle-down"></span>
+                          </span>
                         </v-flex>
                         <v-flex>
                           <input type="text" v-model="props.item.price3" style="width: 60px; text-align:center;" disabled>원
@@ -310,7 +301,7 @@
                     <td>
                       <v-layout>
                         <v-flex>합계 금액</v-flex>
-                        <v-flex style="text-align:right">{{numberWithCommas(sumPrice)}}원</v-flex>
+                        <v-flex style="text-align:right">{{numberWithCommas(this.totalPrice)}}원</v-flex>
                       </v-layout>
                     </td>
                   </template>
@@ -331,6 +322,7 @@
   <!-- 상품 추가 모달 종료 -->
 </v-container>
 </template>
+
 <script>
   import {
     SearchForm,
@@ -399,26 +391,10 @@
         shipping:[],
         allCount:0, //전체 상품 개수,
         payment:0,
-        qTY:[],// 상품 수
-      }
-    },
-    computed: {
-      sumPrice: function(){
-        let sum = 0;
-        for(var i = 0;i < this.selectItems.length;i++){
-          sum += Number(this.selectItems[i].selectPrice*this.selectItems[i].count);
-        }
-        this.payment = sum;
-        return sum;
+        totalPrice:0, // 전체 금액
       }
     },
     methods: {
-      price(index,count,price){
-        console.log(index,count+"정답");
-        this.selectItems[index].count = count;
-        this.selectItems[index].price = count*this.selectItems[index].price3;
-        return count
-      },
       initCustormer(){
         this.$axios.get('http://freshntech.cafe24.com/order/setinsert')
         .then(res => {
@@ -441,7 +417,7 @@
         .then(res => {
           this.customerProducts = res.data;
           for(var i =0;i < this.customerProducts.length;i++){
-            this.customerProducts[i].count = 1;
+            this.customerProducts[i].qTY = 1;
             this.customerProducts[i].selectPrice = this.customerProducts[i].price3;
           }
         })
@@ -456,11 +432,42 @@
         }
         this.appendModalCheck = !this.appendModalCheck;
       },
-      selectProduct(item){
-        this.selectItems.push(item);
-        this.allCount++;
+
+      countModify(mode, index, item){
+        if(mode == 'up'){
+          this.selectItems[index].qTY++;
+          this.totalPrice += Number(this.selectItems[index].price3);
+        }else if(mode == 'down'){
+          this.selectItems[index].qTY--;
+          this.totalPrice -= Number(this.selectItems[index].price3);
+        }
+      },
+
+      selectProduct(item){ // 상품 선택
+        if(this.selectItems[0] == null){
+          this.selectItems.push(item);
+          this.allCount++;
+          this.totalPrice += this.selectItems[0].price3 * this.selectItems[0].qTY;
+        }else{
+          var count = 0;
+          for(var i = 0;i < this.selectItems.length;i++){
+            if(item.itemName == this.selectItems[i].itemName){
+              this.selectItems[i].qTY++;
+              this.totalPrice += Number(this.selectItems[i].price3);
+              break;
+            }else{
+              count++;
+            }
+          }
+          if(this.selectItems.length == count){
+            this.selectItems.push(item);
+            this.totalPrice += Number(this.selectItems[count].price3);
+            this.allCount++;
+          }
+        }
       },
       defaultSelectItem() {
+        this.totalPrice = 0
         this.selectItems = [];
         this.allCount = 0;
       },
@@ -478,6 +485,9 @@
         this.appendModalCheck = false;
       },
       saveOrderItem() { //상품 추가 후 저장 누를 시
+        for(var i = 0;i < this.selectItems.length;i++){
+          this.selectItems[i].amount = this.selectItems[i].qTY * this.selectItems[i].price3;
+        }
         this.orderItems = this.selectItems;
         this.appendModalCheck = false;
         this.$axios.get('http://freshntech.cafe24.com/order/setinsert/'+this.customersItem.id)
@@ -497,6 +507,7 @@
         this.allCount--;
       },
       regOrder() { //등록하기 버튼 누를 시
+        this.orderItems.amount = this.selectItems.price;
         if(!this.customersItem.bName){
           alert('거래처가 선택되지 않았습니다.');
         }else if(this.date == ''){
@@ -512,6 +523,7 @@
             payMethod:this.payMethod,
             requests:this.requests,
             memo:this.memo,
+            amount:this.totalPrice,
             insertProduct:this.orderItems
           }).then((res) => {
             alert('주문이 완료되었습니다.');

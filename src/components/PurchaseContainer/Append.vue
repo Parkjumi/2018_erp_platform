@@ -416,6 +416,10 @@
         }else if(this.orderItems.length == 0){
           alert('상품을 먼저 등록해주세요');
         }else{
+          if(this.purchase.remark == undefined){
+            this.purchase.remark = null;
+            alert(this.purchase.remark)
+          }
           this.$axios.post('http://freshntech.cafe24.com/purchaseitem',{
             id:this.purchase.id,
             tbProvider_ID:this.customersItem.id,

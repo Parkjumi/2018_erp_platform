@@ -43,7 +43,7 @@
                     <v-flex xs7 style="padding: 0px 20px;">
                       <v-text-field v-model="searchWord" label="검색어를 입력해 주세요"></v-text-field>
                     </v-flex>
-                    <v-btn>검색</v-btn>
+                    <v-btn @click="search()">검색</v-btn>
                   </v-layout>
                 </td>
               </tr>
@@ -70,13 +70,12 @@
             :items="delivererData"
             hide-actions>
             <template slot="items" slot-scope="props">
-              <tr>
+              <tr @click="$router.push('/employee/list/detail/'+props.item.id)">
                  <td>{{props.index + 1}}</td>
-                 <td @click="$router.push('/employee/list/detail/'+props.item.id)">{{props.item.regDate}}</td>
+                 <td>{{props.item.regDate}}</td>
                  <td>{{props.item.manager}}</td>
                  <td>{{props.item.bName}}</td>
                  <td>{{props.item.userId}}</td>
-                 <td><v-btn>삭제</v-btn></td>
               </tr>
             </template>
           </v-data-table>
@@ -127,7 +126,6 @@
           { text: '담당자', value: 'string', sortable: false },
           { text: '담당거래처', value: 'string', sortable: false },
           { text: '아이디', value: 'string', sortable: false },
-          { text: '담당자 삭제', value: 'string', sortable: false },
         ],
         purchaseData: [],
         deliveryData: [],
@@ -138,6 +136,7 @@
         searchWord:'',
         orderState:'',
         deliveryManager:'',
+        delivererData:[],
         salesMan:'',
         total:'',
       }
@@ -153,42 +152,20 @@
           console.log("Error : ",ex);
         })
       },
-      searchOrder(){
-        if(this.select == "거래처명"){
-          this.$axios.post('http://freshntech.cafe24.com/order/search',{
-            cBName:this.searchWord,
-            orderState:this.orderState,
-            dManager:this.deliveryManager,
-            sName:this.salesMan,
-            startDay:this.selectDate.startDate,
-            endDay:this.selectDate.endDate
+      search(){
+        if(this.select === "담당자"){
+          this.$axios.post('http://freshntech.cafe24.com/deliverer/search',{
+            manager:this.searchWord
           }).then(res => {
-            this.orderData = res.data;
+            this.delivererData = res.data;
           }).catch((ex) => {
             console.log("Error : ",ex);
           })
-        }else if(this.select == "주문번호"){
-          this.$axios.post('http://freshntech.cafe24.com/order/search',{
-            id:this.searchWord,
-            orderState:this.orderState,
-            dManager:this.deliveryManager,
-            sName:this.salesMan,
-            startDay:this.selectDate.startDate,
-            endDay:this.selectDate.endData
+        }else if(this.select === "담당 거래처"){
+          this.$axios.post('http://freshntech.cafe24.com/deliverer/search',{
+            bName:this.searchWord
           }).then(res => {
-            this.orderData = res.data;
-          }).catch((ex) => {
-            console.log("Error : ",ex);
-          })
-        }else{
-          this.$axios.post('http://freshntech.cafe24.com/order/search',{
-            startDay:this.selectDate.startDate,
-            endDay:this.selectDate.endDate,
-            orderState:this.orderState,
-            sName:this.salesMan,
-            cName:this.deliveryManager
-          }).then(res => {
-            this.orderData = res.data;
+            this.delivererData = res.data;
           }).catch((ex) => {
             console.log("Error : ",ex);
           })
