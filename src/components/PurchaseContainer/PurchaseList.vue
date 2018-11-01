@@ -129,23 +129,15 @@
           <v-data-table
             :headers="headers"
             :items="purchaseData"
-            hide-actions
-            select-all>
+            hide-actions>
             <template slot="items" slot-scope="props">
               <tr>
-                <td>
-                   <v-checkbox
-                     v-model="props.selected"
-                     primary
-                     hide-details
-                   ></v-checkbox>
-                 </td>
                  <td>{{props.index + 1}}</td>
                  <td @click="$router.push('list/detail/'+props.item.id)">{{props.item.id}}</td>
                  <td>{{props.item.bName}}</td>
                  <td>{{props.item.dDay}}</td>
-                 <td>{{props.item.count}}</td>
-                 <td>{{props.item.sum}}</td>
+                 <td>{{props.item.count}}개</td>
+                 <td>{{numberWithCommas(props.item.sum)}}원</td>
                  <td>{{props.item.state}}</td>
               </tr>
             </template>
@@ -274,6 +266,9 @@
             console.log("Error : ",ex);
           })
         }
+      },
+      numberWithCommas(x) { //원화
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
       },
 
       moveOrderAppend() {

@@ -285,7 +285,7 @@ export default{
 
     // ========== created ========== //
     created(){
-      this.$axios.get('http://'+ip+':8080/app/customer')
+      this.$axios.get('http://freshntech.cafe24.com/customer')
       .then(res => {
         this.shippingList = res.data[0];
         this.salesManList = res.data[2];
@@ -304,7 +304,7 @@ export default{
     methods: {
         // ===== 저장 ===== //
         saveOrderItem(){
-          this.$axios.post('http://'+ip+':8080/app/customer',{
+          this.$axios.post('http://freshntech.cafe24.com/customer',{
             bName:this.customer.bName,
             userID:this.customer.id,
             userPW:this.customer.userPW,
@@ -318,12 +318,12 @@ export default{
             salesman_ID:this.customer.salesmanName
           })
           .then(res => {
-              alert('등록되었습니다.')
+            alert('등록되었습니다.')
+            this.$router.push('/customers/list')
           })
           .catch((ex) => {
             console.log("Error : ",ex);
           })
-            // this.$router.push('/customers/list')
         },
     },
 }

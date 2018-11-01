@@ -99,11 +99,14 @@
           <td>
             <v-text-field v-model="qTY[props.index]"/>
           </td>
-          <td>{{props.item.price1}}</td>
-          <td>{{props.item.price2}}</td>
-          <td>{{props.item.price3}}</td>
           <td>
-            {{qTY[props.index] * props.item.price3}}
+            <v-text-field v-model="price[props.index]"/>
+          </td>
+          <td>{{props.item.price1}}원</td>
+          <td>{{props.item.price2}}원</td>
+          <td>{{props.item.price3}}원</td>
+          <td>
+            {{qTY[props.index] * price[props.index]}}원
           </td>
           <td>
             <v-btn outline @click="deleteOneOrderItem(props.item)">삭제</v-btn>
@@ -143,8 +146,8 @@
             <template slot="items" slot-scope="props">
               <td>{{props.item.id}}</td>
               <td>{{props.item.bName}}</td>
-              <td>{{props.item.mobile}}</td>
-              <td>{{props.item.manager}}</td>
+              <td>{{props.item.tel}}</td>
+              <td>{{props.item.count}}</td>
               <td>
                 <v-btn outline sm @click="selectCustomer(props.item)">선택</v-btn>
               </td>
@@ -217,7 +220,7 @@
                     <td>{{props.item.manufacturer}}</td>
                     <td>{{props.item.price2}}</td>
                     <td>
-                      <v-btn outline @click="selectProduct(props.item)">선택</v-btn>
+                      <v-btn outline @click="selectProduct(props.index,props.item)">선택</v-btn>
                     </td>
                   </template>
                 </v-data-table>
@@ -226,12 +229,7 @@
           </v-flex>
           </v-flex>
         </v-layout>
-        <v-layout style="text-align: center;">
-          <v-flex>
-            <v-btn @click="closeProductAppendModal()">닫기</v-btn>
-            <v-btn @click="saveOrderItem()">저장</v-btn>
-          </v-flex>
-        </v-layout>
+
       </v-container>
     </v-card>
   </v-dialog>
@@ -272,6 +270,7 @@
           { text: '규격(단위)', value: 'string', sortable: false },
           { text: '제조사(원산지)', value: 'string', sortable: false },
           { text: '수량', value: 'string', sortable: false },
+          { text: '매입 단가', value: 'string', sortable: false },
           { text: '배송 단가', value: 'string', sortable: false },
           { text: '소비자 가격', value: 'string', sortable: false },
           { text: '예비 가격', value: 'string', sortable: false },
@@ -292,7 +291,7 @@
         customersModalCheck: false,
         customersHeaders: [
           { text: 'no', value: 'num', sortable: false },
-          { text:  '매입처명', value: 'string', sortable: false },
+          { text: '매입처명', value: 'string', sortable: false },
           { text: '대표자 연락처', value: 'string', sortable: false },
           { text: '상품 수', value: 'num', sortable: false },
           { text: '매입처 선택', value: 'string', sortable: false }
@@ -302,39 +301,33 @@
         customerProducts: [],   //거래처가 취급하는 상품 데이터,
         selectItems: [],         //거래처가 취급하는 상품중 선택된 상품
         count: 1,
-        deliveryCategory: '직배송',
-        manager: '',            //영업담당자
-        shippingManager: '',     //배송담당자
         orderItems: [],
-        shipping:[],
         allCount:0, //전체 상품 개수,
         payment:0,
         purchase:[],
         qTY:[],//수량 배열
+        price:[]//매입 단가 배열
       }
     },
     methods: {
       initCustormer(){
-        this.$axios.get('http://freshntech.cafe24.com/order/setinsert')
+        this.$axios.get('http://freshntech.cafe24.com/purchase')
         .then(res => {
-          this.shippingManager = res.data[0];
-          for(var i = 0;i< this.shippingManager.length;i++){
-            this.shipping.push(this.shippingManager[i].sManager);
-          }
-          this.customersItems = res.data[1];
+          this.customersItems = res.data;
         })
         .catch((ex) => {
           console.log("Error : ",ex);
         })
       },
-      selectCustomer(customers) { //거래처 선택 누를시
+      selectCustomer(customers) { //매입처 선택 누를시
         this.customersItem = customers;
         this.orderItems = [];
         this.selectItems = [];
         this.customersModalCheck = false;
-        this.$axios.get('http://freshntech.cafe24.com/order/setinsert/'+this.customersItem.id)
+        this.$axios.get('http://freshntech.cafe24.com/purchase/detail/'+this.customersItem.id)
         .then(res => {
-          this.customerProducts = res.data;
+          this.customerProducts = res.data[1];
+          console.log(this.customerProducts);
         })
         .catch((ex) => {
           console.log("Error : ",ex);
@@ -347,37 +340,11 @@
         }
         this.appendModalCheck = !this.appendModalCheck;
       },
-      selectProduct(item){
-        this.orderItems = this.selectItems;
-        this.$axios.get('http://freshntech.cafe24.com/order/setinsert/'+this.customersItem.id)
-        .then(res => {
-          this.customerProducts = res.data;
-        })
-        .catch((ex) => {
-          console.log("Error : ",ex);
-        })
+      selectProduct(index,item){
+        this.orderItems = this.selectItems
         this.selectItems.push(item);
+        this.price[this.orderItems.length-1] = item.price
         this.allCount++;
-      },
-      countModify(mode, index, item){
-        if(mode == 'up'){
-          this.count += 1;
-          console.log(item);
-        }else{
-          this.count -= 1;
-        }
-      },
-      defaultSelectItem() {
-        this.selectItems = [];
-        this.allCount = 0;
-      },
-      deleteOneItem(product) {
-        this.selectItems.forEach((item, index, array)=>{
-          if(item == product){
-            array.splice(index,1);
-          }
-        })
-        this.allCount--;
       },
       closeProductAppendModal() {
         this.selectItems = [];
@@ -399,14 +366,15 @@
         this.orderItems.forEach((item, index, array)=>{
           if(item == product){
             array.splice(index, 1);
+            this.price.splice(index, 1)
           }
         })
         this.allCount--;
       },
       regOrder() { //등록하기 버튼 누를 시
-        this.orderItems.qTY = this.qTY
         for(var i = 0;i < this.orderItems.length;i++){
           this.orderItems[i].qTY = this.qTY[i];
+          this.orderItems[i].price = this.price[i]
         }
         console.log(this.orderItems);
         if(!this.customersItem.bName){
@@ -418,10 +386,10 @@
         }else{
           if(this.purchase.remark == undefined){
             this.purchase.remark = null;
-            alert(this.purchase.remark)
           }
           this.$axios.post('http://freshntech.cafe24.com/purchaseitem',{
             id:this.purchase.id,
+            bName:this.customersItem.bName,
             tbProvider_ID:this.customersItem.id,
             remark:this.purchase.remark,
             dDay:this.date,
