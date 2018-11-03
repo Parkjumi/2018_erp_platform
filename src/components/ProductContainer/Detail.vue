@@ -39,6 +39,12 @@
                     <col width="35%">
                 </colgroup>
                 <tr>
+                    <th><h4 class="center-align">거래처 *</h4></th>
+                    <td>
+                        {{product.bName}}
+                    </td>
+                </tr>
+                <!-- <tr>
                   <th>거래처 선택 *</th>
                   <td colspan="3">
                     <v-layout>
@@ -54,7 +60,7 @@
                       </v-flex>
                     </v-layout>
                   </td>
-                </tr>
+                </tr> -->
                 <tr>
                     <th><h4 class="center-align">상품명 *</h4></th>
                     <td>
@@ -202,7 +208,7 @@
         </v-flex>
     </v-layout>
     <!-- 거래처 선택 모달 시작 -->
-    <v-dialog
+    <!-- <v-dialog
       v-model="customersModalCheck"
       width="50%">
       <v-card>
@@ -236,7 +242,7 @@
           </v-flex>
         </v-layout>
       </v-card>
-    </v-dialog>
+    </v-dialog> -->
     <!-- 거래처 선택 모달 종료 -->
 <br>
 <v-layout style="text-align: center;">
@@ -272,8 +278,6 @@ import {
 
 
 export default{
-    name : 'BrandList',
-
     // ========== components ========== //
     components: {
         SearchForm,

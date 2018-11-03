@@ -48,7 +48,8 @@
                  <td @click="$router.push('/notice/delivery/detail/'+props.item.id)">{{props.item.id}}</td>
                  <td @click="$router.push('/notice/delivery/detail/'+props.item.id)">{{props.item.title}}</td>
                  <td @click="$router.push('/notice/delivery/detail/'+props.item.id)">{{props.item.regDate}}</td>
-                 <td><v-btn>삭제</v-btn></td>
+                 <td @click="$router.push('/notice/delivery/detail/'+props.item.id)">{{props.item.startDate}}</td>
+                 <td @click="$router.push('/notice/delivery/detail/'+props.item.id)">{{props.item.ednDate}}</td>
               </tr>
             </template>
           </v-data-table>
@@ -97,7 +98,8 @@
           { text: '공지번호', value: 'num', sortable: false },
           { text: '제목', value: 'string', sortable: false },
           { text: '등록일', value: 'string', sortable: false },
-          { text: '삭제', value: 'string', sortable: false },
+          { text: '시작일', value: 'string', sortable: false },
+          { text: '종료일', value: 'string', sortable: false },
         ],
         total:'',
       }

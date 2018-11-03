@@ -7,20 +7,9 @@
       <detail-table>
         <tbody slot="contents">
           <tr>
-            <th>매입처*</th>
-            <td style="width: 35%;">
-              <v-layout>
-                <v-flex xs8>
-                  <v-text-field v-model="customersItem.bName"/>
-                </v-flex>
-                <v-flex xs4 style="padding-top: 8px;">
-                  <v-btn
-                    @click.stop="customersModalCheck = !customersModalCheck"
-                    outline>
-                    매입처 선택
-                  </v-btn>
-                </v-flex>
-              </v-layout>
+            <th><h4 class="center-align">매입처명 *</h4></th>
+            <td style="width: 30%;">
+                {{customersItem.bName}}
             </td>
             <th>납기일자*</th>
             <td>
@@ -49,6 +38,17 @@
                   <v-btn flat color="primary" @click="$refs.menu.save(date)">OK</v-btn>
                 </v-date-picker>
               </v-menu>
+            </td>
+          </tr>
+          <tr>
+            <th><h4 class="center-align">상품상태 *</h4></th>
+            <td>
+              <v-flex class="select-container">
+                <v-select
+                  :items="['발주준비','발주취소','발주완료','입고완료','입고반품']"
+                  v-model="customersItem.state"
+                  label="상품상태를 선택하세요"/>
+              </v-flex>
             </td>
           </tr>
           <tr>
@@ -122,43 +122,6 @@
       <v-btn @click="deletePurchase()">삭제하기</v-btn>
     </v-flex>
   </v-layout>
-  <!-- 매입처 선택 모달 시작 -->
-  <v-dialog
-    v-model="customersModalCheck"
-    width="50%">
-    <v-card>
-      <div style="padding: 10px; background-color: #263238; color: white; height: 48px;">
-        <h3>매입처 검색</h3>
-      </div>
-      <v-layout style="padding: 20px 30px;">
-        <v-flex xs1 style="padding-top: 20px;">
-          <h2>검색</h2>
-        </v-flex>
-        <v-flex xs8>
-          <search-form />
-        </v-flex>
-      </v-layout>
-      <v-layout>
-        <v-flex style="padding: 0px 30px;">
-          <v-data-table
-            :headers="customersHeaders"
-            :items="customersItems"
-            hide-actions>
-            <template slot="items" slot-scope="props">
-              <td>{{props.item.id}}</td>
-              <td>{{props.item.bName}}</td>
-              <td>{{props.item.tel}}</td>
-              <td>{{props.item.count}}</td>
-              <td>
-                <v-btn outline sm @click="selectCustomer(props.item)">선택</v-btn>
-              </td>
-            </template>
-          </v-data-table>
-        </v-flex>
-      </v-layout>
-    </v-card>
-  </v-dialog>
-  <!-- 매입처 선택 모달 종료 -->
   <!-- 상품 추가 모달 시작 -->
   <v-dialog
     v-model="appendModalCheck"
@@ -289,7 +252,6 @@
           { text: '매입단가', value: 'string', sortable: false },
           { text: '선택', value: 'string', sortable: false }
         ],
-        customersModalCheck: false,
         customersHeaders: [
           { text: 'no', value: 'num', sortable: false },
           { text: '매입처명', value: 'string', sortable: false },
@@ -311,6 +273,7 @@
         origin:[], //원래 아이템
         deleteItem:[], //삭제한 아이템
         insertItem:[],//추가한 아이템
+        customersItem:[],
       }
     },
     methods: {
@@ -319,12 +282,11 @@
         .then(res => {
           this.customersItem = res.data[0];
           this.orderItems = res.data[1];
-          this.origin = res.data[1];
           this.date = this.customersItem.regDate;
           for(var i = 0;i < this.orderItems.length;i++){
             this.qTY[i] = this.orderItems[i].qTY;
             this.price[i] = this.orderItems[i].price;
-            this.insertItem.push(this.orderItems[i])
+            this.origin.push(this.orderItems[i])
           }
         })
         .catch((ex) => {
@@ -335,20 +297,6 @@
         .then(res => {
           this.customerProducts = res.data[1];
           console.log(this.customerProducts);
-        })
-        .catch((ex) => {
-          console.log("Error : ",ex);
-        })
-
-      },
-      selectCustomer(customers) { //매입처 선택 누를시
-        this.customersItem = customers;
-        this.orderItems = [];
-        this.selectItems = [];
-        this.customersModalCheck = false;
-        this.$axios.get('http://freshntech.cafe24.com/order/setinsert/'+this.customersItem.id)
-        .then(res => {
-          this.customerProducts = res.data;
         })
         .catch((ex) => {
           console.log("Error : ",ex);
@@ -390,6 +338,7 @@
         this.$axios.put('http://freshntech.cafe24.com/purchaseitem',{
           id:this.$route.params.order_id,
           bName:this.customersItem.bName,
+          state:this.customersItem.state,
           tbProvider_ID:this.customersItem.tbProvider_ID,
           remark:this.customersItem.remark,
           dDay:this.date,

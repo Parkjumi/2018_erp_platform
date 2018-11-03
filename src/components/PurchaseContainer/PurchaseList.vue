@@ -26,79 +26,31 @@
 
   <!-- ========== 컨텐츠 ========== -->
   <div v-else>
-      <v-layout row wrap>
-        <v-flex>
-          <detail-table>
-            <tbody slot="contents">
-              <tr>
-                <th>기간</th>
-                <td>
-                  <v-layout>
-                    <v-flex xs4 style="padding-top:14px;">
-                      <button-toggle
-                        :list="period"
-                        v-model="selectPeriod"
-                        v-on:input="clickPeriod">
-                      </button-toggle>
-                    </v-flex>
-                    <v-flex xs8>
-                      <date-range
-                        :selectPeriod="selectPeriod"
-                        v-model="selectDate"
-                        />
-                    </v-flex>
-                  </v-layout>
-                </td>
-                <td rowspan="3" style="width: 10%;">
-                  <v-btn small @click="searchOrder()">검색</v-btn>
-                </td>
-              </tr>
-              <tr>
-                <th rowspan="2">검색</th>
-                <td>
-                  <v-layout style="padding-top:20px;">
-                    <v-flex xs2>
-                      <select-items
-                        :items="['거래처명', '주문번호']"
-                        v-model="select">
-                      </select-items>
-                    </v-flex>
-                    <v-flex xs10 style="padding: 0px 20px;">
-                      <v-text-field v-model="searchWord" label="검색어를 입력해 주세요">
-
-                      </v-text-field>
-                    </v-flex>
-                  </v-layout>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <v-layout>
-                    <v-flex xs4 class="select-flex-container">
-                      <v-select
-                        :items="['주문완료','주문변경','주문취소','반품접수','반품완료']"
-                        v-model="orderState"
-                        label="주문상태"/>
-                    </v-flex>
-                    <v-flex xs4 class="select-flex-container">
-                      <v-select
-                        :items="deliveryManagerList"
-                        v-model="deliveryManager"
-                        label="배송담당자"/>
-                    </v-flex>
-                    <v-flex xs4 class="select-flex-container">
-                      <v-select
-                        :items="salesManList"
-                        v-model="salesMan"
-                        label="영업담당자"/>
-                    </v-flex>
-                  </v-layout>
-                </td>
-              </tr>
-            </tbody>
-          </detail-table>
-        </v-flex>
-      </v-layout>
+    <v-layout row wrap>
+      <v-flex>
+        <detail-table>
+          <tbody slot="contents">
+            <tr>
+              <th>키워드 검색</th>
+              <td>
+                <v-layout style="padding-top:20px;">
+                  <v-flex xs2>
+                    <select-items
+                      :items="['매입처명', '발주번호']"
+                      v-model="select">
+                    </select-items>
+                  </v-flex>
+                  <v-flex xs7 style="padding: 0px 20px;">
+                    <v-text-field v-model="searchWord" label="검색어를 입력해 주세요"></v-text-field>
+                  </v-flex>
+                  <v-btn @click="search()">검색</v-btn>
+                </v-layout>
+              </td>
+            </tr>
+          </tbody>
+        </detail-table>
+      </v-flex>
+    </v-layout>
       <v-layout row wrap class="middle-container">
         <v-flex xs6>
           <v-layout>
@@ -131,9 +83,9 @@
             :items="purchaseData"
             hide-actions>
             <template slot="items" slot-scope="props">
-              <tr>
+              <tr @click="$router.push('list/detail/'+props.item.id)">
                  <td>{{props.index + 1}}</td>
-                 <td @click="$router.push('list/detail/'+props.item.id)">{{props.item.id}}</td>
+                 <td>{{props.item.id}}</td>
                  <td>{{props.item.bName}}</td>
                  <td>{{props.item.dDay}}</td>
                  <td>{{props.item.count}}개</td>
@@ -226,40 +178,18 @@
         this.selectPeriod = period;
       },
 
-      searchOrder(){
-        if(this.select == "거래처명"){
-          this.$axios.post('http://freshntech.cafe24.com/order/search',{
-            cBName:this.searchWord,
-            orderState:this.orderState,
-            dManager:this.deliveryManager,
-            sName:this.salesMan,
-            startDay:this.selectDate.startDate,
-            endDay:this.selectDate.endDate
+      search(){
+        if(this.select == "매입처명"){
+          this.$axios.post('http://freshntech.cafe24.com/purchaseitem/search',{
+            bName:this.searchWord
           }).then(res => {
             this.purchaseData = res.data;
           }).catch((ex) => {
             console.log("Error : ",ex);
           })
-        }else if(this.select == "주문번호"){
-          this.$axios.post('http://freshntech.cafe24.com/order/search',{
-            id:this.searchWord,
-            orderState:this.orderState,
-            dManager:this.deliveryManager,
-            sName:this.salesMan,
-            startDay:this.selectDate.startDate,
-            endDay:this.selectDate.endData
-          }).then(res => {
-            this.purchaseData = res.data;
-          }).catch((ex) => {
-            console.log("Error : ",ex);
-          })
-        }else{
-          this.$axios.post('http://freshntech.cafe24.com/order/search',{
-            startDay:this.selectDate.startDate,
-            endDay:this.selectDate.endDate,
-            orderState:this.orderState,
-            sName:this.salesMan,
-            cName:this.deliveryManager
+        }else if(this.select == "발주번호"){
+          this.$axios.post('http://freshntech.cafe24.com/purchaseitem/search',{
+            id:this.searchWord
           }).then(res => {
             this.purchaseData = res.data;
           }).catch((ex) => {

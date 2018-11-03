@@ -127,14 +127,11 @@
     width="50%">
     <v-card>
       <div style="padding: 10px; background-color: #263238; color: white; height: 48px;">
-        <h3>매입처 검색</h3>
+        <h3>매입처 선택</h3>
       </div>
       <v-layout style="padding: 20px 30px;">
-        <v-flex xs1 style="padding-top: 20px;">
-          <h2>검색</h2>
-        </v-flex>
-        <v-flex xs8>
-          <search-form />
+        <v-flex xs3 style="padding-top: 20px;">
+          <h2>매입처 선택</h2>
         </v-flex>
       </v-layout>
       <v-layout>
@@ -164,39 +161,12 @@
     width="70%">
     <v-card>
       <div style="padding: 10px; background-color: #263238; color: white; height: 48px;">
-        <h3>직배송 상품 검색 및 선택</h3>
+        <h3>직배송 상품 선택</h3>
       </div>
       <v-container>
         <v-layout>
-          <v-flex>
-            <detail-table>
-              <tbody slot="contents">
-                <tr>
-                  <th>즉시검색</th>
-                  <td>
-                    <v-layout>
-                      <v-flex xs3 style="padding-right: 10px;">
-                        <v-select
-                          :items="['test','test2']"
-                          label="1차카테고리" />
-                      </v-flex>
-                      <v-flex xs3 style="padding-right: 10px;">
-                        <v-select
-                          :items="['test2','test']"
-                          label="2차카테고리"/>
-                      </v-flex>
-                      <v-flex xs6>
-                        <search-form
-                          label="검색어를 입력해 주세요"/>
-                      </v-flex>
-                    </v-layout>
-                  </td>
-                  <td>
-                    <v-btn>검색</v-btn>
-                  </td>
-                </tr>
-              </tbody>
-            </detail-table>
+          <v-flex xs3 style="padding-top: 20px;">
+            <h2>직배송 상품 선택</h2>
           </v-flex>
         </v-layout>
         <v-layout style="margin-top:15px;">
@@ -375,6 +345,7 @@
         for(var i = 0;i < this.orderItems.length;i++){
           this.orderItems[i].qTY = this.qTY[i];
           this.orderItems[i].price = this.price[i]
+          this.orderItems[i].amount = this.qTY[i] * this.price[i]
         }
         console.log(this.orderItems);
         if(!this.customersItem.bName){

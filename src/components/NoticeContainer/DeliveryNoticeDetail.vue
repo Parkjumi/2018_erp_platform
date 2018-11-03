@@ -156,7 +156,6 @@
 </template>
 
 <script>
-var notice_id;
 import {
   SearchForm,
   ButtonToggle,
@@ -202,10 +201,10 @@ export default{
     },
     // ========== created ========== //
     created(){
-      notice_id = this.$route.params.notice_id
+      var notice_id = this.$route.params.notice_id
       this.$set(this, 'notice_id', notice_id)
 
-      this.$axios.get('http://freshntech.cafe24.com/cuboarders/'+notice_id)
+      this.$axios.get('http://freshntech.cafe24.com/deboarders/'+notice_id)
       .then(res => {
         this.notice = res.data;
         this.startDate = this.notice.startDate
@@ -223,7 +222,7 @@ export default{
     methods: {
         // ===== 수정 ===== //
         updateNotice(){
-          this.$axios.put('http://freshntech.cafe24.com/deboarders/'+notice_id,{
+          this.$axios.put('http://freshntech.cafe24.com/deboarders/'+this.$route.params.notice_id,{
             title:this.notice.title,
             startDate:this.startDate,
             ednDate:this.ednDate,
@@ -240,7 +239,7 @@ export default{
           })
         },
         deleteNotice(){
-          this.$axios.delete('http://freshntech.cafe24.com/deboarders/'+notice_id)
+          this.$axios.delete('http://freshntech.cafe24.com/deboarders/'+this.$route.params.notice_id)
           .then(res => {
             alert('삭제가 완료되었습니다.');
             this.$router.push('/notice/delivery/list');

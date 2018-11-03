@@ -201,11 +201,8 @@
           <h3>거래처 검색</h3>
         </div>
         <v-layout style="padding: 20px 30px;">
-          <v-flex xs1 style="padding-top: 20px;">
-            <h2>검색</h2>
-          </v-flex>
-          <v-flex xs8>
-            <search-form />
+          <v-flex xs3 style="padding-top: 20px;">
+            <h2>거래처 검색</h2>
           </v-flex>
         </v-layout>
         <v-layout>

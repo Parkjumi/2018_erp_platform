@@ -154,82 +154,18 @@
       <v-btn @click="regOrder()">등록하기</v-btn>
     </v-flex>
   </v-layout>
-  <!-- 거래처 선택 모달 시작 -->
-  <v-dialog
-    v-model="customersModalCheck"
-    width="50%">
-    <v-card>
-      <div style="padding: 10px; background-color: #263238; color: white; height: 48px;">
-        <h3>거래처 검색</h3>
-      </div>
-      <v-layout style="padding: 20px 30px;">
-        <v-flex xs1 style="padding-top: 20px;">
-          <h2>검색</h2>
-        </v-flex>
-        <v-flex xs8>
-          <search-form />
-        </v-flex>
-      </v-layout>
-      <v-layout>
-        <v-flex style="padding: 0px 30px;">
-          <v-data-table
-            :headers="customersHeaders"
-            :items="customersItems"
-            hide-actions>
-            <template slot="items" slot-scope="props">
-              <td>{{props.item.id}}</td>
-              <td>{{props.item.bName}}</td>
-              <td>{{props.item.mobile}}</td>
-              <td>{{props.item.manager}}</td>
-              <td>
-                <v-btn outline sm @click="selectCustomer(props.item)">선택</v-btn>
-              </td>
-            </template>
-          </v-data-table>
-        </v-flex>
-      </v-layout>
-    </v-card>
-  </v-dialog>
-  <!-- 거래처 선택 모달 종료 -->
   <!-- 상품 추가 모달 시작 -->
   <v-dialog
     v-model="appendModalCheck"
     width="70%">
     <v-card>
       <div style="padding: 10px; background-color: #263238; color: white; height: 48px;">
-        <h3>직배송 상품 검색 및 선택</h3>
+        <h3>직배송 상품 선택</h3>
       </div>
       <v-container>
         <v-layout>
-          <v-flex>
-            <detail-table>
-              <tbody slot="contents">
-                <tr>
-                  <th>즉시검색</th>
-                  <td>
-                    <v-layout>
-                      <v-flex xs3 style="padding-right: 10px;">
-                        <v-select
-                          :items="['test','test2']"
-                          label="1차카테고리" />
-                      </v-flex>
-                      <v-flex xs3 style="padding-right: 10px;">
-                        <v-select
-                          :items="['test2','test']"
-                          label="2차카테고리"/>
-                      </v-flex>
-                      <v-flex xs6>
-                        <search-form
-                          label="검색어를 입력해 주세요"/>
-                      </v-flex>
-                    </v-layout>
-                  </td>
-                  <td>
-                    <v-btn>검색</v-btn>
-                  </td>
-                </tr>
-              </tbody>
-            </detail-table>
+          <v-flex xs3>
+            <h2>직배송 상품 선택</h2>
           </v-flex>
         </v-layout>
         <v-layout style="margin-top:15px;">
@@ -379,16 +315,6 @@
           { text: '예비 가격', value: 'string', sortable: false },
           { text: '선택', value: 'string', sortable: false }
         ],
-        customersModalCheck: false,
-        customersHeaders: [
-          { text: 'no', value: 'num', sortable: false },
-          { text:  '거래처명', value: 'string', sortable: false },
-          { text: '거래처 연락처', value: 'string', sortable: false },
-          { text: '배송 담당자', value: 'string', sortable: false },
-          { text: '거래처 선택', value: 'string', sortable: false }
-        ],
-        customersItems: [],     //거래처 모든 데이터
-        customersItem: '',      //선택된 거래처 1개의 데이터
         purchaseProducts:[],
         customerProducts: [],   //거래처가 취급하는 상품 데이터,
         selectItems: [],         //거래처가 취급하는 상품중 선택된 상품
@@ -420,7 +346,6 @@
           for(var i = 0;i< this.shippingManager.length;i++){
             this.shipping.push(this.shippingManager[i].sManager);
           }
-          this.customersItems = res.data[1];
         })
         .catch((ex) => {
           console.log("Error : ",ex);
